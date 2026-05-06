@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, createContext, useContext } from 'react'
 export type Section = 'profile' | 'stats' | 'quests' | 'xp' | 'home' | 'experience' | 'academic' | 'personal' | 'skills'
 
 /* ── Theme Context ── */
-const ThemeCtx = createContext({ dark: true, toggle: () => {} })
+const ThemeCtx = createContext({ dark: true, toggle: () => { } })
 const useTheme = () => useContext(ThemeCtx)
 
 /* ── Data ── */
@@ -104,9 +104,9 @@ function Lightbox({ imgs, alt, onClose }: { imgs: string[]; alt: string; onClose
   return (
     <div className="fixed inset-0 z-[70] flex flex-col items-center justify-center p-4 sm:p-8" onClick={onClose}>
       <div className={`absolute inset-0 ${t(dark, 'bg-[#0a0a0f]/95', 'bg-[#f8f7f4]/95')} backdrop-blur-md scanlines`} />
-      
+
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center" onClick={e => e.stopPropagation()}>
-        
+
         {/* Game UI Header */}
         <div className={`w-full flex justify-between items-end mb-4 border-b-2 pb-2 ${t(dark, 'border-cyan-900', 'border-indigo-200')}`}>
           <div className="flex flex-col">
@@ -117,8 +117,8 @@ function Lightbox({ imgs, alt, onClose }: { imgs: string[]; alt: string; onClose
               {alt}
             </span>
           </div>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className={`font-['Press_Start_2P'] text-[10px] sm:text-xs px-3 py-2 border-2 transition-all ${t(dark, 'border-red-900/50 text-red-400 hover:bg-red-950/50 hover:border-red-500', 'border-red-200 text-red-600 hover:bg-red-50 hover:border-red-400')}`}
           >
             [X] CLOSE
@@ -128,11 +128,11 @@ function Lightbox({ imgs, alt, onClose }: { imgs: string[]; alt: string; onClose
         {/* Main Image Frame */}
         <div className={`relative w-full border-2 p-2 sm:p-4 ${t(dark, 'border-cyan-800/50 bg-black/50 glow-box-cyan', 'border-indigo-300 bg-white/50 shadow-xl')}`}>
           <div className="relative w-full h-[50vh] sm:h-[65vh] flex items-center justify-center overflow-hidden bg-black/10">
-            <img 
-              key={imgs[idx]} 
-              src={imgs[idx]} 
-              alt={alt} 
-              className="max-w-full max-h-full object-contain animate-fade-in drop-shadow-lg" 
+            <img
+              key={imgs[idx]}
+              src={imgs[idx]}
+              alt={alt}
+              className="max-w-full max-h-full object-contain animate-fade-in drop-shadow-lg"
             />
           </div>
         </div>
@@ -140,19 +140,19 @@ function Lightbox({ imgs, alt, onClose }: { imgs: string[]; alt: string; onClose
         {/* Navigation Controls */}
         {imgs.length > 1 && (
           <div className="w-full flex justify-between items-center mt-6">
-            <button 
-              onClick={prev} 
+            <button
+              onClick={prev}
               className={`font-['Press_Start_2P'] text-[10px] sm:text-xs px-4 py-3 border-2 transition-all ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
             >
               {'< PREV'}
             </button>
-            
+
             <div className={`font-mono text-sm sm:text-base px-4 py-2 border-2 ${t(dark, 'border-white/10 text-white/50 bg-black/30', 'border-gray-200 text-gray-500 bg-white/50')}`}>
               FILE {idx + 1}/{imgs.length}
             </div>
 
-            <button 
-              onClick={next} 
+            <button
+              onClick={next}
               className={`font-['Press_Start_2P'] text-[10px] sm:text-xs px-4 py-3 border-2 transition-all ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
             >
               {'NEXT >'}
@@ -246,8 +246,20 @@ export default function App() {
                 </div>
                 {/* Status Banner */}
                 <div className="mt-3 w-52 sm:w-64">
-                  <div className={`px-3 py-2.5 rounded-xl border text-[9px] font-mono font-bold text-center tracking-tight ${t(dark, 'border-amber-800/40 text-amber-400 bg-amber-950/20 glow-box-amber', 'border-amber-200 text-amber-700 bg-amber-50 shadow-sm')}`}>
-                    OPEN FOR OPPORTUNITIES
+                  <div className={`relative px-4 py-2.5 rounded-xl border-2 flex items-center justify-center gap-3 transition-all duration-300 ${t(dark, 'border-amber-500/20 bg-amber-950/40 glow-box-amber', 'border-amber-200 bg-amber-50 shadow-sm')}`}>
+                    {/* Pulsing Dot */}
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                    </span>
+
+                    <span className={`font-['Press_Start_2P'] text-[7px] tracking-tighter ${t(dark, 'text-amber-400', 'text-amber-600')}`}>
+                      Open to Opportunities
+                    </span>
+
+                    {/* Decorative Corners */}
+                    <div className={`absolute -top-1 -right-1 w-2 h-2 border-r-2 border-t-2 ${t(dark, 'border-amber-400/60', 'border-amber-500/60')}`} />
+                    <div className={`absolute -bottom-1 -left-1 w-2 h-2 border-l-2 border-b-2 ${t(dark, 'border-amber-400/60', 'border-amber-500/60')}`} />
                   </div>
                 </div>
               </div>
@@ -258,7 +270,7 @@ export default function App() {
                   Hannah Jamilla<br /><span className={`${accent} ${dark ? 'glow-cyan' : ''}`}>Peralta</span>
                 </h1>
                 <p className={`${muted} text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0`}>
-                  Hi there! I’m a fresh graduate who builds fun and useful things. 
+                  Hi there! I’m a fresh graduate who builds fun and useful things.
                   I love analyzing details to make things easier for users and enjoy creating with awesome people!
                 </p>
                 <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3">
@@ -275,7 +287,7 @@ export default function App() {
                 <div className={`p-4 sm:p-5 rounded-xl border font-mono text-xs sm:text-sm space-y-1.5 text-left ${card}`}>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>email</span> <a href="mailto:hannahjamillap@gmail.com" className={`${t(dark, 'text-green-400', 'text-green-700')} hover:underline`}>hannahjamillap@gmail.com</a></p>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>github</span> <a href="https://github.com/Hannahjamilla" target="_blank" rel="noopener noreferrer" className={`${t(dark, 'text-green-400', 'text-green-700')} hover:underline`}>github.com/Hannahjamilla</a></p>
-                  <p><span className={muted}>{'>'}</span> <span className={muted}>status</span> <a href="https://ping-me-seven-vert.vercel.app/" target="_blank" rel="noopener noreferrer" className={`${t(dark, 'text-amber-400', 'text-amber-700')} hover:underline`}>Open to opportunities</a><span className={`animate-blink ${accent}`}>_</span></p>
+                  <p><span className={muted}>{'>'}</span> <span className={muted}>ping</span> <a href="https://ping-me-seven-vert.vercel.app/" target="_blank" rel="noopener noreferrer" className={`${t(dark, 'text-amber-400', 'text-amber-700')} hover:underline`}>Reach me out here</a><span className={`animate-blink ${accent}`}>_</span></p>
                 </div>
               </div>
             </div>
@@ -322,7 +334,7 @@ export default function App() {
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                   {QUESTS.map((q, i) => (
                     <div key={i} className={`w-full rounded-2xl border transition-all group flex flex-col md:flex-row overflow-hidden ${card}`}>
-                      <div 
+                      <div
                         className={`h-32 md:h-auto md:w-36 shrink-0 overflow-hidden relative cursor-pointer group/img p-4 flex items-center justify-center ${t(dark, 'bg-black/40', 'bg-gray-100')}`}
                         onClick={() => setLightbox({ imgs: q.imgs, alt: q.title })}
                       >
@@ -415,7 +427,7 @@ export default function App() {
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-2">
               {PERSONAL.map((p, i) => (
                 <div key={i} className={`w-full rounded-2xl border overflow-hidden transition-all hover:scale-[1.01] flex flex-col md:flex-row ${card}`}>
-                  <div 
+                  <div
                     className={`h-32 md:h-auto md:w-36 shrink-0 relative cursor-pointer flex items-center justify-center overflow-hidden group/img p-4 ${t(dark, 'bg-black/40', 'bg-gray-100')}`}
                     onClick={() => setLightbox({ imgs: p.imgs, alt: p.title })}
                   >

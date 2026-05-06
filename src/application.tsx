@@ -32,11 +32,11 @@ const CLOUD_TOOLS = [
   { name: 'GitHub', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-orange-400', icon: GitBranch },
 ]
 const QUESTS = [
-  { status: 'COMPLETE', title: 'BaryoConnect', role: 'Project Manager & Paper Presenter', period: 'IRCITE 2025', desc: 'Presented at IRCITE 2025 International Research Conference. Focused on community engagement and local governance.', tags: ['Flutter', 'Firebase'], xp: 950, imgs: ['/images/15.webp', '/images/16.webp'] },
+  { status: 'COMPLETE', title: 'BaryoConnect', role: 'Project Manager & Paper Presenter', period: 'IRCITE 2025', desc: 'Presented at IRCITE 2025 International Research Conference. Focused on community engagement and local governance.', tags: ['Flutter', 'Firebase'], xp: 950, imgs: ['/images/15.webp', '/images/Ircite.webp', '/images/IRCITE-1.jpg', '/images/IRCITE-2.jpg', '/images/16.webp'] },
   { status: 'COMPLETE', title: 'DialiEase', role: 'Capstone Project', period: 'Nov 2024 – Jan 2026', desc: 'Digital monitoring system for home-based dialysis. Built with React.js, Laravel, and Google Cloud.', tags: ['React.js', 'Laravel', 'Google Cloud'], xp: 900, imgs: ['/images/12.webp', '/images/11.webp', '/images/10.webp'] },
-  { status: 'COMPLETE', title: 'Event Ecosystem', role: 'Published Research', period: 'Aug 2024 – Oct 2024', desc: 'Unified venue rental system with billing and payments. Officially published academic research in IJAMR.', tags: ['Billing', 'Inventory'], xp: 800, imgs: ['/images/paper.webp'] },
-  { status: 'COMPLETE', title: 'Drug Store POS', role: 'Business App', period: '2024', desc: 'Business system for pharmacies to track sales and manage medicine stock.', tags: ['PHP', 'MySQL'], xp: 600, imgs: ['/images/POS2.webp'] },
-  { status: 'COMPLETE', title: 'Tutorial Center', role: 'Learning Tool', period: '2024', desc: 'Online school platform where students can track their learning progress.', tags: ['PHP', 'MySQL'], xp: 550, imgs: ['/images/tutorial.webp'] },
+  { status: 'COMPLETE', title: 'Espasyo - Event place reservation system', role: 'Published Research', period: 'Aug 2024 – Oct 2024', desc: 'Unified venue rental system with billing and payments. Officially published academic research in IJAMR.', tags: ['Billing', 'Inventory'], xp: 800, imgs: ['/images/espasyo-1.png', '/images/espasyo.png', '/images/paper.webp'] },
+  { status: 'COMPLETE', title: 'Drug Store POS', role: 'Business App', period: '2024', desc: 'Business system for pharmacies to track sales and manage medicine stock.', tags: ['PHP', 'MySQL'], xp: 600, imgs: ['/images/POS2.webp', '/images/2.webp', '/images/5.webp', '/images/3.webp'] },
+  { status: 'COMPLETE', title: 'Tutorial Center', role: 'Learning Tool', period: '2024', desc: 'Online school platform where students can track their learning progress.', tags: ['PHP', 'MySQL'], xp: 550, imgs: ['/images/tutorial.webp', '/images/7.webp', '/images/8.webp'] },
   { status: 'COMPLETE', title: 'Interactive 3D Portfolio', role: 'Creative Developer', period: '2025', desc: 'An interactive, immersive 3D portfolio experience built with React and Three.js.', tags: ['React', 'Three.js'], xp: 1000, link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/cover-portfolio.png', '/images/portfolio.png', '/images/2port.png'] },
 ]
 const ACHIEVEMENTS = [
@@ -382,18 +382,18 @@ export default function App() {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 sm:p-5 flex flex-col flex-grow">
-                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <span className={`px-2 py-0.5 rounded-md text-[9px] font-mono font-bold ${t(dark, 'bg-green-950/30 border border-green-800/30 text-green-400', 'bg-green-50 border border-green-200 text-green-700')}`}>{q.status}</span>
-                          <span className={`text-[9px] font-mono ${muted}`}>{q.period}</span>
+                      <div className="p-3 sm:p-4 flex flex-col flex-grow">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
+                          <span className={`px-2 py-0.5 rounded-md text-[8px] font-mono font-bold ${t(dark, 'bg-green-950/30 border border-green-800/30 text-green-400', 'bg-green-50 border border-green-200 text-green-700')}`}>{q.status}</span>
+                          <span className={`text-[8px] font-mono ${muted}`}>{q.period}</span>
                         </div>
-                        <span className={`text-[10px] font-mono mb-2 ${t(dark, 'text-amber-400', 'text-amber-700')}`}>+{q.xp} XP</span>
-                        <h3 className="text-base font-bold mb-1">{q.title}</h3>
-                        <p className={`text-[11px] ${muted} font-medium mb-1.5`}>{q.role}</p>
-                        <p className={`text-xs ${muted} leading-relaxed mb-3 flex-grow`}>{q.desc}</p>
+                        <span className={`text-[9px] font-mono mb-1 ${t(dark, 'text-amber-400', 'text-amber-700')}`}>+{q.xp} XP</span>
+                        <h3 className="text-sm font-bold mb-0.5">{q.title}</h3>
+                        <p className={`text-[10px] ${muted} font-medium mb-1`}>{q.role}</p>
+                        <p className={`text-[11px] ${muted} leading-snug mb-2 flex-grow`}>{q.desc}</p>
                         <div className="flex flex-wrap items-center justify-between gap-2 mt-auto">
-                          <div className="flex flex-wrap gap-2">
-                            {q.tags.map(tg => <span key={tg} className={`px-2.5 py-1 rounded-md text-[10px] font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
+                          <div className="flex flex-wrap gap-1.5">
+                            {q.tags.map(tg => <span key={tg} className={`px-2 py-0.5 rounded-md text-[9px] font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
                           </div>
                           {q.link && (
                             <a href={q.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-1.5 text-[10px] font-mono font-bold ${t(dark, 'text-amber-400 hover:text-amber-300', 'text-amber-700 hover:text-amber-600')} transition-colors`}>
@@ -469,16 +469,16 @@ export default function App() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-4 sm:p-5 flex flex-col flex-grow">
-                    <div className="flex items-start justify-between gap-2 mb-1">
-                      <h3 className="font-bold text-base">{p.title}</h3>
-                      {p.wip && <span className={`px-2 py-0.5 rounded text-[8px] font-mono whitespace-nowrap mt-0.5 ${t(dark, 'bg-amber-900/40 text-amber-400 border border-amber-800/50', 'bg-amber-100 text-amber-700 border border-amber-300')}`}>WORK IN PROGRESS</span>}
+                  <div className="p-3 sm:p-4 flex flex-col flex-grow">
+                    <div className="flex items-start justify-between gap-2 mb-0.5">
+                      <h3 className="font-bold text-sm">{p.title}</h3>
+                      {p.wip && <span className={`px-2 py-0.5 rounded text-[7px] font-mono whitespace-nowrap mt-0.5 ${t(dark, 'bg-amber-900/40 text-amber-400 border border-amber-800/50', 'bg-amber-100 text-amber-700 border border-amber-300')}`}>WIP</span>}
                     </div>
-                    <p className={`text-xs ${muted} leading-relaxed mb-3`}>{p.desc}</p>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {p.tags.map(tg => <span key={tg} className={`px-2 py-1 rounded-md text-[10px] font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
+                    <p className={`text-[11px] ${muted} leading-snug mb-2`}>{p.desc}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {p.tags.map(tg => <span key={tg} className={`px-2 py-0.5 rounded-md text-[9px] font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
                     </div>
-                    <a href={p.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-1.5 text-xs font-mono font-bold ${t(dark, 'text-amber-400 hover:text-amber-300', 'text-amber-700 hover:text-amber-600')} transition-colors`}>
+                    <a href={p.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-1.5 text-[10px] font-mono font-bold ${t(dark, 'text-amber-400 hover:text-amber-300', 'text-amber-700 hover:text-amber-600')} transition-colors`}>
                       OPEN LIVE <span>↗</span>
                     </a>
                   </div>

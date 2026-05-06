@@ -185,6 +185,13 @@ export default function App() {
   const accent = t(dark, 'text-cyan-400', 'text-indigo-600')
   const accentBg = t(dark, 'bg-cyan-950/30 border-cyan-800/40', 'bg-indigo-50 border-indigo-200')
   const pixelColor = t(dark, 'text-cyan-400/60', 'text-indigo-400/60')
+  const [scrollY, setScrollY] = useState(0)
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const dotColor = t(dark, 'bg-cyan-400', 'bg-indigo-500')
 
   return (
@@ -197,16 +204,19 @@ export default function App() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className={`w-3 h-3 rounded-sm ${dotColor} animate-pulse`} />
-              <span className={`font-['Press_Start_2P'] text-[9px] sm:text-[10px] ${accent} tracking-wider`}>HANNAH JAMILLA</span>
+              <span className={`font-['Press_Start_2P'] text-[9px] sm:text-[10px] ${accent} tracking-wider`}>
+                <span className="hidden sm:inline">HANNAH JAMILLA</span>
+                <span className="sm:hidden">Hannah</span>
+              </span>
             </div>
-            <div className="hidden md:flex items-center gap-6 text-xs font-mono font-medium">
+            <div className="hidden lg:flex items-center gap-6 text-xs font-mono font-medium">
               {[{ id: 'profile', label: 'profile' }, { id: 'stats', label: 'skills' }, { id: 'quests', label: 'projects' }, { id: 'xp', label: 'experience' }].map(s => (
                 <a key={s.id} href={`#${s.id}`} className={`${muted} hover:${accent} transition-colors`}>[{s.label.toUpperCase()}]</a>
               ))}
             </div>
             <div className="flex items-center gap-3">
               {/* Level badge */}
-              <div className="hidden sm:flex items-center gap-2 text-xs font-mono">
+              <div className="hidden lg:flex items-center gap-2 text-xs font-mono">
                 <span className="text-amber-400">LVL {lvl}</span>
                 <div className={`w-16 sm:w-24 h-2 rounded-full overflow-hidden ${t(dark, 'bg-white/5 border border-amber-900/30', 'bg-gray-100 border border-amber-200')}`}>
                   <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(totalXP % 1000) / 10}%` }} />
@@ -217,7 +227,7 @@ export default function App() {
                 {dark ? '☀️' : '🌙'}
               </button>
               {/* Mobile hamburger */}
-              <button onClick={() => setMenu(true)} className="md:hidden p-2 font-mono text-sm">[=]</button>
+              <button onClick={() => setMenu(true)} className="lg:hidden p-2 font-mono text-sm">[=]</button>
             </div>
           </div>
         </nav>
@@ -226,7 +236,7 @@ export default function App() {
         <section id="profile" className="relative pt-20 sm:pt-24 pb-10 sm:pb-12 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <p className={`font-['Press_Start_2P'] text-[8px] sm:text-[10px] ${pixelColor} tracking-[0.3em] mb-3 text-center lg:text-left`}>// ABOUT ME</p>
-            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 items-start">
+            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 items-center lg:items-start">
               {/* Character Card */}
               <div className="lg:col-span-4 flex flex-col items-center mx-auto lg:mx-0">
                 <div className={`relative w-52 sm:w-64 h-60 sm:h-72 rounded-2xl border-2 p-1 group ${t(dark, 'border-cyan-800/40 glow-box-cyan', 'border-indigo-200 shadow-lg')} ${t(dark, 'bg-gradient-to-b from-cyan-950/30 to-transparent', 'bg-gradient-to-b from-indigo-50 to-transparent')}`}>
@@ -239,11 +249,11 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3 w-52 sm:w-64">
+                <div className="mt-4 grid grid-cols-3 gap-2 w-48 sm:w-64">
                   {[{ l: 'PRJ', v: '9+', c: 'text-rose-400' }, { id: 'EXP', l: 'EXP', v: '2Y+', c: 'text-cyan-400' }, { l: 'PAS', v: '99', c: 'text-amber-400' }].map(s => (
-                    <div key={s.l} className={`text-center p-2 sm:p-3 rounded-xl border ${card}`}>
-                      <p className="font-['Press_Start_2P'] text-[7px] sm:text-[8px] text-gray-500 mb-1">{s.l}</p>
-                      <p className={`font-['Press_Start_2P'] text-xs sm:text-sm ${s.c}`}>{s.v}</p>
+                    <div key={s.l} className={`text-center p-2 rounded-xl border ${card}`}>
+                      <p className="font-['Press_Start_2P'] text-[6px] sm:text-[8px] text-gray-500 mb-1">{s.l}</p>
+                      <p className={`font-['Press_Start_2P'] text-[10px] sm:text-sm ${s.c}`}>{s.v}</p>
                     </div>
                   ))}
                 </div>
@@ -269,14 +279,14 @@ export default function App() {
 
               {/* Character Info */}
               <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.9] lg:leading-tight">
                   Hannah Jamilla<br /><span className={`${accent} ${dark ? 'glow-cyan' : ''}`}>Peralta</span>
                 </h1>
-                <p className={`${muted} text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0`}>
+                <p className={`${muted} text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mt-4`}>
                   Hi there! I’m a fresh graduate who builds fun and useful things.
                   I love analyzing details to make things easier for users and enjoy creating with awesome people!
                 </p>
-                <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3">
+                <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 mx-auto lg:mx-0 max-w-xl">
                   {[
                     { label: 'Fresh Graduate', c: t(dark, 'border-rose-800/40 text-rose-400 bg-rose-950/20', 'border-rose-200 text-rose-700 bg-rose-50') },
                     { label: 'Creative Builder', c: t(dark, 'border-cyan-800/40 text-cyan-400 bg-cyan-950/20', 'border-indigo-200 text-indigo-700 bg-indigo-50') },
@@ -287,7 +297,7 @@ export default function App() {
                   ))}
                 </div>
                 {/* Terminal contact */}
-                <div className={`p-4 sm:p-5 rounded-xl border font-mono text-xs sm:text-sm space-y-1.5 text-left ${card}`}>
+                <div className={`p-4 sm:p-5 rounded-xl border font-mono text-xs sm:text-sm space-y-1.5 text-left ${card} mx-auto lg:mx-0 max-w-xl`}>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>email</span> <a href="mailto:hannahjamillap@gmail.com" className={`${t(dark, 'text-green-400', 'text-green-700')} hover:underline`}>hannahjamillap@gmail.com</a></p>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>github</span> <a href="https://github.com/Hannahjamilla" target="_blank" rel="noopener noreferrer" className={`${t(dark, 'text-green-400', 'text-green-700')} hover:underline`}>github.com/Hannahjamilla</a></p>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>ping</span> <a href="https://ping-me-seven-vert.vercel.app/" target="_blank" rel="noopener noreferrer" className={`${t(dark, 'text-amber-400', 'text-amber-700')} hover:underline`}>Reach me out here</a><span className={`animate-blink ${accent}`}>_</span></p>
@@ -334,7 +344,7 @@ export default function App() {
 
             <div>
               {tab === 'projects' && (
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {QUESTS.map((q, i) => (
                     <div key={i} className={`w-full rounded-2xl border transition-all group flex flex-col md:flex-row overflow-hidden ${card}`}>
                       <div
@@ -375,9 +385,9 @@ export default function App() {
               )}
 
               {tab === 'skills' && (
-                <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {INVENTORY.map((c, i) => (
-                    <div key={i} className={`w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-md p-5 sm:p-6 rounded-2xl border flex flex-col ${card}`}>
+                    <div key={i} className={`p-5 sm:p-6 rounded-2xl border flex flex-col ${card}`}>
                       <p className={`font-['Press_Start_2P'] text-[8px] sm:text-[9px] mb-4 ${t(dark, 'text-purple-400', 'text-violet-500')}`}>{c.cat.toUpperCase()}</p>
                       <div className="flex flex-wrap gap-2">
                         {c.items.map(it => (
@@ -412,7 +422,7 @@ export default function App() {
             <div className={`absolute -top-3 left-6 px-3 font-['Press_Start_2P'] text-[10px] sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-green-400', 'bg-white text-emerald-600')}`}>
               WORK EXPERIENCE
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
               {XP_LOG.map((x, i) => (
                 <div key={i} className={`p-5 rounded-2xl border transition-all flex flex-col ${card}`}>
                   <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -434,7 +444,7 @@ export default function App() {
             <div className={`absolute -top-3 left-6 px-3 font-['Press_Start_2P'] text-[10px] sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-amber-400', 'bg-white text-amber-600')}`}>
               PERSONAL PROJECTS
             </div>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-2">
               {PERSONAL.map((p, i) => (
                 <div key={i} className={`w-full rounded-2xl border overflow-hidden transition-all hover:scale-[1.01] flex flex-col md:flex-row ${card}`}>
                   <div
@@ -507,6 +517,18 @@ export default function App() {
             <p className={`text-[10px] font-mono ${muted}`}>GAME SAVE // 2025</p>
           </div>
         </footer>
+
+        {/* ── BACK TO TOP ── */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className={`fixed bottom-6 right-6 z-50 p-2 min-w-[44px] border-2 transition-all duration-500 transform flex flex-col items-center justify-center
+            ${scrollY > 400 ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-20 opacity-0 scale-50 pointer-events-none'} 
+            ${t(dark, 'bg-[#0a0a0f] border-cyan-500 text-cyan-400 hover:bg-cyan-400 hover:text-black glow-cyan', 'bg-white border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white shadow-[4px_4px_0px_0px_rgba(79,70,229,0.2)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none')}`}
+        >
+          <span className="text-xs font-bold leading-none">▲</span>
+          <span className="font-['Press_Start_2P'] text-[6px] mt-1 tracking-tighter">TOP</span>
+        </button>
+
         {lightbox && <Lightbox imgs={lightbox.imgs} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
       </div>
     </ThemeCtx.Provider>

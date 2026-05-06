@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, createContext, useContext } from 'react'
-export type Section = 'profile' | 'stats' | 'quests' | 'xp'
+export type Section = 'profile' | 'stats' | 'quests' | 'xp' | 'home' | 'experience' | 'academic' | 'personal' | 'skills'
 
 /* ── Theme Context ── */
 const ThemeCtx = createContext({ dark: true, toggle: () => {} })

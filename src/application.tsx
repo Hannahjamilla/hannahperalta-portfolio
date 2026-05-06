@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState, createContext, useContext } from 'react'
+import { useEffect, useState, createContext, useContext } from 'react'
+import {
+  Atom, FileCode2, Box, Wind,
+  Server, Terminal, Zap, Database,
+  Leaf, Layers, Cloud, GitBranch,
+  Code2, Rocket, Cpu, Send, PenTool, FileText, Globe, ArrowUp,
+  Trophy, ShieldCheck, FileBadge, BookOpen, GraduationCap
+} from 'lucide-react'
 export type Section = 'profile' | 'stats' | 'quests' | 'xp' | 'home' | 'experience' | 'academic' | 'personal' | 'skills'
 
 /* ── Theme Context ── */
@@ -6,17 +13,23 @@ const ThemeCtx = createContext({ dark: true, toggle: () => { } })
 const useTheme = () => useContext(ThemeCtx)
 
 /* ── Data ── */
-const STATS = [
-  { name: 'React.js / Next.js', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-cyan-400' },
-  { name: 'Laravel / PHP', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-purple-400' },
-  { name: 'Node.js / Express', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-green-400' },
-  { name: 'JavaScript / HTML / CSS', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-amber-400' },
-  { name: 'MySQL / Cloud SQL', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-rose-400' },
-  { name: 'MongoDB / Firebase', level: 40, label: 'Lvl. 8 / Foundation', color: 'bg-indigo-400' },
-  { name: 'Google Cloud / RBAC', level: 35, label: 'Lvl. 7 / Exploring', color: 'bg-blue-400' },
-  { name: 'GitHub', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-orange-400' },
-  { name: 'Figma', level: 25, label: 'Lvl. 5 / Exploring', color: 'bg-pink-400' },
-  { name: 'Three.js', level: 15, label: 'Lvl. 3 / Foundation', color: 'bg-indigo-500' },
+const FRONTEND = [
+  { name: 'React.js / Next.js', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-cyan-400', icon: Atom },
+  { name: 'JavaScript / HTML / CSS', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-amber-400', icon: FileCode2 },
+  { name: 'Three.js', level: 15, label: 'Lvl. 3 / Foundation', color: 'bg-indigo-500', icon: Box },
+  { name: 'Tailwind CSS', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-sky-400', icon: Wind },
+]
+const BACKEND = [
+  { name: 'Laravel / PHP', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-purple-400', icon: Server },
+  { name: 'Node.js / Express', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-green-400', icon: Terminal },
+  { name: 'Python / FastAPI', level: 30, label: 'Lvl. 6 / Foundation', color: 'bg-blue-500', icon: Zap },
+  { name: 'MySQL / Cloud SQL', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-rose-400', icon: Database },
+]
+const CLOUD_TOOLS = [
+  { name: 'MongoDB / Firebase', level: 40, label: 'Lvl. 8 / Foundation', color: 'bg-indigo-400', icon: Leaf },
+  { name: 'PostgreSQL', level: 35, label: 'Lvl. 7 / Exploring', color: 'bg-emerald-400', icon: Layers },
+  { name: 'Google Cloud', level: 35, label: 'Lvl. 7 / Exploring', color: 'bg-blue-400', icon: Cloud },
+  { name: 'GitHub', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-orange-400', icon: GitBranch },
 ]
 const QUESTS = [
   { status: 'COMPLETE', title: 'BaryoConnect', role: 'Project Manager & Paper Presenter', period: 'IRCITE 2025', desc: 'Presented at IRCITE 2025 International Research Conference. Focused on community engagement and local governance.', tags: ['Flutter', 'Firebase'], xp: 950, imgs: ['/images/15.webp', '/images/16.webp'] },
@@ -26,20 +39,13 @@ const QUESTS = [
   { status: 'COMPLETE', title: 'Tutorial Center', role: 'Learning Tool', period: '2024', desc: 'Online school platform where students can track their learning progress.', tags: ['PHP', 'MySQL'], xp: 550, imgs: ['/images/tutorial.webp'] },
   { status: 'COMPLETE', title: 'Interactive 3D Portfolio', role: 'Creative Developer', period: '2025', desc: 'An interactive, immersive 3D portfolio experience built with React and Three.js.', tags: ['React', 'Three.js'], xp: 1000, link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/cover-portfolio.png', '/images/portfolio.png', '/images/2port.png'] },
 ]
-const INVENTORY = [
-  { cat: 'Languages', items: ['HTML', 'CSS', 'JavaScript', 'PHP', 'Python'] },
-  { cat: 'Frameworks', items: ['React.js', 'Next.js', 'Laravel', 'Node.js', 'Express.js', 'Three.js'] },
-  { cat: 'Databases', items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Cloud SQL'] },
-  { cat: 'Cloud & Security', items: ['AWS S3', 'Google Cloud', 'RBAC'] },
-  { cat: 'Tools & Productivity', items: ['VS Code', 'Antigravity', 'Kiro', 'Postman', 'Bitbucket', 'GitHub', 'Figma', 'Microsoft Office', 'Google Workspace'] },
-]
 const ACHIEVEMENTS = [
-  { icon: '🏆', title: 'IRCITE 2025 Paper Presenter', date: 'Apr 2025' },
-  { icon: '🏆', title: 'TOPCIT Examinee', date: 'Jul 2025' },
-  { icon: '🛡️', title: 'Microsoft SC-900', date: 'Mar 2025' },
-  { icon: '📜', title: 'Alison Diploma in E-Commerce', date: 'Oct 2025' },
-  { icon: '📝', title: 'Published Researcher (IJAMR)', date: 'Jun 2024' },
-  { icon: '🎓', title: 'ABM with Honors & Loyalty', date: 'May 2022' },
+  { icon: Trophy, title: 'IRCITE 2025 Paper Presenter', date: 'Apr 2025' },
+  { icon: Trophy, title: 'TOPCIT Examinee', date: 'Jul 2025' },
+  { icon: ShieldCheck, title: 'Microsoft SC-900', date: 'Mar 2025' },
+  { icon: FileBadge, title: 'Alison Diploma in E-Commerce', date: 'Oct 2025' },
+  { icon: BookOpen, title: 'Published Researcher (IJAMR)', date: 'Jun 2024' },
+  { icon: GraduationCap, title: 'ABM with Honors & Loyalty', date: 'May 2022' },
 ]
 const XP_LOG = [
   { place: 'Lightweight Solutions', role: 'Full-Stack Software Intern', period: 'Mar – May 2026', desc: 'Completed 400 hours working on a modern SaaS project using React and Python. Building scalable features and high-performance digital solutions.', xp: 400 },
@@ -57,30 +63,7 @@ const PERSONAL: { title: string, desc: string, tags: string[], link: string, img
 /* ── Theme helpers ── */
 function t(dark: boolean, d: string, l: string) { return dark ? d : l }
 
-/* ── Skill Bar ── */
-function SkillBar({ name, level, label, color }: { name: string; level: number; label?: string; color: string }) {
-  const { dark } = useTheme()
-  const [vis, setVis] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true) }, { threshold: 0.5 })
-    ref.current && o.observe(ref.current)
-    return () => o.disconnect()
-  }, [])
-  return (
-    <div ref={ref} className="space-y-2">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end text-[11px] sm:text-sm gap-1">
-        <span className="font-mono font-medium leading-tight">{name}</span>
-        <span className={`font-mono text-[9px] sm:text-xs ${t(dark, 'text-gray-500', 'text-gray-400')} sm:text-right shrink-0 whitespace-nowrap`}>
-          {label || `${level}/100`}
-        </span>
-      </div>
-      <div className={`h-3 rounded-full overflow-hidden ${t(dark, 'bg-white/5 border border-white/10', 'bg-gray-100 border border-gray-200')}`}>
-        <div className={`h-full rounded-full ${color} transition-all duration-1000 ease-out`} style={{ width: vis ? `${level}%` : '0%' }} />
-      </div>
-    </div>
-  )
-}
+
 
 /* ── Mobile Menu ── */
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -282,11 +265,11 @@ export default function App() {
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.9] lg:leading-tight">
                   Hannah Jamilla<br /><span className={`${accent} ${dark ? 'glow-cyan' : ''}`}>Peralta</span>
                 </h1>
-                <p className={`${muted} text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mt-4`}>
+                <p className={`${muted} text-sm sm:text-base md:text-lg leading-relaxed lg:mx-0 mt-4`}>
                   Hi there! I’m a fresh graduate who builds fun and useful things.
                   I love analyzing details to make things easier for users and enjoy creating with awesome people!
                 </p>
-                <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 mx-auto lg:mx-0 max-w-xl">
+                <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 lg:mx-0">
                   {[
                     { label: 'Fresh Graduate', c: t(dark, 'border-rose-800/40 text-rose-400 bg-rose-950/20', 'border-rose-200 text-rose-700 bg-rose-50') },
                     { label: 'Creative Builder', c: t(dark, 'border-cyan-800/40 text-cyan-400 bg-cyan-950/20', 'border-indigo-200 text-indigo-700 bg-indigo-50') },
@@ -297,7 +280,7 @@ export default function App() {
                   ))}
                 </div>
                 {/* Terminal contact */}
-                <div className={`p-4 sm:p-5 rounded-xl border font-mono text-xs sm:text-sm space-y-1.5 text-left ${card} mx-auto lg:mx-0 max-w-xl`}>
+                <div className={`p-4 sm:p-5 rounded-xl border font-mono text-xs sm:text-sm space-y-1.5 text-left ${card} lg:mx-0`}>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>email</span> <a href="mailto:hannahjamillap@gmail.com" className={`${t(dark, 'text-green-400', 'text-green-700')} hover:underline`}>hannahjamillap@gmail.com</a></p>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>github</span> <a href="https://github.com/Hannahjamilla" target="_blank" rel="noopener noreferrer" className={`${t(dark, 'text-green-400', 'text-green-700')} hover:underline`}>github.com/Hannahjamilla</a></p>
                   <p><span className={muted}>{'>'}</span> <span className={muted}>ping</span> <a href="https://ping-me-seven-vert.vercel.app/" target="_blank" rel="noopener noreferrer" className={`${t(dark, 'text-amber-400', 'text-amber-700')} hover:underline`}>Reach me out here</a><span className={`animate-blink ${accent}`}>_</span></p>
@@ -313,15 +296,55 @@ export default function App() {
             <div className={`absolute -top-3 left-6 px-3 font-['Press_Start_2P'] text-[10px] sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-cyan-400', 'bg-white text-indigo-600')}`}>
               TECHNICAL SKILLS
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">
-              {STATS.map(s => <SkillBar key={s.name} {...s} />)}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {[
+                { title: 'FRONTEND', items: FRONTEND, accent: 'text-cyan-400', bg: 'bg-cyan-400' },
+                { title: 'BACKEND', items: BACKEND, accent: 'text-purple-400', bg: 'bg-purple-400' },
+                { title: 'DATABASES & TOOLS', items: CLOUD_TOOLS, accent: 'text-orange-400', bg: 'bg-orange-400' }
+              ].map(cat => (
+                <div key={cat.title} className="space-y-4">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className={`w-1.5 h-1.5 rounded-full ${cat.bg} animate-pulse`} />
+                    <p className={`font-['Press_Start_2P'] text-[8px] ${cat.accent} tracking-wider uppercase`}>{cat.title}</p>
+                  </div>
+                  <div className="space-y-3">
+                    {cat.items.map(s => (
+                      <div key={s.name} className={`p-3 sm:p-4 rounded-xl border flex items-center gap-3 transition-all hover:scale-[1.02] ${card}`}>
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${t(dark, 'bg-white/5', 'bg-gray-50')}`}>
+                          <s.icon size={16} className={cat.accent} />
+                        </div>
+                        <div className="flex-grow min-w-0">
+                          <div className="flex justify-between items-end mb-1.5">
+                            <span className="text-[10px] font-bold tracking-tight truncate">{s.name}</span>
+                            <span className={`text-[8px] font-mono opacity-40 whitespace-nowrap ml-2`}>{s.label.split(' / ')[0]}</span>
+                          </div>
+                          <div className={`h-1 w-full rounded-full overflow-hidden ${t(dark, 'bg-white/10', 'bg-gray-100')}`}>
+                            <div className={`h-full rounded-full transition-all duration-1000 ${s.color}`} style={{ width: `${s.level}%` }} />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
             <div className={`mt-8 pt-5 border-t ${t(dark, 'border-cyan-900/30', 'border-indigo-100')}`}>
               <p className={`font-mono text-xs mb-3 font-bold ${t(dark, 'text-cyan-400', 'text-indigo-600')}`}>TOOLS & PRODUCTIVITY</p>
               <div className="flex flex-wrap gap-2">
-                {['VS Code', 'Three.js', 'Antigravity', 'Kiro', 'Postman', 'Bitbucket', 'GitHub', 'Figma', 'Microsoft Office', 'Google Workspace'].map(tool => (
-                  <span key={tool} className={`px-2.5 py-1 rounded-md text-[10px] font-mono ${t(dark, 'bg-cyan-950/20 border border-cyan-800/30 text-cyan-300', 'bg-indigo-50 border border-indigo-200 text-indigo-700')}`}>
-                    {tool}
+                {[
+                  { name: 'VS Code', icon: Code2 },
+                  { name: 'Antigravity', icon: Rocket },
+                  { name: 'Kiro', icon: Cpu },
+                  { name: 'Postman', icon: Send },
+                  { name: 'Bitbucket', icon: GitBranch },
+                  { name: 'GitHub', icon: GitBranch },
+                  { name: 'Figma', icon: PenTool },
+                  { name: 'MS Office', icon: FileText },
+                  { name: 'Google Workspace', icon: Globe }
+                ].map(tool => (
+                  <span key={tool.name} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono transition-colors ${t(dark, 'bg-cyan-950/20 border border-cyan-800/30 text-cyan-300 hover:bg-cyan-900/40', 'bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100')}`}>
+                    <tool.icon size={12} />
+                    {tool.name}
                   </span>
                 ))}
               </div>
@@ -333,7 +356,7 @@ export default function App() {
         <section id="quests" className="py-8 px-4 sm:px-6">
           <div className={`max-w-6xl mx-auto rounded-xl border-2 p-6 sm:p-8 ${t(dark, 'bg-[#0d0d18] border-white/10', 'bg-white border-gray-200 shadow-sm')}`}>
             <div className="flex gap-2 mb-6 overflow-x-auto pb-2 hide-scrollbar">
-              {(['projects', 'skills', 'awards'] as const).map(tb => (
+              {(['projects', 'awards'] as const).map(tb => (
                 <button key={tb} onClick={() => setTab(tb)}
                   className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider transition-all border whitespace-nowrap
                     ${tab === tb ? `${accentBg} ${accent} border-transparent` : `${card} ${muted} hover:${accent} ${t(dark, 'border-white/10', 'border-gray-200')}`}`}>
@@ -384,26 +407,13 @@ export default function App() {
                 </div>
               )}
 
-              {tab === 'skills' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                  {INVENTORY.map((c, i) => (
-                    <div key={i} className={`p-5 sm:p-6 rounded-2xl border flex flex-col ${card}`}>
-                      <p className={`font-['Press_Start_2P'] text-[8px] sm:text-[9px] mb-4 ${t(dark, 'text-purple-400', 'text-violet-500')}`}>{c.cat.toUpperCase()}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {c.items.map(it => (
-                          <span key={it} className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-mono cursor-default transition-colors ${t(dark, 'bg-purple-950/20 border border-purple-800/20 text-purple-300 hover:bg-purple-900/30', 'bg-violet-50 border border-violet-200 text-violet-600 hover:bg-violet-100')}`}>{it}</span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
               {tab === 'awards' && (
                 <div className="flex flex-wrap justify-center gap-4">
                   {ACHIEVEMENTS.map((a, i) => (
                     <div key={i} className={`w-full sm:w-[calc(50%-0.5rem)] max-w-md flex items-center gap-4 p-4 sm:p-5 rounded-2xl border transition-all ${card}`}>
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl shrink-0 ${t(dark, 'bg-amber-950/30 border border-amber-800/30', 'bg-amber-50 border border-amber-200')}`}>{a.icon}</div>
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${t(dark, 'bg-amber-950/30 border border-amber-800/30 text-amber-400', 'bg-amber-50 border border-amber-200 text-amber-700')}`}>
+                        <a.icon size={24} />
+                      </div>
                       <div>
                         <h4 className={`font-bold ${t(dark, 'text-amber-300', 'text-amber-700')}`}>{a.title}</h4>
                         <p className={`text-xs font-mono mt-1 ${muted}`}>Unlocked: {a.date}</p>
@@ -510,9 +520,8 @@ export default function App() {
               <span className={`font-['Press_Start_2P'] text-[8px] ${muted}`}>HANNAH JAMILLA</span>
             </div>
             <div className="flex gap-6">
-              {['GitHub', 'LinkedIn'].map(l => (
-                <a key={l} href="#" className={`text-xs font-mono ${muted} hover:${accent} transition-colors`}>{l}</a>
-              ))}
+              <a href="https://github.com/Hannahjamilla" target="_blank" rel="noopener noreferrer" className={`text-xs font-mono ${muted} hover:${accent} transition-colors`}>GitHub</a>
+              <a href="https://www.linkedin.com/in/hannah-jamilla-peralta-9277a5337/" target="_blank" rel="noopener noreferrer" className={`text-xs font-mono ${muted} hover:${accent} transition-colors`}>LinkedIn</a>
             </div>
             <p className={`text-[10px] font-mono ${muted}`}>GAME SAVE // 2025</p>
           </div>
@@ -525,7 +534,7 @@ export default function App() {
             ${scrollY > 400 ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-20 opacity-0 scale-50 pointer-events-none'} 
             ${t(dark, 'bg-[#0a0a0f] border-cyan-500 text-cyan-400 hover:bg-cyan-400 hover:text-black glow-cyan', 'bg-white border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white shadow-[4px_4px_0px_0px_rgba(79,70,229,0.2)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none')}`}
         >
-          <span className="text-xs font-bold leading-none">▲</span>
+          <ArrowUp size={16} strokeWidth={3} />
           <span className="font-['Press_Start_2P'] text-[6px] mt-1 tracking-tighter">TOP</span>
         </button>
 

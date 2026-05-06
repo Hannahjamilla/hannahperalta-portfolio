@@ -14,7 +14,9 @@ const STATS = [
   { name: 'MySQL / Cloud SQL', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-rose-400' },
   { name: 'MongoDB / Firebase', level: 40, label: 'Lvl. 8 / Foundation', color: 'bg-indigo-400' },
   { name: 'Google Cloud / RBAC', level: 35, label: 'Lvl. 7 / Exploring', color: 'bg-blue-400' },
-  { name: 'GitHub / Figma', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-orange-400' },
+  { name: 'GitHub', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-orange-400' },
+  { name: 'Figma', level: 25, label: 'Lvl. 5 / Exploring', color: 'bg-pink-400' },
+  { name: 'Three.js', level: 15, label: 'Lvl. 3 / Foundation', color: 'bg-indigo-500' },
 ]
 const QUESTS = [
   { status: 'COMPLETE', title: 'BaryoConnect', role: 'Project Manager & Paper Presenter', period: 'IRCITE 2025', desc: 'Presented at IRCITE 2025 International Research Conference. Focused on community engagement and local governance.', tags: ['Flutter', 'Firebase'], xp: 950, imgs: ['/images/15.webp', '/images/16.webp'] },
@@ -22,10 +24,11 @@ const QUESTS = [
   { status: 'COMPLETE', title: 'Event Ecosystem', role: 'Published Research', period: 'Aug 2024 – Oct 2024', desc: 'Unified venue rental system with billing and payments. Officially published academic research in IJAMR.', tags: ['Billing', 'Inventory'], xp: 800, imgs: ['/images/paper.webp'] },
   { status: 'COMPLETE', title: 'Drug Store POS', role: 'Business App', period: '2024', desc: 'Business system for pharmacies to track sales and manage medicine stock.', tags: ['PHP', 'MySQL'], xp: 600, imgs: ['/images/POS2.webp'] },
   { status: 'COMPLETE', title: 'Tutorial Center', role: 'Learning Tool', period: '2024', desc: 'Online school platform where students can track their learning progress.', tags: ['PHP', 'MySQL'], xp: 550, imgs: ['/images/tutorial.webp'] },
+  { status: 'COMPLETE', title: 'Immersive 3D Experience', role: 'Creative Developer', period: '2025', desc: 'An interactive, immersive 3D portfolio experience built with React and Three.js.', tags: ['React', 'Three.js'], xp: 1000, link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/cover-portfolio.png', '/images/portfolio.png', '/images/2port.png'] },
 ]
 const INVENTORY = [
   { cat: 'Languages', items: ['HTML', 'CSS', 'JavaScript', 'PHP', 'Python'] },
-  { cat: 'Frameworks', items: ['React.js', 'Next.js', 'Laravel', 'Node.js', 'Express.js'] },
+  { cat: 'Frameworks', items: ['React.js', 'Next.js', 'Laravel', 'Node.js', 'Express.js', 'Three.js'] },
   { cat: 'Databases', items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Cloud SQL'] },
   { cat: 'Cloud & Security', items: ['AWS S3', 'Google Cloud', 'RBAC'] },
   { cat: 'Tools & Productivity', items: ['VS Code', 'Antigravity', 'Kiro', 'Postman', 'Bitbucket', 'GitHub', 'Figma', 'Microsoft Office', 'Google Workspace'] },
@@ -306,7 +309,7 @@ export default function App() {
             <div className={`mt-8 pt-5 border-t ${t(dark, 'border-cyan-900/30', 'border-indigo-100')}`}>
               <p className={`font-mono text-xs mb-3 font-bold ${t(dark, 'text-cyan-400', 'text-indigo-600')}`}>TOOLS & PRODUCTIVITY</p>
               <div className="flex flex-wrap gap-2">
-                {['VS Code', 'Antigravity', 'Kiro', 'Postman', 'Bitbucket', 'GitHub', 'Figma', 'Microsoft Office', 'Google Workspace'].map(tool => (
+                {['VS Code', 'Three.js', 'Antigravity', 'Kiro', 'Postman', 'Bitbucket', 'GitHub', 'Figma', 'Microsoft Office', 'Google Workspace'].map(tool => (
                   <span key={tool} className={`px-2.5 py-1 rounded-md text-[10px] font-mono ${t(dark, 'bg-cyan-950/20 border border-cyan-800/30 text-cyan-300', 'bg-indigo-50 border border-indigo-200 text-indigo-700')}`}>
                     {tool}
                   </span>

@@ -24,7 +24,7 @@ const QUESTS = [
   { status: 'COMPLETE', title: 'Event Ecosystem', role: 'Published Research', period: 'Aug 2024 – Oct 2024', desc: 'Unified venue rental system with billing and payments. Officially published academic research in IJAMR.', tags: ['Billing', 'Inventory'], xp: 800, imgs: ['/images/paper.webp'] },
   { status: 'COMPLETE', title: 'Drug Store POS', role: 'Business App', period: '2024', desc: 'Business system for pharmacies to track sales and manage medicine stock.', tags: ['PHP', 'MySQL'], xp: 600, imgs: ['/images/POS2.webp'] },
   { status: 'COMPLETE', title: 'Tutorial Center', role: 'Learning Tool', period: '2024', desc: 'Online school platform where students can track their learning progress.', tags: ['PHP', 'MySQL'], xp: 550, imgs: ['/images/tutorial.webp'] },
-  { status: 'COMPLETE', title: 'Immersive 3D Experience', role: 'Creative Developer', period: '2025', desc: 'An interactive, immersive 3D portfolio experience built with React and Three.js.', tags: ['React', 'Three.js'], xp: 1000, link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/cover-portfolio.png', '/images/portfolio.png', '/images/2port.png'] },
+  { status: 'COMPLETE', title: 'Interactive 3D Portfolio', role: 'Creative Developer', period: '2025', desc: 'An interactive, immersive 3D portfolio experience built with React and Three.js.', tags: ['React', 'Three.js'], xp: 1000, link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/cover-portfolio.png', '/images/portfolio.png', '/images/2port.png'] },
 ]
 const INVENTORY = [
   { cat: 'Languages', items: ['HTML', 'CSS', 'JavaScript', 'PHP', 'Python'] },
@@ -358,8 +358,15 @@ export default function App() {
                         <h3 className="text-base font-bold mb-1">{q.title}</h3>
                         <p className={`text-[11px] ${muted} font-medium mb-1.5`}>{q.role}</p>
                         <p className={`text-xs ${muted} leading-relaxed mb-3 flex-grow`}>{q.desc}</p>
-                        <div className="flex flex-wrap gap-2 mt-auto">
-                          {q.tags.map(tg => <span key={tg} className={`px-2.5 py-1 rounded-md text-[10px] font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
+                        <div className="flex flex-wrap items-center justify-between gap-2 mt-auto">
+                          <div className="flex flex-wrap gap-2">
+                            {q.tags.map(tg => <span key={tg} className={`px-2.5 py-1 rounded-md text-[10px] font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
+                          </div>
+                          {q.link && (
+                            <a href={q.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-1.5 text-[10px] font-mono font-bold ${t(dark, 'text-amber-400 hover:text-amber-300', 'text-amber-700 hover:text-amber-600')} transition-colors`}>
+                              OPEN LIVE <span>↗</span>
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>

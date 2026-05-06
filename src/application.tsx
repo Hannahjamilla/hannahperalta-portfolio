@@ -10,7 +10,7 @@ const STATS = [
   { name: 'React.js / Next.js', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-cyan-400' },
   { name: 'Laravel / PHP', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-purple-400' },
   { name: 'Node.js / Express', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-green-400' },
-  { name: 'JavaScript / HTML / CSS', level: 60, label: 'Lvl. 12 / Growing', color: 'bg-amber-400' },
+  { name: 'JavaScript / HTML / CSS', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-amber-400' },
   { name: 'MySQL / Cloud SQL', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-rose-400' },
   { name: 'MongoDB / Firebase', level: 40, label: 'Lvl. 8 / Foundation', color: 'bg-indigo-400' },
   { name: 'Google Cloud / RBAC', level: 35, label: 'Lvl. 7 / Exploring', color: 'bg-blue-400' },

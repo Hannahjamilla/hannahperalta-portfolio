@@ -2,7 +2,7 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import {
   Atom, FileCode2, Box, Wind,
   Server, Terminal, Zap, Database,
-  Leaf, Layers, Cloud, GitBranch,
+  Leaf, Layers, GitBranch,
   Code2, Rocket, Cpu, Send, PenTool, FileText, Globe, ArrowUp,
   Trophy, ShieldCheck, FileBadge, BookOpen, GraduationCap
 } from 'lucide-react'
@@ -79,7 +79,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 }
 
 /* ── Lightbox Modal ── */
-function Lightbox({ imgs, alt, onClose }: { imgs: string[]; alt: string; onClose: () => void }) {
+function Lightbox({ imgs, alt, wip, onClose }: { imgs: string[]; alt: string; wip?: boolean; onClose: () => void }) {
   const { dark } = useTheme()
   const [idx, setIdx] = useState(0)
 
@@ -103,8 +103,9 @@ function Lightbox({ imgs, alt, onClose }: { imgs: string[]; alt: string; onClose
             <span className={`font-semibold tracking-wide text-xs sm:text-xs uppercase ${t(dark, 'text-cyan-400', 'text-indigo-600')}`}>
               // VIEWING_DATA
             </span>
-            <span className={`font-mono text-xs sm:text-sm mt-1.5 ${t(dark, 'text-gray-400', 'text-gray-600')}`}>
+            <span className={`font-mono text-xs sm:text-sm mt-1.5 flex items-center gap-2 ${t(dark, 'text-gray-400', 'text-gray-600')}`}>
               {alt}
+              {wip && <span className={`inline-flex px-1.5 py-0.5 rounded text-[10px] font-mono font-bold whitespace-nowrap border ${t(dark, 'bg-amber-950/40 text-amber-400 border-amber-800/50', 'bg-amber-50 text-amber-700 border-amber-200')}`}>Work in Progress</span>}
             </span>
           </div>
           <button
@@ -179,8 +180,6 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
   }, [])
-  const ac = data.accentColor || (dark ? 'text-indigo-400' : 'text-indigo-600')
-  const acBorder = data.accentColor || (dark ? 'border-indigo-800/40' : 'border-indigo-200')
   return (
     <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center" onClick={onClose}>
       <div className={`absolute inset-0 ${t(dark, 'bg-black/80', 'bg-black/40')} backdrop-blur-sm`} />
@@ -199,11 +198,12 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
         </div>
 
         {/* Scrollable Body */}
-        <div className={`overflow-y-auto flex-1 ${data.profileMode ? 'sm:flex sm:flex-row' : ''}`}>
-          {/* Image Viewer */}
-          {imgs.length > 0 && (
-            <div className={`relative flex items-center justify-center overflow-hidden ${t(dark, 'bg-black/40', 'bg-gray-50')} ${data.profileMode ? 'w-full sm:w-2/5 shrink-0 border-b sm:border-b-0 sm:border-r ' + t(dark, 'border-white/10', 'border-gray-100') : 'w-full h-44 sm:h-56 md:h-72 lg:h-96'}`}>
-              <img src={imgs[imgIdx]} alt={data.title} className={`max-w-full max-h-full ${data.profileMode ? 'w-full h-full object-cover object-[50%_15%]' : 'object-contain'}`} />
+        {/* Scrollable Body */}
+        <div className="overflow-y-auto flex-1">
+          {/* Image Viewer (Normal Projects) */}
+          {!data.profileMode && imgs.length > 0 && (
+            <div className={`relative w-full h-44 sm:h-56 md:h-72 lg:h-96 flex items-center justify-center overflow-hidden ${t(dark, 'bg-black/40', 'bg-gray-50')}`}>
+              <img src={imgs[imgIdx]} alt={data.title} className="max-w-full max-h-full object-contain" />
               {imgs.length > 1 && (
                 <>
                   <button onClick={() => setImgIdx(i => (i - 1 + imgs.length) % imgs.length)} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm font-bold">‹</button>
@@ -216,53 +216,55 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
             </div>
           )}
 
-          <div className={`px-5 pt-4 pb-6 space-y-5 ${data.profileMode ? 'sm:w-3/5 sm:py-6 sm:px-7' : ''}`}>
-            <div>
-              <h2 className={`text-xl md:text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{data.title}</h2>
-              {data.date && <p className={`text-xs font-mono mt-1.5 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Unlocked: {data.date}</p>}
-            </div>
-
-            {(data.subtitle || data.period) && (
-              <div className={`grid grid-cols-2 gap-4 py-4 border-y ${t(dark, 'border-white/10', 'border-gray-100')}`}>
-                {data.subtitle && (
-                  <div>
-                    <span className={`block text-[10px] font-bold tracking-wider mb-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>ROLE / CATEGORY</span>
-                    <span className={`text-xs md:text-sm font-medium ${t(dark, 'text-gray-300', 'text-gray-700')}`}>{data.subtitle}</span>
+          <div className="px-5 pt-4 pb-6">
+            <div className="clearfix space-y-5">
+              
+              {/* Clean Profile Header Format */}
+              {data.profileMode ? (
+                <div className={`p-4 md:p-5 rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-5 mb-5 ${t(dark, 'bg-[#0a0a14] border border-white/5 shadow-inner', 'bg-gray-50 border border-gray-100 shadow-sm')}`}>
+                  {imgs.length > 0 && (
+                    <div className={`relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden shadow-lg border-4 ${t(dark, 'border-[#131320]', 'border-white')}`}>
+                      <img src={imgs[imgIdx]} alt={data.title} className="w-full h-full object-cover object-[50%_15%]" />
+                    </div>
+                  )}
+                  <div className="flex-1 text-center sm:text-left space-y-1 sm:space-y-1.5 sm:mt-2">
+                    <h2 className={`text-xl md:text-2xl font-black tracking-tight leading-none ${t(dark, 'text-white', 'text-gray-900')}`}>{data.title}</h2>
+                    {data.subtitle && <p className={`text-sm md:text-base font-medium ${t(dark, 'text-gray-400', 'text-gray-500')}`}>{data.subtitle}</p>}
+                    {data.period && <p className={`text-xs font-mono pt-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>{data.period}</p>}
                   </div>
-                )}
-                {data.period && (
-                  <div>
-                    <span className={`block text-[10px] font-bold tracking-wider mb-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>TIMELINE</span>
-                    <span className={`text-xs md:text-sm font-medium ${t(dark, 'text-gray-300', 'text-gray-700')}`}>{data.period}</span>
+                </div>
+              ) : (
+                /* Normal Project Title */
+                <div>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                    <h2 className={`text-xl md:text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{data.title}</h2>
+                    {data.wip && <span className={`self-start sm:self-auto inline-flex px-2 py-1 rounded-md text-[10px] sm:text-xs font-mono font-bold whitespace-nowrap border ${t(dark, 'bg-amber-950/40 text-amber-400 border-amber-800/50', 'bg-amber-50 text-amber-700 border-amber-200')}`}>Work in Progress</span>}
                   </div>
-                )}
-              </div>
-            )}
+                  {data.subtitle && <p className={`text-sm md:text-base font-medium mt-0.5 md:mt-1 ${t(dark, 'text-gray-400', 'text-gray-500')}`}>{data.subtitle}</p>}
+                  {data.period && <p className={`text-xs font-mono mt-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>{data.period}</p>}
+                  {data.date && <p className={`text-xs font-mono mt-1.5 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Unlocked: {data.date}</p>}
+                </div>
+              )}
 
-            {data.desc && (
-              <div>
-                <span className={`block text-[10px] font-bold tracking-wider mb-2 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>ABOUT PROJECT</span>
+              {data.desc && (
                 <p className={`text-sm md:text-base leading-relaxed ${t(dark, 'text-gray-400', 'text-gray-600')}`}>{data.desc}</p>
-              </div>
-            )}
+              )}
 
-            {data.tags && data.tags.length > 0 && (
-              <div>
-                <span className={`block text-[10px] font-bold tracking-wider mb-2 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>TECHNOLOGIES & SKILLS</span>
-                <div className="flex flex-wrap gap-2">
+              {data.tags && data.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 clear-both pt-2">
                   {data.tags.map(tg => (
                     <span key={tg} className={`px-2.5 py-1 rounded-lg text-xs font-mono ${t(dark, 'bg-white/5 border border-white/10 text-gray-400', 'bg-gray-100 border border-gray-200 text-gray-600')}`}>{tg}</span>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {data.link && (
               <a
                 href={data.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-2 text-sm md:text-base font-mono font-bold border px-4 md:px-6 py-2.5 md:py-3 rounded-xl w-full justify-center transition-all active:scale-95 ${t(dark, 'border-indigo-700/50 text-indigo-400 bg-indigo-950/30 hover:bg-indigo-950/60', 'border-indigo-200 text-indigo-700 bg-indigo-50 hover:bg-indigo-100')}`}
+                className={`mt-6 mb-2 inline-flex items-center gap-2 text-sm md:text-base font-mono font-bold border px-4 md:px-6 py-2.5 md:py-3 rounded-xl w-full justify-center transition-all active:scale-95 ${t(dark, 'border-indigo-700/50 text-indigo-400 bg-indigo-950/30 hover:bg-indigo-950/60', 'border-indigo-200 text-indigo-700 bg-indigo-50 hover:bg-indigo-100')}`}
               >
                 OPEN LIVE <span>↗</span>
               </a>
@@ -279,19 +281,19 @@ export default function App() {
   const [dark, setDark] = useState(false)
   const [tab, setTab] = useState<'projects' | 'skills' | 'awards'>('projects')
   const [menu, setMenu] = useState(false)
-  const [lightbox, setLightbox] = useState<{ imgs: string[]; alt: string } | null>(null)
+  const [lightbox, setLightbox] = useState<{ imgs: string[]; alt: string; wip?: boolean } | null>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
   
   const openProfileModal = () => {
     setDetailModal({
       profileMode: true,
       title: 'Hannah Jamilla DR. Peralta',
-      subtitle: 'Aspiring AI Search Generalist | Full-Stack Developer',
+      subtitle: 'IT Graduate & Web Developer',
       period: 'Tabon Pulilan, Bulacan | +63 922 250 0165',
       badge: 'ACTIVE',
       desc: 'Detail-oriented Information Technology individual with hands-on experience in full-stack and backend development through academic projects and internships. Skilled in research, workflow analysis, quality assurance testing, system documentation, and AI-assisted tools. Recognized for strong analytical thinking, attention to detail, and the ability to translate requirements into practical solutions that improve efficiency, user experience, and overall business outcomes.',
       tags: ['SDLC', 'System Documentation', 'QA Testing', 'Process Improvement', 'Workflow Analysis', 'Research & Operations'],
-      imgs: ['/images/Hannah-casual4.png', '/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Hannah-casual2.jpg']
+      imgs: ['/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Jamilla.png', '/images/Hannah-casual4.png']
     })
   }
 
@@ -461,7 +463,7 @@ export default function App() {
                 >
                   <div className={`w-full h-full rounded-2xl overflow-hidden flex items-center justify-center relative ${t(dark, 'bg-[#0d0d18]', 'bg-gray-50')}`}>
                     <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover opacity-100 transition-opacity duration-500 group-hover:opacity-0" />
-                    <img src="/images/Hannah-casual.png" alt="Hannah casual" className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <img src="/images/Hannah-casual2.jpg" alt="Hannah casual" className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all duration-300 flex items-center justify-center rounded-2xl">
                       <svg xmlns="http://www.w3.org/2000/svg" className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8 text-white drop-shadow-lg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <circle cx="11" cy="11" r="7" /><line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round" />
@@ -497,7 +499,7 @@ export default function App() {
               {/* Character Info */}
               <div className="col-span-8 space-y-5 text-left">
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05]">
-                  <span className={t(dark, 'text-[#0f172a]', 'text-[#0f172a]')}>Hannah Jamilla</span>
+                  <span className={t(dark, 'text-white', 'text-[#0f172a]')}>Hannah Jamilla</span>
                   <br />
                   <span className={t(dark, 'text-[#5B4DFF]', 'text-[#5B4DFF]')}>Peralta</span>
                 </h1>
@@ -609,7 +611,7 @@ export default function App() {
                         className={`aspect-square xl:aspect-auto xl:h-auto xl:w-36 shrink-0 overflow-hidden relative cursor-pointer group/img p-0 sm:p-4 flex items-center justify-center ${t(dark, 'bg-[#0f0f1a] sm:bg-black/40', 'bg-gray-50 sm:bg-gray-100')}`}
                         onClick={() => window.innerWidth < 1280
                           ? setDetailModal({ title: q.title, subtitle: q.role, badge: q.status, xp: q.xp, period: q.period, desc: q.desc, tags: q.tags, link: q.link, imgs: q.imgs })
-                          : setLightbox({ imgs: q.imgs, alt: q.title })
+                          : setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip })
                         }
                       >
                         <img src={q.imgs[0]} alt={q.title} className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105" />
@@ -627,25 +629,20 @@ export default function App() {
                         {/* Mobile: highly abbreviated title */}
                         <h3 className="text-[11px] sm:text-sm font-bold truncate w-full sm:mb-0.5">{q.title}</h3>
                         
-                        {/* Desktop: Full Details */}
+                        {/* Desktop: Concise Details only */}
                         <div className="hidden xl:flex flex-col flex-grow mt-1">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
                             <span className={`px-2 py-0.5 rounded-md text-xs font-mono font-bold ${t(dark, 'bg-green-950/30 border border-green-800/30 text-green-400', 'bg-green-50 border border-green-200 text-green-700')}`}>{q.status}</span>
                             <span className={`text-xs font-mono ${muted}`}>{q.period}</span>
                           </div>
                           <span className={`text-xs font-mono mb-1 ${t(dark, 'text-amber-400', 'text-amber-700')}`}>+{q.xp} XP</span>
-                          <p className={`text-xs ${muted} font-medium mb-1`}>{q.role}</p>
-                          <p className={`text-sm ${muted} leading-snug mb-2 flex-grow`}>{q.desc}</p>
-                          <div className="flex flex-wrap items-center justify-between gap-2 mt-auto">
-                            <div className="flex flex-wrap gap-1.5">
-                              {q.tags.map(tg => <span key={tg} className={`px-2 py-0.5 rounded-md text-xs font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
-                            </div>
-                            {q.link && (
-                              <a href={q.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-1.5 text-xs font-mono font-bold ${t(dark, 'text-amber-400 hover:text-amber-300', 'text-amber-700 hover:text-amber-600')} transition-colors`}>
-                                OPEN LIVE <span>↗</span>
-                              </a>
-                            )}
-                          </div>
+                          <p className={`text-xs font-semibold ${t(dark, 'text-indigo-400', 'text-violet-600')}`}>{q.role}</p>
+                          <p className={`text-xs ${muted} leading-snug mt-1`}>{q.desc.split('. ')[0]}.</p>
+                          {q.link && (
+                            <a href={q.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-1 text-xs font-mono font-bold mt-2 ${t(dark, 'text-amber-400 hover:text-amber-300', 'text-amber-700 hover:text-amber-600')} transition-colors`}>
+                              OPEN LIVE <span>↗</span>
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -678,9 +675,9 @@ export default function App() {
             <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-green-400', 'bg-white text-emerald-600')}`}>
               WORK EXPERIENCE
             </div>
-            <div className="flex flex-col gap-3 sm:gap-4 mt-2">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-2">
               {XP_LOG.map((x, i) => (
-                <div key={i} onClick={() => window.innerWidth < 1280 && setDetailModal({ title: x.place, subtitle: x.role, xp: x.xp, period: x.period, desc: x.desc })} className={`p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border transition-all flex flex-col cursor-pointer sm:cursor-default active:scale-[0.98] sm:active:scale-100 ${card}`}>
+                <div key={i} onClick={() => window.innerWidth < 1280 && setDetailModal({ title: x.place, subtitle: x.role, xp: x.xp, period: x.period, desc: x.desc })} className={`w-full xl:w-[calc(50%-0.5rem)] md:w-full p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border transition-all flex flex-col cursor-pointer sm:cursor-default active:scale-[0.98] sm:active:scale-100 ${card}`}>
                   <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
                     <span className={`text-[9px] sm:text-xs font-mono ${muted}`}>{x.period}</span>
                   </div>
@@ -707,7 +704,7 @@ export default function App() {
                     className={`aspect-square xl:aspect-auto xl:h-auto xl:w-36 shrink-0 relative cursor-pointer flex items-center justify-center overflow-hidden group/img p-0 sm:p-4 ${t(dark, 'bg-[#0f0f1a] sm:bg-black/40', 'bg-gray-50 sm:bg-gray-100')}`}
                     onClick={() => window.innerWidth < 1280
                       ? setDetailModal({ title: p.title, desc: p.desc, tags: p.tags, link: p.link, imgs: p.imgs, wip: p.wip })
-                      : setLightbox({ imgs: p.imgs, alt: p.title })
+                      : setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip })
                     }
                   >
                     <img src={p.imgs[0]} alt={p.title} className="w-full h-full object-contain transition-transform duration-500 group-hover/img:scale-105" />
@@ -725,7 +722,7 @@ export default function App() {
                     {/* Mobile: highly abbreviated title */}
                     <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center sm:justify-between gap-1 sm:gap-2 mb-0.5">
                       <h3 className="text-[11px] sm:text-sm font-bold truncate w-full">{p.title}</h3>
-                      {p.wip && <span className={`inline-block px-1.5 py-0.5 sm:px-2 rounded text-[8px] sm:text-xs font-mono whitespace-nowrap mt-0.5 sm:mt-0 ${t(dark, 'bg-amber-900/40 text-amber-400 border border-amber-800/50', 'bg-amber-100 text-amber-700 border border-amber-300')}`}>WIP</span>}
+                      {p.wip && <span className={`inline-block px-1.5 py-0.5 sm:px-2 rounded text-[8px] sm:text-xs font-mono whitespace-nowrap mt-0.5 sm:mt-0 ${t(dark, 'bg-amber-900/40 text-amber-400 border border-amber-800/50', 'bg-amber-100 text-amber-700 border border-amber-300')}`}>Work in Progress</span>}
                     </div>
 
                     {/* Desktop Details */}
@@ -797,7 +794,7 @@ export default function App() {
           <span className="font-semibold tracking-wide text-xs mt-1 tracking-tighter">TOP</span>
         </button>
 
-        {lightbox && <Lightbox imgs={lightbox.imgs} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
+        {lightbox && <Lightbox imgs={lightbox.imgs} alt={lightbox.alt} wip={lightbox.wip} onClose={() => setLightbox(null)} />}
         {detailModal && <DetailModal data={detailModal} onClose={() => setDetailModal(null)} />}
       </div>
     </ThemeCtx.Provider>

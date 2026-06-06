@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
-  GitBranch, Code2, Rocket, Cpu, Send, PenTool, FileText, Globe, ArrowUp
+  GitBranch, Code2, Rocket, Cpu, Send, PenTool, FileText, Globe, ArrowUp, Heart, Volume2
 } from 'lucide-react'
 import type { DetailData } from './types'
 import { ThemeCtx, t } from './context/theme-context'
@@ -16,7 +16,38 @@ export default function App() {
   const [menu, setMenu] = useState(false)
   const [lightbox, setLightbox] = useState<{ imgs: string[]; alt: string; wip?: boolean } | null>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
-  
+  const [isReading, setIsReading] = useState(false)
+
+  const toggleReadBio = () => {
+    if (!('speechSynthesis' in window)) return;
+
+    if (isReading) {
+      window.speechSynthesis.cancel();
+      setIsReading(false);
+    } else {
+      window.speechSynthesis.cancel();
+      const text = "Hi there! I'm an IT graduate who crafts practical and impactful digital solutions. I thrive on diving deep into the technical details to refine and elevate user experiences, ensuring every project is both functional and visually engaging. Beyond writing code, I absolutely love collaborating with awesome teams to bring great ideas to life. I am always eager to embrace new challenges, learn emerging technologies, and build products that truly make a difference!";
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.rate = 0.95;
+      
+      const voices = window.speechSynthesis.getVoices();
+      // Try specifically for female voices, otherwise fallback to any voice that isn't a known male voice
+      const femaleVoice = voices.find(v => 
+        /zira|susan|hazel|heather|female|samantha|victoria|google us english/i.test(v.name)
+      ) || voices.find(v => !/david|mark|male|boy|guy/i.test(v.name));
+      
+      if (femaleVoice) {
+        msg.voice = femaleVoice;
+      }
+
+      msg.onend = () => setIsReading(false);
+      msg.onerror = () => setIsReading(false);
+
+      window.speechSynthesis.speak(msg);
+      setIsReading(true);
+    }
+  };
+
   const openProfileModal = () => {
     setDetailModal({
       profileMode: true,
@@ -32,8 +63,6 @@ export default function App() {
 
   const toggle = () => setDark(p => !p)
 
-  const totalXP = [...QUESTS, ...XP_LOG].reduce((s, q) => s + q.xp, 0)
-  const lvl = Math.floor(totalXP / 1000) + 1
 
   const bg = t(dark, 'bg-[#0a0a0f] text-gray-100', 'bg-[#f8f7f4] text-gray-900')
   const gridBg = t(dark, '', '')
@@ -46,6 +75,13 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    // Specifically preload TTS voices so they are ready before the user clicks
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -57,34 +93,58 @@ export default function App() {
         <MobileMenu open={menu} onClose={() => setMenu(false)} />
 
         {/* ── NAV ── */}
-        <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-colors duration-300 ${t(dark, 'bg-[#0a0a0f]/90 border-cyan-900/30', 'bg-white/80 border-gray-200')}`}>
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className={`w-3 h-3 rounded-sm ${dotColor} animate-pulse`} />
-              <span className={`font-semibold tracking-wide text-xs sm:text-xs ${accent} tracking-wider`}>
+        <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b transition-all duration-500 ${t(dark, 'bg-[#0a0a0f]/80 border-cyan-900/40 shadow-[0_4px_30px_rgba(34,211,238,0.03)]', 'bg-white/80 border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)]')}`}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center gap-3 group cursor-pointer hover:opacity-90 transition-opacity" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <div className="relative flex items-center justify-center w-4 h-4">
+                <Heart size={14} className={`transform group-hover:scale-125 transition-transform duration-300 ${t(dark, 'text-cyan-400 fill-cyan-400 drop-shadow-[0_0_6px_rgba(34,211,238,0.6)]', 'text-indigo-500 fill-indigo-500 drop-shadow-[0_0_6px_rgba(99,102,241,0.6)]')}`} />
+              </div>
+              <span className={`font-black uppercase text-xs sm:text-[13px] tracking-[0.2em] transition-all duration-300 ${t(dark, 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:to-cyan-300', 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:to-indigo-500')}`}>
                 <span className="hidden xl:inline">HANNAH JAMILLA</span>
                 <span className="xl:hidden">Hannah</span>
               </span>
             </div>
-            <div className="hidden xl:flex items-center gap-6 text-xs font-mono font-medium">
-              {[{ id: 'profile', label: 'profile' }, { id: 'stats', label: 'skills' }, { id: 'quests', label: 'projects' }, { id: 'xp', label: 'experience' }].map(s => (
-                <a key={s.id} href={`#${s.id}`} className={`${muted} hover:${accent} transition-colors`}>[{s.label.toUpperCase()}]</a>
+
+            {/* Desktop Links */}
+            <div className="hidden xl:flex items-center gap-7 text-[13px] font-mono font-bold">
+              {[{ id: 'profile', label: 'profile' }, { id: 'stats', label: 'skills' }, { id: 'quests', label: 'projects' }, { id: 'experience', label: 'experience' }].map(s => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  className={`group relative px-2 py-1.5 transition-colors duration-300 flex items-center gap-[4px] ${t(dark, 'text-gray-400 hover:text-cyan-400', 'text-gray-500 hover:text-indigo-600')}`}
+                >
+                  <span className={`text-[11px] sm:text-xs transition-colors duration-300 ${t(dark, 'text-cyan-900 group-hover:text-cyan-500', 'text-indigo-200 group-hover:text-indigo-400')}`}>[</span>
+                  <span className="relative z-10 transition-transform duration-300 ease-out group-hover:-translate-y-[1px] tracking-wide">
+                    {s.label.toUpperCase()}
+                  </span>
+                  <span className={`text-[11px] sm:text-xs transition-colors duration-300 ${t(dark, 'text-cyan-900 group-hover:text-cyan-500', 'text-indigo-200 group-hover:text-indigo-400')}`}>]</span>
+
+                  {/* Underline glow */}
+                  <span className={`absolute bottom-0 left-1/2 w-0 h-[2px] -translate-x-1/2 transition-all duration-300 ease-out group-hover:w-[70%] rounded-full opacity-0 group-hover:opacity-100 ${t(dark, 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]', 'bg-indigo-600 shadow-[0_0_8px_rgba(79,70,229,0.5)]')}`} />
+                </a>
               ))}
             </div>
-            <div className="flex items-center gap-3">
-              {/* Level badge */}
-              <div className="hidden xl:flex items-center gap-2 text-xs font-mono">
-                <span className="text-amber-400">LVL {lvl}</span>
-                <div className={`w-16 sm:w-24 h-2 rounded-full overflow-hidden ${t(dark, 'bg-white/5 border border-amber-900/30', 'bg-gray-100 border border-amber-200')}`}>
-                  <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(totalXP % 1000) / 10}%` }} />
-                </div>
-              </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Theme toggle */}
-              <button onClick={toggle} className={`p-2 rounded-lg transition-colors text-sm ${t(dark, 'hover:bg-white/10', 'hover:bg-gray-100')}`}>
-                {dark ? '☀️' : '🌙'}
+              <button
+                onClick={toggle}
+                className={`relative p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center overflow-hidden group border border-transparent ${t(dark, 'hover:border-white/10 hover:bg-white/5', 'hover:border-gray-200 hover:bg-gray-50')} shadow-sm hover:shadow-md cursor-pointer`}
+              >
+                <span className={`relative z-10 text-sm sm:text-base transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 drop-shadow-sm`}>
+                  {dark ? '☀️' : '🌙'}
+                </span>
               </button>
+
               {/* Mobile hamburger */}
-              <button onClick={() => setMenu(true)} className="xl:hidden p-2 font-mono text-sm">[=]</button>
+              <button
+                onClick={() => setMenu(true)}
+                className={`xl:hidden p-2.5 rounded-xl font-mono text-sm font-bold transition-all duration-300 border border-transparent flex items-center justify-center ${t(dark, 'text-cyan-400 hover:bg-cyan-950/30 hover:border-cyan-900/50', 'text-indigo-600 hover:bg-indigo-50 hover:border-indigo-200')}`}
+              >
+                [=]
+              </button>
             </div>
           </div>
         </nav>
@@ -94,15 +154,23 @@ export default function App() {
 
           <div className="xl:hidden">
             {/* Cover Banner */}
-            <div className={`relative w-full overflow-hidden ${t(dark, 'bg-[#0f0f1a]', 'bg-gray-100')}`}>
+            <div 
+              className={`relative w-full overflow-hidden cursor-pointer group ${t(dark, 'bg-[#0f0f1a]', 'bg-gray-100')}`}
+              onClick={() => setLightbox({ imgs: ['/images/cover photo-Hannah.png'], alt: 'Cover Photo' })}
+            >
               {/* Cover Photo - No forced height so it doesn't crop horizontally */}
               <img
                 src="/images/cover photo-Hannah.png"
                 alt="Cover"
-                className="w-full h-auto block"
+                className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
               />
               {/* Subtle overlay for contrast */}
-              <div className="absolute inset-0 bg-black/10" />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round" />
+                </svg>
+              </div>
             </div>
 
             {/* Profile Card Body */}
@@ -116,16 +184,16 @@ export default function App() {
                   <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover object-[50%_15%]" />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round"/>
+                      <circle cx="11" cy="11" r="7" /><line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round" />
                     </svg>
                   </div>
                 </div>
                 <div className="min-w-0 flex flex-col items-center">
-                  <h1 className={`font-black tracking-tight leading-[1.1] text-[1.5rem] sm:text-2xl ${t(dark, 'text-white', 'text-[#0f172a]')}`}>
+                  <h1 className={`font-black tracking-tight leading-[1.1] text-[1.5rem] sm:text-2xl whitespace-nowrap ${t(dark, 'text-white', 'text-[#0f172a]')}`}>
                     Hannah Jamilla <span className="text-[#5B4DFF]">Peralta</span>
                   </h1>
                   <p className={`text-[11px] sm:text-xs mt-1.5 font-medium ${t(dark, 'text-gray-400', 'text-gray-500')}`}>Builder of Things · Fresh Graduate</p>
-                  
+
                   {/* Availability badge under the title */}
                   <div className={`mt-3 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wide ${t(dark, 'bg-amber-950/30 border border-amber-500/30 text-amber-400', 'bg-amber-50 border border-amber-200 text-amber-600')}`}>
                     <span className="relative flex h-2 w-2">
@@ -155,8 +223,15 @@ export default function App() {
 
               {/* Bio */}
               <div className="px-6 py-4 text-center">
-                <p className={`text-[13px] leading-relaxed max-w-sm mx-auto ${t(dark, 'text-gray-400', 'text-gray-600')}`}>
-                  Hi there! I'm a fresh graduate who builds fun and useful things. I love analyzing details to make things easier for users and enjoy creating with awesome people!
+                <p className={`text-[12px] leading-relaxed max-w-sm mx-auto ${t(dark, 'text-gray-400', 'text-gray-600')}`}>
+                  <button
+                    onClick={toggleReadBio}
+                    className={`inline-flex items-center justify-center w-5 h-5 rounded hover:bg-black/5 dark:hover:bg-white/10 mr-1.5 align-middle transition-colors cursor-pointer ${isReading ? t(dark, 'text-amber-400 animate-pulse', 'text-amber-600 animate-pulse') : t(dark, 'text-cyan-400', 'text-indigo-600')}`}
+                    title={isReading ? "Stop reading" : "Read aloud"}
+                  >
+                    <Volume2 size={14} />
+                  </button>
+                  Hi there! I'm an IT graduate who crafts practical and impactful digital solutions. I thrive on diving deep into the technical details to refine and elevate user experiences, ensuring every project is both functional and visually engaging. Beyond writing code, I absolutely love collaborating with awesome teams to bring great ideas to life. I am always eager to embrace new challenges, learn emerging technologies, and build products that truly make a difference!
                 </p>
               </div>
 
@@ -186,7 +261,6 @@ export default function App() {
 
           {/* ══ DESKTOP VIEW — original layout ══ */}
           <div className="hidden xl:block px-6 max-w-6xl mx-auto">
-            <p className={`font-semibold tracking-wide text-xs ${pixelColor} tracking-[0.3em] mb-3 text-left`}>// ABOUT ME</p>
             <div className="grid grid-cols-12 gap-6 items-start">
               {/* Character Card */}
               <div className="col-span-4 flex flex-col items-start">
@@ -203,7 +277,10 @@ export default function App() {
                       </svg>
                     </div>
                     <div className={`absolute bottom-0 left-0 right-0 p-4 pointer-events-none ${t(dark, 'bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent', 'bg-gradient-to-t from-white via-white/90 to-transparent')}`}>
-                      <p className={`font-semibold tracking-wide text-sm ${accent} leading-relaxed`}>Hannah</p>
+                      <p className={`font-semibold tracking-wide text-sm ${accent} leading-relaxed`}>
+                        <span className="inline group-hover:hidden">Hannah</span>
+                        <span className="hidden group-hover:inline">Jaja</span>
+                      </p>
                       <p className={`font-semibold tracking-wide text-xs ${muted} mt-1`}>Builder of Things</p>
                     </div>
                   </div>
@@ -231,14 +308,19 @@ export default function App() {
 
               {/* Character Info */}
               <div className="col-span-8 space-y-5 text-left">
-                <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05]">
-                  <span className={t(dark, 'text-white', 'text-[#0f172a]')}>Hannah Jamilla</span>
-                  <br />
+                <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05] whitespace-nowrap">
+                  <span className={t(dark, 'text-white', 'text-[#0f172a]')}>Hannah Jamilla</span>{' '}
                   <span className={t(dark, 'text-[#5B4DFF]', 'text-[#5B4DFF]')}>Peralta</span>
                 </h1>
-                <p className={`${muted} text-sm sm:text-base md:text-lg leading-relaxed mt-4`}>
-                  Hi there! I'm a fresh graduate who builds fun and useful things.
-                  I love analyzing details to make things easier for users and enjoy creating with awesome people!
+                <p className={`${muted} text-xs sm:text-sm md:text-base leading-relaxed mt-4`}>
+                  <button
+                    onClick={toggleReadBio}
+                    className={`inline-flex items-center justify-center w-6 h-6 rounded hover:bg-black/5 dark:hover:bg-white/10 mr-1.5 align-middle transition-colors cursor-pointer ${isReading ? t(dark, 'text-amber-400 animate-pulse', 'text-amber-600 animate-pulse') : t(dark, 'text-cyan-400', 'text-indigo-600')}`}
+                    title={isReading ? "Stop reading" : "Read aloud"}
+                  >
+                    <Volume2 size={16} />
+                  </button>
+                  Hi there! I'm an IT graduate who crafts practical and impactful digital solutions. I thrive on diving deep into the technical details to refine and elevate user experiences, ensuring every project is both functional and visually engaging. Beyond writing code, I absolutely love collaborating with awesome teams to bring great ideas to life. I am always eager to embrace new challenges, learn emerging technologies, and build products that truly make a difference!
                 </p>
                 <div className="flex flex-wrap gap-2 sm:gap-3">
                   {[
@@ -259,6 +341,47 @@ export default function App() {
             </div>
           </div>
         </section>
+        {/* ── XP LOG (Work Experience) ── */}
+        <section id="experience" className="py-8 px-4 sm:px-6">
+          <div className={`max-w-6xl mx-auto rounded-2xl border p-6 sm:p-8 relative ${t(dark, 'bg-[#0d0d18] border-green-900/40 shadow-sm hover:shadow-md', 'bg-white border-emerald-200 shadow-sm')}`}>
+            <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-green-400', 'bg-white text-emerald-600')}`}>
+              WORK EXPERIENCE
+            </div>
+            <div className={`relative pl-6 sm:pl-8 border-l-2 mt-6 space-y-6 sm:space-y-8 ${t(dark, 'border-green-900/40', 'border-emerald-100')}`}>
+              {XP_LOG.map((x, i) => (
+                <div key={i} onClick={() => window.innerWidth < 1280 && setDetailModal({ title: x.place, subtitle: x.role, period: x.period, desc: x.desc })}
+                  className="relative group">
+
+                  {/* Timeline Dot */}
+                  <div className={`absolute -left-[31px] sm:-left-[41px] top-6 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-[3px] ${t(dark, 'bg-green-400 border-green-500 shadow-[0_0_10px_rgba(74,222,128,0.3)]', 'bg-emerald-400 border-emerald-500 shadow-sm')}`} />
+
+                  {/* Card Content */}
+                  <div className={`w-full p-5 sm:p-6 rounded-2xl border transition-all duration-300 ${card}`}>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4 mb-3 sm:mb-4">
+                      <div>
+                        <h3 className={`text-sm sm:text-base font-black leading-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{x.place}</h3>
+                        <p className={`text-[11px] sm:text-xs font-bold mt-0.5 ${t(dark, 'text-green-400', 'text-emerald-600')}`}>{x.role}</p>
+                      </div>
+                      <div className="flex flex-col items-start sm:items-end shrink-0">
+                        <span className={`text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase ${muted}`}>{x.period}</span>
+                      </div>
+                    </div>
+
+                    <div className={`hidden sm:flex flex-col gap-2.5 text-xs xl:text-xs ${t(dark, 'text-gray-400', 'text-gray-600')} leading-relaxed`}>
+                      {x.desc.map((d, di) => (
+                        <div key={di} className="flex flex-row items-start gap-3">
+                          <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 shadow-[0_0_8px_rgba(0,0,0,0.5)] ${t(dark, 'bg-green-400 shadow-green-400/50', 'bg-emerald-500 shadow-emerald-400/30')}`} />
+                          <span>{d}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
 
         {/* ── STATS ── */}
         <section id="stats" className="py-8 px-4 sm:px-6">
@@ -290,8 +413,8 @@ export default function App() {
                         </div>
                         {/* Desktop: original row layout */}
                         <div className="hidden xl:flex min-w-0 w-full flex-row items-center justify-between">
-                          <span className="text-sm font-bold tracking-tight truncate">{s.name}</span>
-                          <span className="text-xs font-mono opacity-60 ml-2 shrink-0">{s.label.split(' / ')[1]}</span>
+                          <span className="text-xs font-bold tracking-tight truncate">{s.name}</span>
+                          <span className="text-[10px] font-mono opacity-80 xl:opacity-60 ml-2 shrink-0">{s.label.split(' / ')[1]}</span>
                         </div>
                       </div>
                     ))}
@@ -343,7 +466,7 @@ export default function App() {
                       <div
                         className={`aspect-square xl:aspect-auto xl:h-auto xl:w-36 shrink-0 overflow-hidden relative cursor-pointer group/img p-0 sm:p-4 flex items-center justify-center ${t(dark, 'bg-[#0f0f1a] sm:bg-black/40', 'bg-gray-50 sm:bg-gray-100')}`}
                         onClick={() => window.innerWidth < 1280
-                          ? setDetailModal({ title: q.title, subtitle: q.role, badge: q.status, xp: q.xp, period: q.period, desc: q.desc, tags: q.tags, link: q.link, imgs: q.imgs })
+                          ? setDetailModal({ title: q.title, subtitle: q.role, badge: q.status, period: q.period, desc: q.desc, tags: q.tags, link: q.link, imgs: q.imgs })
                           : setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip })
                         }
                       >
@@ -361,14 +484,13 @@ export default function App() {
                       <div className="p-2.5 sm:p-4 flex flex-col flex-grow text-center xl:text-left justify-center xl:justify-start">
                         {/* Mobile: highly abbreviated title */}
                         <h3 className="text-[11px] sm:text-sm font-bold truncate w-full sm:mb-0.5">{q.title}</h3>
-                        
+
                         {/* Desktop: Concise Details only */}
                         <div className="hidden xl:flex flex-col flex-grow mt-1">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
                             <span className={`px-2 py-0.5 rounded-md text-xs font-mono font-bold ${t(dark, 'bg-green-950/30 border border-green-800/30 text-green-400', 'bg-green-50 border border-green-200 text-green-700')}`}>{q.status}</span>
                             <span className={`text-xs font-mono ${muted}`}>{q.period}</span>
                           </div>
-                          <span className={`text-xs font-mono mb-1 ${t(dark, 'text-amber-400', 'text-amber-700')}`}>+{q.xp} XP</span>
                           <p className={`text-xs font-semibold ${t(dark, 'text-indigo-400', 'text-violet-600')}`}>{q.role}</p>
                           <p className={`text-xs ${muted} leading-snug mt-1`}>{q.desc.split('. ')[0]}.</p>
                           {q.link && (
@@ -402,27 +524,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* ── XP LOG ── */}
-        <section id="xp" className="py-8 px-4 sm:px-6">
-          <div className={`max-w-6xl mx-auto rounded-2xl border p-6 sm:p-8 relative ${t(dark, 'bg-[#0d0d18] border-green-900/40 shadow-sm hover:shadow-md', 'bg-white border-emerald-200 shadow-sm')}`}>
-            <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-green-400', 'bg-white text-emerald-600')}`}>
-              WORK EXPERIENCE
-            </div>
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-2">
-              {XP_LOG.map((x, i) => (
-                <div key={i} onClick={() => window.innerWidth < 1280 && setDetailModal({ title: x.place, subtitle: x.role, xp: x.xp, period: x.period, desc: x.desc })} className={`w-full xl:w-[calc(50%-0.5rem)] md:w-full p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border transition-all flex flex-col cursor-pointer sm:cursor-default active:scale-[0.98] sm:active:scale-100 ${card}`}>
-                  <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-                    <span className={`text-[9px] sm:text-xs font-mono ${muted}`}>{x.period}</span>
-                  </div>
-                  <span className={`text-[9px] sm:text-xs font-mono mb-1.5 sm:mb-3 ${t(dark, 'text-green-400', 'text-green-700')}`}>+{x.xp} XP</span>
-                  <h3 className={`text-[12px] sm:text-base font-bold mb-0.5 sm:mb-1 leading-tight ${t(dark, 'text-green-300', 'text-gray-900')}`}>{x.place}</h3>
-                  <p className={`text-[10px] sm:text-xs font-medium ${muted} mb-1 sm:mb-2 leading-tight`}>{x.role}</p>
-                  <p className={`hidden sm:block text-sm ${muted} leading-relaxed flex-grow`}>{x.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── SIDE QUESTS (Personal Projects) ── */}
         <section className="py-8 px-4 sm:px-6">
@@ -460,7 +561,14 @@ export default function App() {
 
                     {/* Desktop Details */}
                     <div className="hidden xl:flex flex-col flex-grow mt-1">
-                      <p className={`text-sm ${muted} leading-snug mb-2`}>{p.desc}</p>
+                      <div className={`flex flex-col gap-1 text-xs xl:text-xs ${muted} leading-snug mb-2`}>
+                        {p.desc.map((d, di) => (
+                          <div key={di} className="flex flex-row items-start gap-1.5">
+                            <span className={`mt-1.5 w-1 h-1 rounded-full shrink-0 ${t(dark, 'bg-amber-400/50', 'bg-amber-400')}`} />
+                            <span>{d}</span>
+                          </div>
+                        ))}
+                      </div>
                       <div className="flex flex-wrap gap-1.5 mb-2 mt-auto">
                         {p.tags.map(tg => <span key={tg} className={`px-2 py-0.5 rounded-md text-xs font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}
                       </div>

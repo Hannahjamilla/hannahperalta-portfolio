@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { MeshTransmissionMaterial, Float, Sparkles, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
-import type { Section } from '../../application'
+import type { Section } from '../../types'
 
 interface SceneProps {
   section: Section

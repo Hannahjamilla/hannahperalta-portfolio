@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import type { Section } from '../../application'
+import type { Section } from '../../types'
 
 interface OverlayProps {
   section: Section
@@ -136,13 +136,13 @@ export default function OverlayUi({ section, setSection, isDarkMode, setIsDarkMo
                     <ExperienceItem 
                       title="Lightweight Solutions" 
                       role="Full-Stack Developer | Internship 2" 
-                      date="March – May 2026" 
+                      date="March – May 2026 | 400 Hours" 
                       text="Working on a modern SaaS project using React and Python. Building scalable full-stack features and high-performance digital solutions."
                     />
                     <ExperienceItem 
                       title="Creciendo Philippines" 
                       role="Web Developer | Internship 1" 
-                      date="Nov 2025 – Feb 2026" 
+                      date="Nov 2025 – Feb 2026 | 400 Hours" 
                       text="Developed backend systems with Express.js and MongoDB. Optimized APIs for 400+ hours of performance-focused development."
                     />
                     <ExperienceItem 

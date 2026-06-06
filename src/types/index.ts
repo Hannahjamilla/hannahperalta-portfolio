@@ -5,8 +5,8 @@ export type DetailData = {
   subtitle?: string
   period?: string
   badge?: string
-  xp?: number
-  desc?: string
+
+  desc?: string | string[]
   tags?: string[]
   link?: string
   imgs?: string[]

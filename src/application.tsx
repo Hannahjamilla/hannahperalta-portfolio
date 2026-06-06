@@ -345,7 +345,7 @@ export default function App() {
                   className={`-mt-12 mb-3 relative w-[6.5rem] h-[6.5rem] sm:w-[7.5rem] sm:h-[7.5rem] rounded-full border-[5px] overflow-hidden shrink-0 cursor-pointer group flex items-center justify-center ${t(dark, 'border-[#0f0f1a] bg-[#0f0f1a] shadow-xl', 'border-white bg-white shadow-[0_8px_20px_rgb(0,0,0,0.08)]')}`}
                   onClick={() => setLightbox({ imgs: ['/images/Hannah-casual4.png', '/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Hannah-casual2.jpg'], alt: 'Hannah Jamilla Peralta' })}
                 >
-                  <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover" />
+                  <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover object-[50%_15%]" />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round"/>

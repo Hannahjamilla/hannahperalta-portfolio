@@ -714,7 +714,7 @@ export default function App() {
             <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-purple-400', 'bg-white text-violet-600')}`}>
               EDUCATIONAL BACKGROUND
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-3 sm:gap-4 mt-2">
+            <div className="flex flex-col gap-3 sm:gap-4 mt-2">
               <div onClick={() => window.innerWidth < 1280 && setDetailModal({ title: 'National University - Baliwag', subtitle: 'BS Information Technology', period: 'Expected: July 2026', desc: 'Specialization in Mobile and Web Application' })} className={`p-4 sm:p-6 rounded-xl sm:rounded-2xl border cursor-pointer sm:cursor-default active:scale-[0.98] sm:active:scale-100 transition-all ${card}`}>
                 <p className={`text-[9px] sm:text-xs font-mono mb-1.5 sm:mb-2 ${t(dark, 'text-purple-400', 'text-violet-500')}`}>COLLEGE DEGREE</p>
                 <h3 className="text-[12px] sm:text-lg font-bold mb-0.5 sm:mb-1 leading-tight">National University - Baliwag</h3>

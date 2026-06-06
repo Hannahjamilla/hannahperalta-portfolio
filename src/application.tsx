@@ -48,9 +48,9 @@ const ACHIEVEMENTS = [
   { icon: GraduationCap, title: 'ABM with Honors & Loyalty', date: 'May 2022' },
 ]
 const XP_LOG = [
-  { place: 'Lightweight Solutions', role: 'Full-Stack Software Intern', period: 'Mar – May 2026', desc: 'Completed 400 hours working on a modern SaaS project using React and Python. Building scalable features and high-performance digital solutions.', xp: 400 },
-  { place: 'Creciendo Philippines', role: 'Web Software Intern', period: 'Nov 2025 – Feb 2026', desc: 'Developed backend systems with Express.js and MongoDB. Optimized APIs for 400+ hours of performance-focused work.', xp: 400 },
-  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – Present', desc: 'Facilitating cloud-focused workshops and learning sessions for IT students at National University.', xp: 200 },
+  { place: 'Lightweight Solutions', role: 'Web Developer Intern (Full-Stack Development)', period: 'Mar – May 2026', desc: 'Developed scalable SaaS features using React and Python to support business application workflows. Collaborated with developers to improve application usability, user experience, and workflow efficiency through testing, debugging, and feature enhancements. Assisted in validating application features to ensure functionality, performance, and user satisfaction. (400 hours)', xp: 400 },
+  { place: 'Creciendo Philippines', role: 'Backend Developer Intern (Web Development)', period: 'Nov 2025 – Feb 2026', desc: 'Developed backend systems using Express.js and MongoDB to support application requirements and improve system functionality. Built and tested RESTful APIs using Postman, validated system functionality, and assisted in identifying issues to ensure reliable backend integration and data accuracy. (400 hours)', xp: 400 },
+  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Committee & Member — Chief Skill Development Office', period: 'Mar 2025 – Jun 2026', desc: 'Facilitated cloud-focused workshops and learning sessions for IT students at National University. Promoted IT skill development and effective collaboration through structured training activities.', xp: 200 },
   { place: "Executive Secretary's Office", role: 'Core Team Member', period: '2023 – 2024', desc: 'Managed student group communications and organized key campus events.', xp: 150 },
 ]
 const PERSONAL: { title: string, desc: string, tags: string[], link: string, imgs: string[], wip?: boolean }[] = [
@@ -274,6 +274,121 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
   )
 }
 
+/* ── Profile Modal ── */
+function ProfileModal({ onClose }: { onClose: () => void }) {
+  const { dark } = useTheme()
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+  const s = (d: string, l: string) => dark ? d : l
+  return (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4" onClick={onClose}>
+      <div className={`absolute inset-0 ${s('bg-black/85', 'bg-black/50')} backdrop-blur-md`} />
+      <div
+        className={`relative z-10 w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl flex flex-col ${s('bg-[#0f0f1a] border border-white/10', 'bg-white border border-gray-200 shadow-2xl')}`}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className={`sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b ${s('border-white/10 bg-[#0f0f1a]', 'border-gray-100 bg-white')}`}>
+          <div>
+            <h2 className={`text-lg font-black tracking-tight ${s('text-white', 'text-gray-900')}`}>Hannah Jamilla DR. Peralta</h2>
+            <p className={`text-xs font-mono mt-0.5 ${s('text-indigo-400', 'text-indigo-600')}`}>Full-Stack Developer &amp; AI Operations Associate</p>
+          </div>
+          <button onClick={onClose} className={`text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all ${s('border-red-900/50 text-red-400 hover:bg-red-950/40', 'border-red-200 text-red-500 hover:bg-red-50')}`}>[X] CLOSE</button>
+        </div>
+
+        <div className="px-6 py-5 space-y-6">
+          {/* Contact */}
+          <div className={`p-4 rounded-2xl border font-mono text-xs space-y-1.5 ${s('bg-white/3 border-white/8 text-gray-400', 'bg-gray-50 border-gray-200 text-gray-600')}`}>
+            <p><span className={s('text-indigo-400','text-indigo-600')}>{'>'}</span> <span>location</span>{' '}Tabon Pulilan, Bulacan</p>
+            <p><span className={s('text-indigo-400','text-indigo-600')}>{'>'}</span> <span>email</span>{' '}<a href="mailto:hannahjamillap@gmail.com" className={`${s('text-green-400','text-green-700')} hover:underline`}>hannahjamillap@gmail.com</a></p>
+            <p><span className={s('text-indigo-400','text-indigo-600')}>{'>'}</span> <span>phone</span>{' '}+63 922 250 0165</p>
+            <p><span className={s('text-indigo-400','text-indigo-600')}>{'>'}</span> <span>portfolio</span>{' '}<a href="https://hannahjamilla.vercel.app" target="_blank" rel="noopener noreferrer" className={`${s('text-amber-400','text-amber-700')} hover:underline`}>hannahperalta.vercel.app</a></p>
+            <p><span className={s('text-indigo-400','text-indigo-600')}>{'>'}</span> <span>github</span>{' '}<a href="https://github.com/Hannahjamilla" target="_blank" rel="noopener noreferrer" className={`${s('text-green-400','text-green-700')} hover:underline`}>github.com/Hannahjamilla</a></p>
+          </div>
+
+          {/* Summary */}
+          <div>
+            <p className={`text-[10px] font-bold tracking-widest mb-2 ${s('text-indigo-400','text-indigo-600')}`}>// SUMMARY</p>
+            <p className={`text-sm leading-relaxed ${s('text-gray-400','text-gray-600')}`}>Detail-oriented Information Technology individual with hands-on experience in full-stack and backend development through academic projects and internships. Skilled in research, workflow analysis, quality assurance testing, system documentation, and AI-assisted tools. Demonstrates strong analytical thinking, attention to detail, and a proactive approach to identifying process improvements, solving problems, and supporting efficient business operations.</p>
+          </div>
+
+          {/* Experience */}
+          <div>
+            <p className={`text-[10px] font-bold tracking-widest mb-3 ${s('text-green-400','text-emerald-600')}`}>// EXPERIENCE</p>
+            <div className="space-y-4">
+              {[
+                { company: 'Lightweight Solutions', location: 'Quezon City, Metro Manila', role: 'Web Developer Intern (Full-Stack Development)', period: 'Mar 2026 – May 2026', stack: 'React.js, Python', bullets: ['Developed scalable SaaS features using React and Python to support business application workflows','Collaborated with developers to improve application usability, user experience, and workflow efficiency through testing, debugging, and feature enhancements','Assisted in testing, debugging, and validating application features to ensure functionality, performance, and user satisfaction'] },
+                { company: 'Creciendo Philippines', location: 'Quezon City, Metro Manila', role: 'Backend Developer Intern (Web Development)', period: 'Nov 2025 – Feb 2026', stack: 'Express.js, MongoDB, Postman, RESTful APIs', bullets: ['Developed backend systems using Express.js and MongoDB to support application requirements and improve system functionality','Built and tested RESTful APIs using Postman, validated system functionality, and assisted in identifying issues to ensure reliable backend integration and data accuracy'] },
+                { company: 'AWS Cloud Clubs | NU Baliwag', location: 'Baliwag, Bulacan', role: 'Committee & Member — Chief Skill Development Office', period: 'Mar 2025 – Jun 2026', stack: null, bullets: ['Facilitated cloud learning sessions and training activities to promote IT skill development and effective collaboration'] },
+              ].map((exp, i) => (
+                <div key={i} className={`p-4 rounded-xl border ${s('bg-white/3 border-white/8','bg-gray-50 border-gray-200')}`}>
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
+                    <div>
+                      <h4 className={`font-bold text-sm ${s('text-white','text-gray-900')}`}>{exp.company}</h4>
+                      <p className={`text-[11px] ${s('text-gray-500','text-gray-500')}`}>{exp.location}</p>
+                    </div>
+                    <span className={`text-[10px] font-mono shrink-0 ${s('text-gray-500','text-gray-400')}`}>{exp.period}</span>
+                  </div>
+                  <p className={`text-xs font-semibold mb-1 ${s('text-indigo-400','text-indigo-600')}`}>{exp.role}</p>
+                  {exp.stack && <p className={`text-[10px] font-mono mb-2 ${s('text-gray-500','text-gray-400')}`}>Stack: {exp.stack}</p>}
+                  <ul className="space-y-1">
+                    {exp.bullets.map((b, j) => (
+                      <li key={j} className={`text-xs leading-relaxed flex gap-2 ${s('text-gray-400','text-gray-600')}`}><span className="shrink-0 mt-[3px]">•</span><span>{b}</span></li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Education */}
+          <div>
+            <p className={`text-[10px] font-bold tracking-widest mb-3 ${s('text-purple-400','text-violet-600')}`}>// EDUCATION</p>
+            <div className="space-y-3">
+              <div className={`p-4 rounded-xl border ${s('bg-white/3 border-white/8','bg-gray-50 border-gray-200')}`}>
+                <div className="flex justify-between items-start">
+                  <h4 className={`font-bold text-sm ${s('text-white','text-gray-900')}`}>National University – Baliwag, Bulacan</h4>
+                  <span className={`text-[10px] font-mono shrink-0 ml-2 ${s('text-gray-500','text-gray-400')}`}>Expected: Jul 2026</span>
+                </div>
+                <p className={`text-xs mt-1 ${s('text-gray-400','text-gray-600')}`}>BS Information Technology – Specialization in Mobile and Web Application Development</p>
+              </div>
+              <div className={`p-4 rounded-xl border ${s('bg-white/3 border-white/8','bg-gray-50 border-gray-200')}`}>
+                <div className="flex justify-between items-start">
+                  <h4 className={`font-bold text-sm ${s('text-white','text-gray-900')}`}>St. Dominic Academy of Pulilan, Inc.</h4>
+                  <span className={`text-[10px] font-mono shrink-0 ml-2 ${s('text-gray-500','text-gray-400')}`}>May 2022</span>
+                </div>
+                <p className={`text-xs mt-1 ${s('text-gray-400','text-gray-600')}`}>Accountancy, Business, and Management (ABM)</p>
+                <p className={`text-[11px] font-semibold mt-1 ${s('text-amber-400','text-amber-700')}`}>With Honors and Loyalty Award Recipient</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Skills */}
+          <div>
+            <p className={`text-[10px] font-bold tracking-widest mb-3 ${s('text-cyan-400','text-indigo-600')}`}>// TECHNICAL SKILLS</p>
+            <div className="space-y-2">
+              {[
+                { label: 'Programming & Web', value: 'HTML, CSS, JavaScript, React.js, Node.js, Express.js, PHP, Laravel, Python, Tailwind CSS, Vite' },
+                { label: 'Databases', value: 'MySQL, MongoDB, PostgreSQL, Supabase' },
+                { label: 'Tools & Platforms', value: 'GitHub, Postman, VS Code, Figma, Vercel' },
+                { label: 'Concepts', value: 'Requirements Gathering, Workflow Analysis, System Documentation, QA Testing, Process Improvement, Research & Analysis, SDLC, RESTful APIs' },
+                { label: 'AI Tools', value: 'ChatGPT, Claude, Gemini, Perplexity AI, Google Workspace, Jira, Antigravity, Cursor' },
+              ].map((sk, i) => (
+                <div key={i} className={`flex gap-2 text-xs ${s('text-gray-400','text-gray-600')}`}>
+                  <span className={`font-bold shrink-0 ${s('text-gray-300','text-gray-800')}`}>{sk.label}:</span>
+                  <span>{sk.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ── App ── */
 export default function App() {
   const [dark, setDark] = useState(false)
@@ -281,6 +396,7 @@ export default function App() {
   const [menu, setMenu] = useState(false)
   const [lightbox, setLightbox] = useState<{ imgs: string[]; alt: string } | null>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
+  const [profileModal, setProfileModal] = useState(false)
   
   const toggle = () => setDark(p => !p)
 
@@ -363,7 +479,7 @@ export default function App() {
               <div className="flex flex-col items-center pt-0 pb-4 px-6 text-center">
                 <div
                   className={`-mt-12 mb-3 relative w-[6.5rem] h-[6.5rem] sm:w-[7.5rem] sm:h-[7.5rem] rounded-full border-[5px] overflow-hidden shrink-0 cursor-pointer group flex items-center justify-center ${t(dark, 'border-[#0f0f1a] bg-[#0f0f1a] shadow-xl', 'border-white bg-white shadow-[0_8px_20px_rgb(0,0,0,0.08)]')}`}
-                  onClick={() => setLightbox({ imgs: ['/images/Hannah-casual4.png', '/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Hannah-casual2.jpg'], alt: 'Hannah Jamilla Peralta' })}
+                  onClick={() => setProfileModal(true)}
                 >
                   <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover object-[50%_15%]" />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
@@ -444,7 +560,7 @@ export default function App() {
               <div className="col-span-4 flex flex-col items-start">
                 <div
                   className={`relative w-64 h-72 rounded-2xl border p-1 group cursor-pointer ${t(dark, 'border-cyan-800/40 shadow-sm hover:shadow-md', 'border-indigo-200 shadow-lg')} ${t(dark, 'bg-gradient-to-b from-cyan-950/30 to-transparent', 'bg-gradient-to-b from-indigo-50 to-transparent')}`}
-                  onClick={() => setLightbox({ imgs: ['/images/Hannah-casual4.png', '/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Hannah-casual2.jpg'], alt: 'Hannah Jamilla Peralta' })}
+                  onClick={() => setProfileModal(true)}
                 >
                   <div className={`w-full h-full rounded-2xl overflow-hidden flex items-center justify-center relative ${t(dark, 'bg-[#0d0d18]', 'bg-gray-50')}`}>
                     <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover opacity-100 transition-opacity duration-500 group-hover:opacity-0" />
@@ -786,6 +902,7 @@ export default function App() {
 
         {lightbox && <Lightbox imgs={lightbox.imgs} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
         {detailModal && <DetailModal data={detailModal} onClose={() => setDetailModal(null)} />}
+        {profileModal && <ProfileModal onClose={() => setProfileModal(false)} />}
       </div>
     </ThemeCtx.Provider>
   )

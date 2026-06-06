@@ -531,12 +531,20 @@ export default function App() {
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-1 gap-2 sm:gap-3">
                     {cat.items.map(s => (
-                      <div key={s.name} className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border flex flex-col items-center transition-all hover:scale-[1.02] text-center ${card}`}>
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mb-1.5 ${t(dark, 'bg-white/5', 'bg-gray-50')}`}>
-                          <s.icon className={`w-4 h-4 ${cat.accent}`} />
+                      <div key={s.name} className={`p-2.5 xl:p-4 rounded-xl xl:rounded-2xl border flex flex-col xl:flex-row items-center xl:gap-3 transition-all hover:scale-[1.02] text-center xl:text-left ${card}`}>
+                        <div className={`w-7 h-7 xl:w-8 xl:h-8 rounded-lg flex items-center justify-center shrink-0 mb-1.5 xl:mb-0 ${t(dark, 'bg-white/5', 'bg-gray-50')}`}>
+                          <s.icon className={`w-4 h-4 xl:w-5 xl:h-5 ${cat.accent}`} />
                         </div>
-                        <span className="text-[11px] font-bold tracking-tight leading-snug break-words w-full">{s.name}</span>
-                        <span className={`text-[9px] font-mono opacity-60 mt-0.5`}>{s.label.split(' / ')[1]}</span>
+                        {/* Mobile/Tablet: stacked, no truncate */}
+                        <div className="xl:hidden w-full">
+                          <span className="text-[11px] font-bold tracking-tight leading-snug break-words block">{s.name}</span>
+                          <span className="text-[9px] font-mono opacity-60 mt-0.5 block">{s.label.split(' / ')[1]}</span>
+                        </div>
+                        {/* Desktop: original row layout */}
+                        <div className="hidden xl:flex min-w-0 w-full flex-row items-center justify-between">
+                          <span className="text-sm font-bold tracking-tight truncate">{s.name}</span>
+                          <span className="text-xs font-mono opacity-60 ml-2 shrink-0">{s.label.split(' / ')[1]}</span>
+                        </div>
                       </div>
                     ))}
                   </div>

@@ -531,14 +531,12 @@ export default function App() {
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-1 gap-2 sm:gap-3">
                     {cat.items.map(s => (
-                      <div key={s.name} className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border flex flex-col sm:flex-row items-center sm:gap-3 transition-all hover:scale-[1.02] text-center sm:text-left ${card}`}>
-                        <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center shrink-0 mb-1 sm:mb-0 ${t(dark, 'bg-white/5', 'bg-gray-50')}`}>
-                          <s.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${cat.accent}`} />
+                      <div key={s.name} className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border flex flex-col items-center transition-all hover:scale-[1.02] text-center ${card}`}>
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mb-1.5 ${t(dark, 'bg-white/5', 'bg-gray-50')}`}>
+                          <s.icon className={`w-4 h-4 ${cat.accent}`} />
                         </div>
-                        <div className="min-w-0 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                          <span className="text-[11px] sm:text-sm font-bold tracking-tight truncate">{s.name}</span>
-                          <span className={`text-[9px] sm:text-xs font-mono opacity-60 mt-0.5 sm:mt-0 sm:ml-2`}>{s.label.split(' / ')[1]}</span>
-                        </div>
+                        <span className="text-[11px] font-bold tracking-tight leading-snug break-words w-full">{s.name}</span>
+                        <span className={`text-[9px] font-mono opacity-60 mt-0.5`}>{s.label.split(' / ')[1]}</span>
                       </div>
                     ))}
                   </div>

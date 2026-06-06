@@ -565,9 +565,9 @@ export default function App() {
               {tab === 'projects' && (
                 <div className="grid grid-cols-2 xl:grid-cols-2 gap-3 sm:gap-4">
                   {QUESTS.map((q, i) => (
-                    <div key={i} className={`w-full rounded-xl sm:rounded-2xl border transition-all group flex flex-col md:flex-row overflow-hidden ${card}`}>
+                    <div key={i} className={`w-full rounded-xl sm:rounded-2xl border transition-all group flex flex-col xl:flex-row overflow-hidden ${card}`}>
                       <div
-                        className={`aspect-square md:aspect-auto md:h-auto md:w-36 shrink-0 overflow-hidden relative cursor-pointer group/img p-0 sm:p-4 flex items-center justify-center ${t(dark, 'bg-[#0f0f1a] sm:bg-black/40', 'bg-gray-50 sm:bg-gray-100')}`}
+                        className={`aspect-square xl:aspect-auto xl:h-auto xl:w-36 shrink-0 overflow-hidden relative cursor-pointer group/img p-0 sm:p-4 flex items-center justify-center ${t(dark, 'bg-[#0f0f1a] sm:bg-black/40', 'bg-gray-50 sm:bg-gray-100')}`}
                         onClick={() => window.innerWidth < 1280
                           ? setDetailModal({ title: q.title, subtitle: q.role, badge: q.status, xp: q.xp, period: q.period, desc: q.desc, tags: q.tags, link: q.link, imgs: q.imgs })
                           : setLightbox({ imgs: q.imgs, alt: q.title })
@@ -584,12 +584,12 @@ export default function App() {
                           </div>
                         </div>
                       </div>
-                      <div className="p-2.5 sm:p-4 flex flex-col flex-grow text-center md:text-left justify-center md:justify-start">
+                      <div className="p-2.5 sm:p-4 flex flex-col flex-grow text-center xl:text-left justify-center xl:justify-start">
                         {/* Mobile: highly abbreviated title */}
                         <h3 className="text-[11px] sm:text-sm font-bold truncate w-full sm:mb-0.5">{q.title}</h3>
                         
                         {/* Desktop: Full Details */}
-                        <div className="hidden md:flex flex-col flex-grow mt-1">
+                        <div className="hidden xl:flex flex-col flex-grow mt-1">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
                             <span className={`px-2 py-0.5 rounded-md text-xs font-mono font-bold ${t(dark, 'bg-green-950/30 border border-green-800/30 text-green-400', 'bg-green-50 border border-green-200 text-green-700')}`}>{q.status}</span>
                             <span className={`text-xs font-mono ${muted}`}>{q.period}</span>
@@ -663,9 +663,9 @@ export default function App() {
             </div>
             <div className="grid grid-cols-2 xl:grid-cols-2 gap-3 sm:gap-4 mt-2">
               {PERSONAL.map((p, i) => (
-                <div key={i} className={`w-full rounded-xl sm:rounded-2xl border overflow-hidden transition-all group hover:scale-[1.01] flex flex-col md:flex-row ${card}`}>
+                <div key={i} className={`w-full rounded-xl sm:rounded-2xl border overflow-hidden transition-all group hover:scale-[1.01] flex flex-col xl:flex-row ${card}`}>
                   <div
-                    className={`aspect-square md:aspect-auto md:h-auto md:w-36 shrink-0 relative cursor-pointer flex items-center justify-center overflow-hidden group/img p-0 sm:p-4 ${t(dark, 'bg-[#0f0f1a] sm:bg-black/40', 'bg-gray-50 sm:bg-gray-100')}`}
+                    className={`aspect-square xl:aspect-auto xl:h-auto xl:w-36 shrink-0 relative cursor-pointer flex items-center justify-center overflow-hidden group/img p-0 sm:p-4 ${t(dark, 'bg-[#0f0f1a] sm:bg-black/40', 'bg-gray-50 sm:bg-gray-100')}`}
                     onClick={() => window.innerWidth < 1280
                       ? setDetailModal({ title: p.title, desc: p.desc, tags: p.tags, link: p.link, imgs: p.imgs, wip: p.wip })
                       : setLightbox({ imgs: p.imgs, alt: p.title })
@@ -682,7 +682,7 @@ export default function App() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-2.5 sm:p-4 flex flex-col flex-grow text-center md:text-left justify-center md:justify-start">
+                  <div className="p-2.5 sm:p-4 flex flex-col flex-grow text-center xl:text-left justify-center xl:justify-start">
                     {/* Mobile: highly abbreviated title */}
                     <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center sm:justify-between gap-1 sm:gap-2 mb-0.5">
                       <h3 className="text-[11px] sm:text-sm font-bold truncate w-full">{p.title}</h3>
@@ -690,7 +690,7 @@ export default function App() {
                     </div>
 
                     {/* Desktop Details */}
-                    <div className="hidden md:flex flex-col flex-grow mt-1">
+                    <div className="hidden xl:flex flex-col flex-grow mt-1">
                       <p className={`text-sm ${muted} leading-snug mb-2`}>{p.desc}</p>
                       <div className="flex flex-wrap gap-1.5 mb-2 mt-auto">
                         {p.tags.map(tg => <span key={tg} className={`px-2 py-0.5 rounded-md text-xs font-mono ${t(dark, 'bg-white/5 text-gray-400', 'bg-gray-100 text-gray-600')}`}>{tg}</span>)}

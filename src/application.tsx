@@ -16,20 +16,20 @@ const useTheme = () => useContext(ThemeCtx)
 const FRONTEND = [
   { name: 'React.js / Next.js', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-cyan-400', icon: Atom },
   { name: 'JavaScript / HTML / CSS', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-amber-400', icon: FileCode2 },
-  { name: 'Three.js', level: 15, label: 'Lvl. 3 / Foundation', color: 'bg-indigo-500', icon: Box },
-  { name: 'Tailwind CSS', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-sky-400', icon: Wind },
+  { name: 'Tailwind CSS / Vite', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-sky-400', icon: Wind },
+  { name: 'Responsive Design', level: 40, label: 'Lvl. 8 / Foundation', color: 'bg-pink-400', icon: Box },
 ]
 const BACKEND = [
   { name: 'Laravel / PHP', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-purple-400', icon: Server },
-  { name: 'Node.js / Express', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-green-400', icon: Terminal },
-  { name: 'Python / FastAPI', level: 30, label: 'Lvl. 6 / Foundation', color: 'bg-blue-500', icon: Zap },
-  { name: 'MySQL / Cloud SQL', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-rose-400', icon: Database },
+  { name: 'Node.js / Express.js', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-green-400', icon: Terminal },
+  { name: 'Python / RESTful APIs', level: 30, label: 'Lvl. 6 / Foundation', color: 'bg-blue-500', icon: Zap },
+  { name: 'MySQL / PostgreSQL', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-rose-400', icon: Database },
 ]
 const CLOUD_TOOLS = [
-  { name: 'MongoDB / Firebase', level: 40, label: 'Lvl. 8 / Foundation', color: 'bg-indigo-400', icon: Leaf },
-  { name: 'PostgreSQL', level: 35, label: 'Lvl. 7 / Exploring', color: 'bg-emerald-400', icon: Layers },
-  { name: 'Google Cloud', level: 35, label: 'Lvl. 7 / Exploring', color: 'bg-blue-400', icon: Cloud },
-  { name: 'GitHub', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-orange-400', icon: GitBranch },
+  { name: 'MongoDB / Supabase', level: 40, label: 'Lvl. 8 / Foundation', color: 'bg-indigo-400', icon: Leaf },
+  { name: 'Vercel / GitHub', level: 50, label: 'Lvl. 10 / Capable', color: 'bg-emerald-400', icon: Layers },
+  { name: 'System Analysis & QA', level: 45, label: 'Lvl. 9 / Exploring', color: 'bg-blue-400', icon: ShieldCheck },
+  { name: 'AI Assisted Tools', level: 55, label: 'Lvl. 11 / Learner', color: 'bg-orange-400', icon: Cpu },
 ]
 const QUESTS = [
   { status: 'COMPLETE', title: 'BaryoConnect', role: 'Project Manager & Paper Presenter', period: 'IRCITE 2025', desc: 'An innovative community-focused platform designed to streamline local governance and public engagement. Presented as a research paper at the IRCITE 2025 International Conference, the project emphasizes bridging the communication gap between citizens and local authorities through accessible digital tools.', tags: ['Flutter', 'Firebase'], xp: 950, imgs: ['/images/15.webp', '/images/Ircite.webp', '/images/IRCITE-1.jpg', '/images/IRCITE-2.jpg', '/images/16.webp'] },
@@ -48,10 +48,9 @@ const ACHIEVEMENTS = [
   { icon: GraduationCap, title: 'ABM with Honors & Loyalty', date: 'May 2022' },
 ]
 const XP_LOG = [
-  { place: 'Lightweight Solutions', role: 'Web Developer Intern (Full-Stack Development)', period: 'Mar – May 2026', desc: 'Developed scalable SaaS features using React and Python to support business application workflows. Collaborated with developers to improve application usability, user experience, and workflow efficiency through testing, debugging, and feature enhancements. Assisted in validating application features to ensure functionality, performance, and user satisfaction. (400 hours)', xp: 400 },
-  { place: 'Creciendo Philippines', role: 'Backend Developer Intern (Web Development)', period: 'Nov 2025 – Feb 2026', desc: 'Developed backend systems using Express.js and MongoDB to support application requirements and improve system functionality. Built and tested RESTful APIs using Postman, validated system functionality, and assisted in identifying issues to ensure reliable backend integration and data accuracy. (400 hours)', xp: 400 },
-  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Committee & Member — Chief Skill Development Office', period: 'Mar 2025 – Jun 2026', desc: 'Facilitated cloud-focused workshops and learning sessions for IT students at National University. Promoted IT skill development and effective collaboration through structured training activities.', xp: 200 },
-  { place: "Executive Secretary's Office", role: 'Core Team Member', period: '2023 – 2024', desc: 'Managed student group communications and organized key campus events.', xp: 150 },
+  { place: 'Creciendo Philippines', role: 'Backend Developer Intern', period: 'Nov 2025 – Feb 2026', desc: 'Developed backend systems using Express.js and MongoDB to support application requirements and improve system functionality. Built and tested RESTful APIs using Postman to ensure reliable backend integration and accurate data processing.', xp: 400 },
+  { place: 'Lightweight Solutions', role: 'Web Developer Intern', period: 'Mar 2026 – May 2026', desc: 'Developed scalable SaaS features using React and Python to support business application workflows. Collaborated with developers to improve responsive UI design, application usability, and overall user experience.', xp: 400 },
+  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: 'Facilitated cloud learning sessions and training activities to promote IT skill development and effective collaboration for students.', xp: 200 },
 ]
 const PERSONAL: { title: string, desc: string, tags: string[], link: string, imgs: string[], wip?: boolean }[] = [
   { title: 'PingMe', desc: 'A beautifully styled interactive platform designed to facilitate project inquiries and professional assistance requests. It focuses on delivering a sleek, user-centric UI/UX design with smooth transitions and highly intuitive inquiry forms.', tags: ['React', 'Tailwind'], link: 'https://ping-me-seven-vert.vercel.app/', imgs: ['/images/PingMe.webp'] },
@@ -274,106 +273,6 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
   )
 }
 
-/* ── Profile Modal ── */
-function ProfileModal({ onClose }: { onClose: () => void }) {
-  const { dark } = useTheme()
-  const [imgIdx, setImgIdx] = useState(0)
-  const imgs = ['/images/Hannah-casual4.png', '/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Hannah-casual2.jpg']
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
-  }, [])
-  
-  const s = (d: string, l: string) => dark ? d : l
-  return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
-      <div className={`absolute inset-0 ${s('bg-black/85', 'bg-black/50')} backdrop-blur-md`} />
-      <div
-        className={`relative z-10 w-full max-w-lg max-h-[95vh] overflow-y-auto rounded-3xl flex flex-col ${s('bg-[#0f0f1a] border border-white/10', 'bg-white border border-gray-200 shadow-2xl')}`}
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Header Slider */}
-        <div className="relative w-full h-[60vh] sm:h-96 shrink-0 bg-black">
-          <img src={imgs[imgIdx]} alt="Hannah" className="w-full h-full object-contain" />
-          
-          {/* Controls */}
-          {imgs.length > 1 && (
-            <>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setImgIdx(p => (p - 1 + imgs.length) % imgs.length) }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center border border-white/20 hover:bg-black/80 transition-all font-mono"
-              >
-                {'<'}
-              </button>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setImgIdx(p => (p + 1) % imgs.length) }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center border border-white/20 hover:bg-black/80 transition-all font-mono"
-              >
-                {'>'}
-              </button>
-              
-              {/* Dots */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                {imgs.map((_, i) => (
-                  <div key={i} className={`h-1.5 rounded-full transition-all ${i === imgIdx ? 'w-6 bg-white' : 'w-1.5 bg-white/50'}`} />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Close Button top-right over image */}
-          <button 
-            onClick={onClose} 
-            className={`absolute top-4 right-4 text-[10px] font-mono font-bold px-3 py-1.5 rounded-lg border backdrop-blur-md transition-all ${s('border-white/20 bg-black/40 text-white hover:bg-black/60', 'border-white/40 bg-black/20 text-white hover:bg-black/40')}`}
-          >
-            [X] CLOSE
-          </button>
-        </div>
-
-        <div className="px-6 py-6 pb-8 space-y-6">
-          {/* Info Block */}
-          <div>
-            <h2 className={`text-xl font-black tracking-tight ${s('text-white', 'text-gray-900')}`}>Hannah Jamilla DR. Peralta</h2>
-            <p className={`text-sm font-medium mt-1 ${s('text-indigo-400', 'text-indigo-600')}`}>AI & Operations Associate | Full-Stack Developer | Research & Process Improvement</p>
-          </div>
-
-          <div className={`p-4 rounded-2xl border font-mono text-xs space-y-2 ${s('bg-white/5 border-white/10 text-gray-300', 'bg-gray-50 border-gray-200 text-gray-700')}`}>
-            <p className="flex items-start gap-2">
-              <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">location</span> 
-              <span>Tabon Pulilan, Bulacan</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">phone</span> 
-              <span>+63 922 250 0165</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">email</span> 
-              <a href="mailto:hannahjamillap@gmail.com" className={`${s('text-green-400','text-green-600')} hover:underline truncate`}>hannahjamillap@gmail.com</a>
-            </p>
-            <p className="flex items-start gap-2">
-              <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">portfolio</span> 
-              <a href="https://hannahjamilla.vercel.app" target="_blank" rel="noopener noreferrer" className={`${s('text-amber-400','text-amber-600')} hover:underline truncate`}>hannahperalta.vercel.app</a>
-            </p>
-          </div>
-
-          {/* Summary */}
-          <div>
-            <p className={`text-[10px] font-bold tracking-widest mb-2 ${s('text-indigo-400','text-indigo-600')}`}>// SUMMARY</p>
-            <p className={`text-sm leading-relaxed ${s('text-gray-400','text-gray-600')}`}>
-              Detail-oriented Information Technology individual with hands-on experience in full-stack and backend development through academic projects and internships. Skilled in research, workflow analysis, quality assurance testing, system documentation, and AI-assisted tools. Demonstrates strong analytical thinking, attention to detail, and a proactive approach to identifying process improvements, solving problems, and supporting efficient business operations.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 /* ── App ── */
 export default function App() {
   const [dark, setDark] = useState(false)
@@ -381,8 +280,19 @@ export default function App() {
   const [menu, setMenu] = useState(false)
   const [lightbox, setLightbox] = useState<{ imgs: string[]; alt: string } | null>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
-  const [profileModal, setProfileModal] = useState(false)
   
+  const openProfileModal = () => {
+    setDetailModal({
+      title: 'Hannah Jamilla DR. Peralta',
+      subtitle: 'Frontend Web Designer | React & Tailwind CSS',
+      period: 'Tabon Pulilan, Bulacan | +63 922 250 0165',
+      badge: 'ACTIVE',
+      desc: 'Detail-oriented Information Technology individual with hands-on experience in full-stack and backend development through academic projects and internships. Skilled in research, workflow analysis, quality assurance testing, system documentation, and AI-assisted tools. Demonstrates strong analytical thinking, attention to detail, and a proactive approach to identifying process improvements, solving problems, and supporting efficient business operations.',
+      tags: ['SDLC', 'System Documentation', 'QA Testing', 'Process Improvement', 'Workflow Analysis'],
+      imgs: ['/images/Hannah-casual4.png', '/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Hannah-casual2.jpg']
+    })
+  }
+
   const toggle = () => setDark(p => !p)
 
   const totalXP = [...QUESTS, ...XP_LOG].reduce((s, q) => s + q.xp, 0)
@@ -464,7 +374,7 @@ export default function App() {
               <div className="flex flex-col items-center pt-0 pb-4 px-6 text-center">
                 <div
                   className={`-mt-12 mb-3 relative w-[6.5rem] h-[6.5rem] sm:w-[7.5rem] sm:h-[7.5rem] rounded-full border-[5px] overflow-hidden shrink-0 cursor-pointer group flex items-center justify-center ${t(dark, 'border-[#0f0f1a] bg-[#0f0f1a] shadow-xl', 'border-white bg-white shadow-[0_8px_20px_rgb(0,0,0,0.08)]')}`}
-                  onClick={() => setProfileModal(true)}
+                  onClick={openProfileModal}
                 >
                   <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover object-[50%_15%]" />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
@@ -545,7 +455,7 @@ export default function App() {
               <div className="col-span-4 flex flex-col items-start">
                 <div
                   className={`relative w-64 h-72 rounded-2xl border p-1 group cursor-pointer ${t(dark, 'border-cyan-800/40 shadow-sm hover:shadow-md', 'border-indigo-200 shadow-lg')} ${t(dark, 'bg-gradient-to-b from-cyan-950/30 to-transparent', 'bg-gradient-to-b from-indigo-50 to-transparent')}`}
-                  onClick={() => setProfileModal(true)}
+                  onClick={openProfileModal}
                 >
                   <div className={`w-full h-full rounded-2xl overflow-hidden flex items-center justify-center relative ${t(dark, 'bg-[#0d0d18]', 'bg-gray-50')}`}>
                     <img src="/images/Hannah-casual4.png" alt="Hannah" className="w-full h-full object-cover opacity-100 transition-opacity duration-500 group-hover:opacity-0" />
@@ -657,14 +567,14 @@ export default function App() {
               <div className="flex flex-wrap justify-center gap-2">
                 {[
                   { name: 'VS Code', icon: Code2 },
+                  { name: 'Cursor', icon: PenTool },
                   { name: 'Antigravity', icon: Rocket },
-                  { name: 'Kiro', icon: Cpu },
+                  { name: 'Claude', icon: Cpu },
                   { name: 'Postman', icon: Send },
-                  { name: 'Bitbucket', icon: GitBranch },
                   { name: 'GitHub', icon: GitBranch },
                   { name: 'Figma', icon: PenTool },
-                  { name: 'MS Office', icon: FileText },
-                  { name: 'Google Workspace', icon: Globe }
+                  { name: 'Vercel', icon: Globe },
+                  { name: 'ChatGPT', icon: FileText }
                 ].map(tool => (
                   <span key={tool.name} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${t(dark, 'bg-cyan-950/20 border border-cyan-800/30 text-cyan-300 hover:bg-cyan-900/40', 'bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100')}`}>
                     <tool.icon size={12} />
@@ -887,7 +797,6 @@ export default function App() {
 
         {lightbox && <Lightbox imgs={lightbox.imgs} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
         {detailModal && <DetailModal data={detailModal} onClose={() => setDetailModal(null)} />}
-        {profileModal && <ProfileModal onClose={() => setProfileModal(false)} />}
       </div>
     </ThemeCtx.Provider>
   )

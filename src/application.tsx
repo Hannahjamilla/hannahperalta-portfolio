@@ -216,24 +216,44 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
             </div>
           )}
 
-          {/* Info */}
-          <div className="px-5 pt-4 pb-6 space-y-3">
+          <div className="px-5 pt-4 pb-6 space-y-5">
             <div>
               <h2 className={`text-xl md:text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{data.title}</h2>
-              {data.subtitle && <p className={`text-sm md:text-base font-medium mt-0.5 md:mt-1 ${t(dark, 'text-gray-400', 'text-gray-500')}`}>{data.subtitle}</p>}
-              {data.period && <p className={`text-xs font-mono mt-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>{data.period}</p>}
-              {data.date && <p className={`text-xs font-mono mt-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Unlocked: {data.date}</p>}
+              {data.date && <p className={`text-xs font-mono mt-1.5 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Unlocked: {data.date}</p>}
             </div>
 
+            {(data.subtitle || data.period) && (
+              <div className={`grid grid-cols-2 gap-4 py-4 border-y ${t(dark, 'border-white/10', 'border-gray-100')}`}>
+                {data.subtitle && (
+                  <div>
+                    <span className={`block text-[10px] font-bold tracking-wider mb-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>ROLE / CATEGORY</span>
+                    <span className={`text-xs md:text-sm font-medium ${t(dark, 'text-gray-300', 'text-gray-700')}`}>{data.subtitle}</span>
+                  </div>
+                )}
+                {data.period && (
+                  <div>
+                    <span className={`block text-[10px] font-bold tracking-wider mb-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>TIMELINE</span>
+                    <span className={`text-xs md:text-sm font-medium ${t(dark, 'text-gray-300', 'text-gray-700')}`}>{data.period}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
             {data.desc && (
-              <p className={`text-sm md:text-base leading-relaxed ${t(dark, 'text-gray-400', 'text-gray-600')}`}>{data.desc}</p>
+              <div>
+                <span className={`block text-[10px] font-bold tracking-wider mb-2 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>ABOUT PROJECT</span>
+                <p className={`text-sm md:text-base leading-relaxed ${t(dark, 'text-gray-400', 'text-gray-600')}`}>{data.desc}</p>
+              </div>
             )}
 
             {data.tags && data.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {data.tags.map(tg => (
-                  <span key={tg} className={`px-2.5 py-1 rounded-lg text-xs font-mono ${t(dark, 'bg-white/5 border border-white/10 text-gray-400', 'bg-gray-100 border border-gray-200 text-gray-600')}`}>{tg}</span>
-                ))}
+              <div>
+                <span className={`block text-[10px] font-bold tracking-wider mb-2 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>TECHNOLOGIES & SKILLS</span>
+                <div className="flex flex-wrap gap-2">
+                  {data.tags.map(tg => (
+                    <span key={tg} className={`px-2.5 py-1 rounded-lg text-xs font-mono ${t(dark, 'bg-white/5 border border-white/10 text-gray-400', 'bg-gray-100 border border-gray-200 text-gray-600')}`}>{tg}</span>
+                  ))}
+                </div>
               </div>
             )}
 

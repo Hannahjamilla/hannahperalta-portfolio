@@ -70,7 +70,6 @@ export default function App() {
   const muted = t(dark, 'text-gray-500', 'text-gray-600')
   const accent = t(dark, 'text-cyan-400', 'text-indigo-600')
   const accentBg = t(dark, 'bg-cyan-950/30 border-cyan-800/40', 'bg-indigo-50 border-indigo-200')
-  const pixelColor = t(dark, 'text-cyan-400/60', 'text-indigo-400/60')
   const [scrollY, setScrollY] = useState(0)
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)

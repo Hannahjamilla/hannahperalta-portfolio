@@ -22,6 +22,7 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
       window.speechSynthesis.cancel()
       setIsPlaying(false)
     } else {
+      window.speechSynthesis.cancel()
       let textToRead = [
         data.title?.replace(/DR\.\s*/gi, ''),
         data.subtitle,
@@ -31,29 +32,18 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
 
       const utterance = new SpeechSynthesisUtterance(textToRead)
       
-      const setVoiceAndSpeak = () => {
-        const voices = window.speechSynthesis.getVoices()
-        // Try to find a good female English voice
-        const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Female') || v.name.includes('Google') || v.name.includes('Samantha')))
-        if (preferredVoice) utterance.voice = preferredVoice
+      const voices = window.speechSynthesis.getVoices()
+      const preferredVoice = voices.find(v => v.lang.startsWith('en') && /zira|susan|hazel|heather|female|samantha|victoria|aria|jenny|sonia|google/i.test(v.name))
+        || voices.find(v => v.lang.startsWith('en') && !/david|mark|male|boy|guy/i.test(v.name))
+      if (preferredVoice) utterance.voice = preferredVoice
 
-        utterance.rate = 0.95
-        utterance.onend = () => setIsPlaying(false)
-        
-        window.speechSynthesis.cancel()
-        setIsPlaying(true)
-        window.speechSynthesis.speak(utterance)
-      }
-
-      // Handle Safari/Chrome voice loading quirk
-      if (window.speechSynthesis.getVoices().length === 0) {
-        window.speechSynthesis.onvoiceschanged = () => {
-          setVoiceAndSpeak()
-          window.speechSynthesis.onvoiceschanged = null
-        }
-      } else {
-        setVoiceAndSpeak()
-      }
+      utterance.rate = 0.95
+      utterance.onend = () => setIsPlaying(false)
+      utterance.onerror = () => setIsPlaying(false)
+      
+      setIsPlaying(true)
+      window.speechSynthesis.speak(utterance)
+      window.speechSynthesis.resume() // Fixes Edge bug where TTS silently pauses/locks
     }
   }
   

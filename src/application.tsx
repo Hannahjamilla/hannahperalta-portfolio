@@ -31,9 +31,9 @@ export default function App() {
       msg.rate = 0.95;
       
       const voices = window.speechSynthesis.getVoices();
-      // Try specifically for female voices, otherwise fallback to any voice that isn't a known male voice
+      // Try specifically for female voices (including Edge's Aria and Jenny), otherwise fallback to any voice that isn't a known male voice
       const femaleVoice = voices.find(v => 
-        /zira|susan|hazel|heather|female|samantha|victoria|google us english/i.test(v.name)
+        /zira|susan|hazel|heather|female|samantha|victoria|aria|jenny|sonia|google us english/i.test(v.name)
       ) || voices.find(v => !/david|mark|male|boy|guy/i.test(v.name));
       
       if (femaleVoice) {
@@ -42,9 +42,10 @@ export default function App() {
 
       msg.onend = () => setIsReading(false);
       msg.onerror = () => setIsReading(false);
-
-      window.speechSynthesis.speak(msg);
+      
       setIsReading(true);
+      window.speechSynthesis.speak(msg);
+      window.speechSynthesis.resume(); // Fixes Edge bug where TTS silently pauses/locks
     }
   };
 

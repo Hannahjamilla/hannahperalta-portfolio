@@ -287,14 +287,14 @@ function ProfileModal({ onClose }: { onClose: () => void }) {
   
   const s = (d: string, l: string) => dark ? d : l
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 md:p-8" onClick={onClose}>
       <div className={`absolute inset-0 ${s('bg-black/85', 'bg-black/50')} backdrop-blur-md`} />
       <div
-        className={`relative z-10 w-full max-w-lg max-h-[95vh] overflow-y-auto rounded-3xl flex flex-col ${s('bg-[#0f0f1a] border border-white/10', 'bg-white border border-gray-200 shadow-2xl')}`}
+        className={`relative z-10 w-full max-w-lg md:max-w-4xl max-h-[95vh] rounded-3xl flex flex-col md:flex-row overflow-hidden ${s('bg-[#0f0f1a] border border-white/10', 'bg-white border border-gray-200 shadow-2xl')}`}
         onClick={e => e.stopPropagation()}
       >
-        {/* Header Slider */}
-        <div className="relative w-full h-[60vh] sm:h-96 shrink-0 bg-black">
+        {/* Left Side: Header Slider */}
+        <div className="relative w-full md:w-[45%] h-[50vh] md:h-auto shrink-0 bg-black">
           <img src={imgs[imgIdx]} alt="Hannah" className="w-full h-full object-contain" />
           
           {/* Controls */}
@@ -331,40 +331,41 @@ function ProfileModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <div className="px-6 py-6 pb-8 space-y-6">
+        {/* Right Side: Info Scrollable */}
+        <div className="w-full md:w-[55%] px-6 py-6 pb-8 space-y-6 overflow-y-auto max-h-[45vh] md:max-h-[90vh]">
           {/* Info Block */}
           <div>
-            <h2 className={`text-xl font-black tracking-tight ${s('text-white', 'text-gray-900')}`}>Hannah Jamilla DR. Peralta</h2>
-            <p className={`text-sm font-medium mt-1 ${s('text-indigo-400', 'text-indigo-600')}`}>AI & Operations Associate | Full-Stack Developer | Research & Process Improvement</p>
+            <h2 className={`text-xl md:text-2xl font-black tracking-tight ${s('text-white', 'text-gray-900')}`}>Hannah Jamilla DR. Peralta</h2>
+            <p className={`text-sm md:text-base font-medium mt-1 ${s('text-indigo-400', 'text-indigo-600')}`}>AI & Operations Associate | Full-Stack Developer | Research & Process Improvement</p>
           </div>
 
-          <div className={`p-4 rounded-2xl border font-mono text-xs space-y-2 ${s('bg-white/5 border-white/10 text-gray-300', 'bg-gray-50 border-gray-200 text-gray-700')}`}>
+          <div className={`p-4 md:p-5 rounded-2xl border font-mono text-xs md:text-sm space-y-2 md:space-y-3 ${s('bg-white/5 border-white/10 text-gray-300', 'bg-gray-50 border-gray-200 text-gray-700')}`}>
             <p className="flex items-start gap-2">
               <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">location</span> 
+              <span className="opacity-60 w-16 md:w-20 shrink-0">location</span> 
               <span>Tabon Pulilan, Bulacan</span>
             </p>
             <p className="flex items-start gap-2">
               <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">phone</span> 
+              <span className="opacity-60 w-16 md:w-20 shrink-0">phone</span> 
               <span>+63 922 250 0165</span>
             </p>
             <p className="flex items-start gap-2">
               <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">email</span> 
-              <a href="mailto:hannahjamillap@gmail.com" className={`${s('text-green-400','text-green-600')} hover:underline truncate`}>hannahjamillap@gmail.com</a>
+              <span className="opacity-60 w-16 md:w-20 shrink-0">email</span> 
+              <a href="mailto:hannahjamillap@gmail.com" className={`${s('text-green-400','text-green-600')} hover:underline truncate break-all`}>hannahjamillap@gmail.com</a>
             </p>
             <p className="flex items-start gap-2">
               <span className={s('text-cyan-400','text-indigo-500')}>{'>'}</span> 
-              <span className="opacity-60 w-16 shrink-0">portfolio</span> 
-              <a href="https://hannahjamilla.vercel.app" target="_blank" rel="noopener noreferrer" className={`${s('text-amber-400','text-amber-600')} hover:underline truncate`}>hannahperalta.vercel.app</a>
+              <span className="opacity-60 w-16 md:w-20 shrink-0">portfolio</span> 
+              <a href="https://hannahjamilla.vercel.app" target="_blank" rel="noopener noreferrer" className={`${s('text-amber-400','text-amber-600')} hover:underline truncate break-all`}>hannahperalta.vercel.app</a>
             </p>
           </div>
 
           {/* Summary */}
           <div>
-            <p className={`text-[10px] font-bold tracking-widest mb-2 ${s('text-indigo-400','text-indigo-600')}`}>// SUMMARY</p>
-            <p className={`text-sm leading-relaxed ${s('text-gray-400','text-gray-600')}`}>
+            <p className={`text-[10px] md:text-xs font-bold tracking-widest mb-2 ${s('text-indigo-400','text-indigo-600')}`}>// SUMMARY</p>
+            <p className={`text-sm md:text-base leading-relaxed ${s('text-gray-400','text-gray-600')}`}>
               Detail-oriented Information Technology individual with hands-on experience in full-stack and backend development through academic projects and internships. Skilled in research, workflow analysis, quality assurance testing, system documentation, and AI-assisted tools. Demonstrates strong analytical thinking, attention to detail, and a proactive approach to identifying process improvements, solving problems, and supporting efficient business operations.
             </p>
           </div>

@@ -526,8 +526,8 @@ export default function App() {
               ))}
             </div>
             <div className={`mt-8 pt-5 border-t ${t(dark, 'border-cyan-900/30', 'border-indigo-100')}`}>
-              <p className={`font-mono text-xs mb-3 font-bold ${t(dark, 'text-cyan-400', 'text-indigo-600')}`}>TOOLS & PRODUCTIVITY</p>
-              <div className="flex flex-wrap gap-2">
+              <p className={`font-mono text-xs mb-3 font-bold text-center ${t(dark, 'text-cyan-400', 'text-indigo-600')}`}>TOOLS & PRODUCTIVITY</p>
+              <div className="flex flex-wrap justify-center gap-2">
                 {[
                   { name: 'VS Code', icon: Code2 },
                   { name: 'Antigravity', icon: Rocket },

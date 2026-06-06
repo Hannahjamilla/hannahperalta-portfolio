@@ -168,6 +168,7 @@ type DetailData = {
   date?: string
   wip?: boolean
   accentColor?: string
+  profileMode?: boolean
 }
 function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void }) {
   const { dark } = useTheme()
@@ -198,11 +199,11 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
         </div>
 
         {/* Scrollable Body */}
-        <div className="overflow-y-auto flex-1">
+        <div className={`overflow-y-auto flex-1 ${data.profileMode ? 'sm:flex sm:flex-row' : ''}`}>
           {/* Image Viewer */}
           {imgs.length > 0 && (
-            <div className={`relative w-full h-44 sm:h-56 md:h-72 lg:h-96 flex items-center justify-center overflow-hidden ${t(dark, 'bg-black/40', 'bg-gray-50')}`}>
-              <img src={imgs[imgIdx]} alt={data.title} className="max-w-full max-h-full object-contain" />
+            <div className={`relative flex items-center justify-center overflow-hidden ${t(dark, 'bg-black/40', 'bg-gray-50')} ${data.profileMode ? 'w-full sm:w-2/5 shrink-0 border-b sm:border-b-0 sm:border-r ' + t(dark, 'border-white/10', 'border-gray-100') : 'w-full h-44 sm:h-56 md:h-72 lg:h-96'}`}>
+              <img src={imgs[imgIdx]} alt={data.title} className={`max-w-full max-h-full ${data.profileMode ? 'w-full h-full object-cover object-[50%_15%]' : 'object-contain'}`} />
               {imgs.length > 1 && (
                 <>
                   <button onClick={() => setImgIdx(i => (i - 1 + imgs.length) % imgs.length)} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm font-bold">‹</button>
@@ -215,7 +216,7 @@ function DetailModal({ data, onClose }: { data: DetailData; onClose: () => void 
             </div>
           )}
 
-          <div className="px-5 pt-4 pb-6 space-y-5">
+          <div className={`px-5 pt-4 pb-6 space-y-5 ${data.profileMode ? 'sm:w-3/5 sm:py-6 sm:px-7' : ''}`}>
             <div>
               <h2 className={`text-xl md:text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{data.title}</h2>
               {data.date && <p className={`text-xs font-mono mt-1.5 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Unlocked: {data.date}</p>}
@@ -283,12 +284,13 @@ export default function App() {
   
   const openProfileModal = () => {
     setDetailModal({
+      profileMode: true,
       title: 'Hannah Jamilla DR. Peralta',
-      subtitle: 'Frontend Web Designer | React & Tailwind CSS',
+      subtitle: 'Aspiring AI Search Generalist | Full-Stack Developer',
       period: 'Tabon Pulilan, Bulacan | +63 922 250 0165',
       badge: 'ACTIVE',
-      desc: 'Detail-oriented Information Technology individual with hands-on experience in full-stack and backend development through academic projects and internships. Skilled in research, workflow analysis, quality assurance testing, system documentation, and AI-assisted tools. Demonstrates strong analytical thinking, attention to detail, and a proactive approach to identifying process improvements, solving problems, and supporting efficient business operations.',
-      tags: ['SDLC', 'System Documentation', 'QA Testing', 'Process Improvement', 'Workflow Analysis'],
+      desc: 'Detail-oriented Information Technology individual with hands-on experience in full-stack and backend development through academic projects and internships. Skilled in research, workflow analysis, quality assurance testing, system documentation, and AI-assisted tools. Recognized for strong analytical thinking, attention to detail, and the ability to translate requirements into practical solutions that improve efficiency, user experience, and overall business outcomes.',
+      tags: ['SDLC', 'System Documentation', 'QA Testing', 'Process Improvement', 'Workflow Analysis', 'Research & Operations'],
       imgs: ['/images/Hannah-casual4.png', '/images/Hannah-casual.png', '/images/Hannah-casual1.png', '/images/Hannah-casual2.jpg']
     })
   }

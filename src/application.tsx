@@ -639,7 +639,7 @@ export default function App() {
             <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-green-400', 'bg-white text-emerald-600')}`}>
               WORK EXPERIENCE
             </div>
-            <div className="grid grid-cols-2 xl:grid-cols-2 gap-3 sm:gap-4 mt-2">
+            <div className="flex flex-col gap-3 sm:gap-4 mt-2">
               {XP_LOG.map((x, i) => (
                 <div key={i} onClick={() => window.innerWidth < 1280 && setDetailModal({ title: x.place, subtitle: x.role, xp: x.xp, period: x.period, desc: x.desc })} className={`p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border transition-all flex flex-col cursor-pointer sm:cursor-default active:scale-[0.98] sm:active:scale-100 ${card}`}>
                   <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-1 sm:mb-2">

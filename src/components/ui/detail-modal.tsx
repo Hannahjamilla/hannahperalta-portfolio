@@ -89,7 +89,7 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
           {/* Image Viewer (Normal Projects) */}
           {!data.profileMode && imgs.length > 0 && (
             <div className={`relative w-full h-44 sm:h-56 md:h-72 lg:h-96 flex items-center justify-center overflow-hidden ${t(dark, 'bg-black/40', 'bg-[#eaebed]')}`}>
-              <img src={imgs[imgIdx]} alt={data.title} className="max-w-full max-h-full object-contain" loading="lazy" decoding="async" />
+              <img src={imgs[imgIdx]} alt={data.title} className="max-w-full max-h-full object-contain" decoding="async" />
               {imgs.length > 1 && (
                 <>
                   <button onClick={() => setImgIdx(i => (i - 1 + imgs.length) % imgs.length)} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm font-bold">‹</button>
@@ -111,7 +111,7 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
                 <div className={`p-4 md:p-5 rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-5 mb-5 ${t(dark, 'bg-[#0a0a14] border border-white/5 shadow-inner', 'bg-gray-100 border border-gray-200/80 shadow-sm')}`}>
                   {imgs.length > 0 && (
                     <div className={`relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 rounded-full overflow-hidden shadow-lg border-4 ${t(dark, 'border-[#131320]', 'border-white')}`}>
-                      <img src={imgs[imgIdx]} alt={data.title} className="w-full h-full object-cover object-[50%_15%]" loading="lazy" decoding="async" />
+                      <img src={imgs[imgIdx]} alt={data.title} className="w-full h-full object-cover object-[50%_15%]" decoding="async" />
                     </div>
                   )}
                   <div className="flex-1 text-center sm:text-left space-y-1 sm:space-y-1.5 sm:mt-2">

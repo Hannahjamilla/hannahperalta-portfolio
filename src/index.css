@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-pixel: 'Press Start 2P', cursive;
-  --font-inter: 'Inter', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -11,10 +9,6 @@
   body { 
     @apply antialiased m-0 p-0 overflow-x-hidden; 
     font-family: 'Plus Jakarta Sans', sans-serif;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="none" stroke="%2322d3ee" stroke-width="2" d="M16 4v8m0 8v8M4 16h8m8 0h8"/><circle cx="16" cy="16" r="2" fill="%2322d3ee"/></svg>') 16 16, crosshair;
-  }
-  a, button, [role="button"], .cursor-pointer {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="none" stroke="%23fbbf24" stroke-width="2" d="M16 2v6m0 16v6M2 16h6m16 0h6"/><circle cx="16" cy="16" r="5" fill="none" stroke="%23fbbf24" stroke-width="2"/><circle cx="16" cy="16" r="2" fill="%23fbbf24"/></svg>') 16 16, pointer;
   }
   html { scroll-behavior: smooth; }
   ::-webkit-scrollbar { width: 6px; }
@@ -23,9 +17,6 @@
 }
 
 @layer utilities {
-  .scanlines::after {
-    display: none;
-  }
   .glow-cyan { text-shadow: 0 0 10px rgba(34,211,238,0.5), 0 0 30px rgba(34,211,238,0.2); }
   .glow-box-cyan { box-shadow: 0 0 15px rgba(34,211,238,0.10), inset 0 0 15px rgba(34,211,238,0.03); }
   .glow-box-green { box-shadow: 0 0 15px rgba(74,222,128,0.10), inset 0 0 15px rgba(74,222,128,0.03); }
@@ -35,12 +26,8 @@
   .animate-blink { animation: blink 1s step-end infinite; }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
   .animate-float { animation: float 4s ease-in-out infinite; }
-  .grid-bg-dark {
-    background-image: linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-  .grid-bg-light {
-    background-image: linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
+  @keyframes slideRight { 0% { transform: translateX(100%); } 100% { transform: translateX(0); } }
+  .animate-slide-right { animation: slideRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  @keyframes slideBottom { 0% { transform: translateY(100%); } 100% { transform: translateY(0); } }
+  .animate-slide-bottom { animation: slideBottom 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 }

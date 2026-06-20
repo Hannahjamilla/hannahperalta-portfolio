@@ -90,8 +90,6 @@ export default function App() {
     }, 2000);
   }, [])
 
-  const dotColor = t(dark, 'bg-cyan-400', 'bg-indigo-500')
-
   return (
     <ThemeCtx.Provider value={{ dark, toggle }}>
       <div className={`min-h-screen w-full ${bg} overflow-x-hidden relative transition-colors duration-300`}>
@@ -103,7 +101,7 @@ export default function App() {
 
         {/* ── HERO ── */}
         <main role="main">
-          <section id="profile" className="relative pt-16 sm:pt-20 pb-6 sm:pb-8">
+          <section id="profile" className="relative pt-20 sm:pt-24 pb-4">
 
             <div className="xl:hidden">
               {/* Cover Banner */}
@@ -151,7 +149,7 @@ export default function App() {
                     </div>
                   </div>
                   <div className="min-w-0 flex flex-col items-center">
-                    <h1 className={`font-black tracking-tight leading-[1.1] text-[1.5rem] sm:text-2xl whitespace-nowrap ${t(dark, 'text-white', 'text-[#0f172a]')}`}>
+                    <h1 style={{ fontFamily: "'Orbitron', sans-serif" }} className={`font-black tracking-tight leading-[1.1] text-[1.25rem] sm:text-2xl whitespace-nowrap ${t(dark, 'text-white', 'text-[#0f172a]')}`}>
                       Hannah Jamilla <span className="text-[#5B4DFF]">Peralta</span>
                     </h1>
                     <p className={`text-[11px] sm:text-xs mt-1.5 font-medium ${t(dark, 'text-gray-400', 'text-gray-500')}`}>Builder of Things · Fresh Graduate</p>
@@ -184,8 +182,8 @@ export default function App() {
                 <div className={`h-[1px] mx-6 ${t(dark, 'bg-white/10', 'bg-gray-100')}`} />
 
                 {/* Bio */}
-                <div className="px-6 py-4 text-center">
-                  <p className={`text-[12px] leading-relaxed max-w-sm md:max-w-3xl mx-auto ${t(dark, 'text-gray-400', 'text-gray-600')}`}>
+                <div className="px-6 pt-6 pb-4 text-center">
+                  <p className={`text-[12px] mt-2 leading-relaxed max-w-sm md:max-w-3xl mx-auto ${t(dark, 'text-gray-400', 'text-gray-600')}`}>
                     <button
                       onClick={toggleReadBio}
                       className={`inline-flex items-center justify-center w-5 h-5 rounded hover:bg-black/5 dark:hover:bg-white/10 mr-1.5 align-middle transition-colors cursor-pointer ${isReading ? t(dark, 'text-amber-400 animate-pulse', 'text-amber-600 animate-pulse') : t(dark, 'text-cyan-400', 'text-indigo-600')}`}
@@ -273,11 +271,11 @@ export default function App() {
 
                 {/* Character Info */}
                 <div className="col-span-8 space-y-5 text-left">
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05] whitespace-nowrap">
+                  <h1 style={{ fontFamily: "'Orbitron', sans-serif" }} className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.05] whitespace-nowrap">
                     <span className={t(dark, 'text-white', 'text-[#0f172a]')}>Hannah Jamilla</span>{' '}
                     <span className={t(dark, 'text-[#5B4DFF]', 'text-[#5B4DFF]')}>Peralta</span>
                   </h1>
-                  <p className={`${muted} text-xs sm:text-sm md:text-base leading-relaxed mt-4`}>
+                  <p className={`${muted} text-xs sm:text-sm md:text-base leading-relaxed mt-7`}>
                     <button
                       onClick={toggleReadBio}
                       className={`inline-flex items-center justify-center w-6 h-6 rounded hover:bg-black/5 dark:hover:bg-white/10 mr-1.5 align-middle transition-colors cursor-pointer ${isReading ? t(dark, 'text-amber-400 animate-pulse', 'text-amber-600 animate-pulse') : t(dark, 'text-cyan-400', 'text-indigo-600')}`}
@@ -307,9 +305,9 @@ export default function App() {
             </div>
           </section>
           {/* ── XP LOG (Work Experience) ── */}
-          <section id="experience" className="py-8 px-4 sm:px-6">
+          <section id="experience" className="py-5 px-4 sm:px-6">
             <div className={`max-w-6xl mx-auto rounded-2xl border p-6 sm:p-8 relative ${t(dark, 'bg-[#0d0d18] border-green-900/40 shadow-sm hover:shadow-md', 'bg-white border-emerald-200 shadow-sm')}`}>
-              <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-green-400', 'bg-white text-emerald-600')}`}>
+              <div className={`absolute -top-3 left-6 px-3 font-bold tracking-widest text-[10px] sm:text-xs uppercase ${t(dark, 'bg-[#0d0d18] text-green-400', 'bg-white text-emerald-600')}`} style={{ fontFamily: "'Orbitron', sans-serif" }}>
                 WORK EXPERIENCE
               </div>
               <div className={`relative pl-6 sm:pl-8 border-l-2 mt-6 space-y-6 sm:space-y-8 ${t(dark, 'border-green-900/40', 'border-emerald-100')}`}>
@@ -352,7 +350,7 @@ export default function App() {
           <TechnicalSkills dark={dark} card={card} />
 
           {/* ── TABS ── */}
-          <section id="quests" className="py-8 px-4 sm:px-6">
+          <section id="quests" className="py-5 px-4 sm:px-6">
             <div className={`max-w-6xl mx-auto rounded-2xl border p-6 sm:p-8 ${t(dark, 'bg-[#0d0d18] border-white/10', 'bg-white border-gray-200 shadow-sm')}`}>
               <div className="grid grid-cols-2 sm:flex sm:justify-start gap-2 mb-6">
                 {(['projects', 'awards'] as const).map(tb => (
@@ -431,9 +429,9 @@ export default function App() {
 
 
           {/* ── SIDE QUESTS (Personal Projects) ── */}
-          <section className="py-8 px-4 sm:px-6">
+          <section className="py-5 px-4 sm:px-6">
             <div className={`max-w-6xl mx-auto rounded-2xl border p-6 sm:p-8 relative ${t(dark, 'bg-[#0d0d18] border-amber-900/40 shadow-sm hover:shadow-md', 'bg-white border-amber-200 shadow-sm')}`}>
-              <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-amber-400', 'bg-white text-amber-600')}`}>
+              <div className={`absolute -top-3 left-6 px-3 font-bold tracking-widest text-[10px] sm:text-xs uppercase ${t(dark, 'bg-[#0d0d18] text-amber-400', 'bg-white text-amber-600')}`} style={{ fontFamily: "'Orbitron', sans-serif" }}>
                 PERSONAL PROJECTS
               </div>
               <div className="grid grid-cols-2 xl:grid-cols-2 gap-3 sm:gap-4 mt-2 items-stretch">
@@ -486,9 +484,9 @@ export default function App() {
           </section>
 
           {/* ── EDUCATION ── */}
-          <section className="py-8 px-4 sm:px-6">
+          <section className="py-5 px-4 sm:px-6">
             <div className={`max-w-6xl mx-auto rounded-2xl border p-6 sm:p-8 relative ${t(dark, 'bg-[#0d0d18] border-purple-900/40 shadow-sm hover:shadow-md', 'bg-white border-violet-200 shadow-sm')}`}>
-              <div className={`absolute -top-3 left-6 px-3 font-semibold tracking-wide text-xs sm:text-xs tracking-widest ${t(dark, 'bg-[#0d0d18] text-purple-400', 'bg-white text-violet-600')}`}>
+              <div className={`absolute -top-3 left-6 px-3 font-bold tracking-widest text-[10px] sm:text-xs uppercase ${t(dark, 'bg-[#0d0d18] text-purple-400', 'bg-white text-violet-600')}`} style={{ fontFamily: "'Orbitron', sans-serif" }}>
                 EDUCATIONAL BACKGROUND
               </div>
               <div className="flex flex-col gap-3 sm:gap-4 mt-2">
@@ -514,14 +512,19 @@ export default function App() {
         <footer className={`border-t py-8 sm:py-10 px-4 sm:px-6 ${t(dark, 'border-white/5', 'border-gray-200')}`} role="contentinfo">
           <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-sm ${dotColor}`} />
-              <span className={`font-semibold tracking-wide text-xs ${muted}`}>HANNAH JAMILLA</span>
+              <div className="w-12 h-12 flex items-center justify-center overflow-hidden shrink-0">
+                <img 
+                  src="/images/HanMade.webp" 
+                  alt="HanMade logo" 
+                  className={`w-full h-full object-contain opacity-80 hover:opacity-100 transition-all duration-300 ${dark ? 'invert brightness-[1.8]' : ''}`} 
+                />
+              </div>
             </div>
             <div className="flex gap-6">
-              <a href="https://github.com/Hannahjamilla" target="_blank" rel="noopener noreferrer" className={`text-xs font-mono ${muted} hover:${accent} transition-colors`}>GitHub</a>
-              <a href="https://www.linkedin.com/in/hannah-jamilla-peralta-9277a5337/" target="_blank" rel="noopener noreferrer" className={`text-xs font-mono ${muted} hover:${accent} transition-colors`}>LinkedIn</a>
+              <a href="https://github.com/Hannahjamilla" target="_blank" rel="noopener noreferrer" className={`text-[10px] sm:text-xs font-bold hover:${accent} transition-colors uppercase tracking-wider`} style={{ fontFamily: "'Orbitron', sans-serif" }}>GitHub</a>
+              <a href="https://www.linkedin.com/in/hannah-jamilla-peralta-9277a5337/" target="_blank" rel="noopener noreferrer" className={`text-[10px] sm:text-xs font-bold hover:${accent} transition-colors uppercase tracking-wider`} style={{ fontFamily: "'Orbitron', sans-serif" }}>LinkedIn</a>
             </div>
-            <p className={`text-xs font-mono ${muted}`}>GAME SAVE // 2025</p>
+            <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-widest ${muted}`} style={{ fontFamily: "'Orbitron', sans-serif" }}>GAME SAVE // 2025</p>
           </div>
         </footer>
 

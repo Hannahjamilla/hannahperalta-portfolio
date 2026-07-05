@@ -22,6 +22,7 @@ export default function App() {
   const [dark, setDark] = useState(false)
   const [lightbox, setLightbox] = useState<any>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
+  const [colorProfile, setColorProfile] = useState(false)
   const dateString = useDateString()
 
   const toggle = () => setDark(p => !p)
@@ -105,9 +106,9 @@ export default function App() {
                 {/* Mobile: newspaper side-by-side photo + caption */}
                 <div className="flex gap-4 md:block">
                   <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-3 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-lg rounded md:rounded-xl overflow-hidden flex-shrink-0`}>
-                    <picture>
+                    <picture onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
                       <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
-                      <img src="/images/Hannah-casual4.webp" className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-[1.02] active:grayscale-0 active:scale-[1.02] transition-all duration-[1s]" alt="Hannah Jamilla DR. Peralta" />
+                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[1s] hover:scale-[1.02] ${colorProfile ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0'}`} alt="Hannah Jamilla DR. Peralta" />
                     </picture>
                   </div>
                   {/* Mobile-only bio blurb next to photo */}

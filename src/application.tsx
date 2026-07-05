@@ -437,8 +437,8 @@ export default function App() {
                     onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
                   >
                     <div>
-                      <div className={`w-full aspect-[16/10] max-h-[160px] lg:max-h-none p-1.5 mb-5 overflow-hidden relative`}>
-                        <img src={p.imgs[0]} className="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-102 transition-all duration-500 rounded" />
+                      <div className={`w-full h-[110px] lg:h-auto lg:aspect-[16/10] p-1.5 mb-4 overflow-hidden relative flex items-center justify-center`}>
+                        <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" />
                       </div>
                       
                       <div className="flex items-center gap-3 mb-2 text-[9px] font-mono font-bold uppercase tracking-widest opacity-70">
@@ -459,9 +459,15 @@ export default function App() {
                       </div>
                       {p.wip ? (
                         <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>● WIP</span>
-                      ) : (
-                        <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentBurgundy}`}>● Live</span>
-                      )}
+                      ) : p.link ? (
+                        <a
+                          href={p.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
+                        >● Live</a>
+                      ) : null}
                     </div>
                   </div>
                 ))}

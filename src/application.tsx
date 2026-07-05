@@ -16,14 +16,7 @@ const useDateString = () => {
   return date
 }
 
-const NewsprintOverlay = () => (
-  <div className="fixed inset-0 z-[100] pointer-events-none opacity-[0.35] mix-blend-multiply dark:mix-blend-overlay">
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-70">
-      <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" /></filter>
-      <rect width="100%" height="100%" filter="url(#noise)" />
-    </svg>
-  </div>
-)
+
 
 export default function App() {
   const [dark, setDark] = useState(false)
@@ -66,8 +59,6 @@ export default function App() {
 
   return (
     <ThemeCtx.Provider value={{ dark, toggle }}>
-      <NewsprintOverlay />
-
       <div className={`min-h-screen w-full ${bg} transition-colors duration-700 flex flex-col items-center selection:bg-red-600/30 selection:text-current font-serif`}>
 
         <TopNav dark={dark} toggle={toggle} border={border} />

@@ -8,12 +8,12 @@ export function TopNav({ dark, toggle, border }: { dark: boolean, toggle: () => 
       <div className="font-serif font-normal tracking-wide uppercase text-xl sm:text-2xl pt-1">
         H.J. Peralta
       </div>
-      <div className="flex items-center gap-6 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest">
-        <a href="#profile" className="hover:underline underline-offset-4 decoration-2 hidden md:block">Home</a>
-        <a href="#experience" className="hover:underline underline-offset-4 decoration-2 hidden md:block">Experience</a>
-        <a href="#projects" className="hover:underline underline-offset-4 decoration-2 hidden md:block">Projects</a>
-        <button onClick={toggle} className="border border-current px-3 py-1.5 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">
-          {dark ? 'Day Edition' : 'Night Edition'}
+      <div className="flex items-center gap-2.5 md:gap-6 text-[8px] sm:text-[10px] md:text-xs font-mono font-bold uppercase tracking-widest">
+        <a href="#profile" className="hover:underline underline-offset-4 decoration-2 hidden sm:block">Home</a>
+        <a href="#experience" className="hover:underline underline-offset-4 decoration-2">Work</a>
+        <a href="#projects" className="hover:underline underline-offset-4 decoration-2">Projects</a>
+        <button onClick={toggle} className="border border-current px-2 py-1 md:px-3 md:py-1.5 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors shrink-0 ml-1">
+          {dark ? 'Day' : 'Night'}<span className="hidden md:inline"> Edition</span>
         </button>
       </div>
     </nav>

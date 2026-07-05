@@ -8,10 +8,10 @@ import {
 
 // Simplified data structures for better performance
 export const FRONTEND = [
-  { name: 'React.js / Next.js', level: 50, label: 'Lvl. 10', color: 'bg-cyan-400', icon: Atom },
+  { name: 'React.js', level: 50, label: 'Lvl. 10', color: 'bg-cyan-400', icon: Atom },
   { name: 'JavaScript / HTML / CSS', level: 50, label: 'Lvl. 10', color: 'bg-amber-400', icon: FileCode2 },
-  { name: 'Tailwind CSS / Vite', level: 45, label: 'Lvl. 9', color: 'bg-sky-400', icon: Wind },
-  { name: 'Responsive Design', level: 40, label: 'Lvl. 8', color: 'bg-pink-400', icon: Box },
+  { name: 'Flutter / Tailwind CSS', level: 45, label: 'Lvl. 9', color: 'bg-sky-400', icon: Wind },
+  { name: 'Responsive Web Design', level: 40, label: 'Lvl. 8', color: 'bg-pink-400', icon: Box },
 ]
 
 export const BACKEND = [
@@ -22,43 +22,43 @@ export const BACKEND = [
 ]
 
 export const CLOUD_TOOLS = [
-  { name: 'MongoDB / Supabase', level: 40, label: 'Lvl. 8', color: 'bg-indigo-400', icon: Leaf },
-  { name: 'Vercel / GitHub', level: 50, label: 'Lvl. 10', color: 'bg-emerald-400', icon: Layers },
-  { name: 'System Analysis & QA', level: 45, label: 'Lvl. 9', color: 'bg-blue-400', icon: ShieldCheck },
-  { name: 'AI Assisted Tools', level: 55, label: 'Lvl. 11', color: 'bg-orange-400', icon: Cpu },
+  { name: 'MongoDB / Supabase / Firebase', level: 40, label: 'Lvl. 8', color: 'bg-indigo-400', icon: Leaf },
+  { name: 'Git / GitHub / Vercel', level: 50, label: 'Lvl. 10', color: 'bg-emerald-400', icon: Layers },
+  { name: 'Software Testing / QA', level: 45, label: 'Lvl. 9', color: 'bg-blue-400', icon: ShieldCheck },
+  { name: 'AI-Assisted Development', level: 55, label: 'Lvl. 11', color: 'bg-orange-400', icon: Cpu },
 ]
 
 export const QUESTS = [
-  { status: 'COMPLETE', title: 'BaryoConnect', role: 'Project Manager & Paper Presenter', period: 'IRCITE 2025', desc: [
-    'Community-focused platform designed to streamline local barangay governance and enhance public engagement.',
-    'Features incident reporting, seamless announcement bulletins, and a mobile-friendly interface for residents.',
-    'Successfully presented as an official research paper at the IRCITE 2025 International Conference.'
-  ], tags: ['Flutter', 'Firebase', 'Mobile App'], imgs: ['/images/15.webp', '/images/Ircite.webp', '/images/IRCITE-1.webp', '/images/IRCITE-2.webp', '/images/16.webp'] },
-  { status: 'COMPLETE', title: 'DialiEase', role: 'Capstone Project', period: 'Nov 2024 – Jan 2026', desc: [
-    'Digital monitoring system tailored for home-based dialysis patients and healthcare providers.',
-    'Includes real-time health tracking metrics, automated risk alerts, and data visualization tools for remote care.',
-    'Aims to reduce readmission rates by ensuring continuous, data-driven patient supervision.'
-  ], tags: ['React.js', 'Laravel', 'Google Cloud'], imgs: ['/images/12.webp', '/images/11.webp', '/images/10.webp'] },
-  { status: 'COMPLETE', title: 'Espasyo - Event place reservation system', role: 'Published Research', period: 'Aug 2024 – Oct 2024', desc: [
-    'Unified venue rental platform equipped with online reservations, dynamic billing, and inventory tracking.',
-    'Eliminates booking overlaps and streamlines scheduling for venue managers and event organizers.',
-    'Technical and business framework successfully published in the IJAMR journal.'
-  ], tags: ['Billing', 'Inventory', 'Web Platform'], imgs: ['/images/espasyo-1.webp', '/images/espasyo.webp', '/images/paper.webp'] },
-  { status: 'COMPLETE', title: 'Drug Store POS', role: 'Business App', period: '2024', desc: [
-    'Comprehensive Point-of-Sale and inventory management system designed specifically for pharmacies.',
-    'Monitors daily transactions, alerts on low stock thresholds, and tracks medicine expiration dates.',
-    'Ensures pharmacy compliance and efficient stock rotation.'
-  ], tags: ['PHP', 'MySQL', 'POS'], imgs: ['/images/POS2.webp', '/images/2.webp', '/images/5.webp', '/images/3.webp'] },
-  { status: 'COMPLETE', title: 'Tutorial Center', role: 'Learning Tool', period: '2024', desc: [
-    'Online school platform featuring secure student portals and course enrollment workflows.',
-    'Provides teachers and students with progress tracking dashboards and unified access to resources.',
-    'Modernizes the learning experience for tutorial and review centers.'
-  ], tags: ['PHP', 'MySQL', 'EdTech'], imgs: ['/images/tutorial.webp', '/images/7.webp', '/images/8.webp'] },
-  { status: 'COMPLETE', title: 'Interactive 3D Portfolio', role: 'Creative Developer', period: '2025', desc: [
+  { status: 'COMPLETE', title: 'BaryoConnect', badge: 'Community App', role: 'Project Manager & Lead Researcher', period: 'Feb 2025 – May 2025', desc: [
+    'Led project planning and coordinated development activities, collaborating with team members throughout the application lifecycle.',
+    'Developed responsive frontend features using Flutter and Firebase, translating stakeholder requirements into user-centered interfaces.',
+    'Represented National University at PSITE IRCITE 2025, presenting a community-based governance application.'
+  ], tags: ['Flutter', 'Firebase', 'Mobile App'], imgs: ['/images/baryo.webp', '/images/IRCITE-cert.webp', '/images/IRCITE-1.webp', '/images/IRCITE-2.webp', '/images/16.webp', '/images/15.webp'] },
+  { status: 'COMPLETE', title: 'DialiEase', badge: 'Capstone Project', role: 'Web Developer', period: 'Nov 2024 – Jan 2026', desc: [
+    'Developed a healthcare monitoring system using React.js, Laravel 12, MySQL, and RESTful APIs.',
+    'Implemented frontend and backend features, integrated APIs, and optimized database operations to improve system performance.',
+    'Performed testing, debugging, and feature validation to ensure application reliability and usability.'
+  ], tags: ['React.js', 'Laravel', 'MySQL'], imgs: ['/images/10.webp', '/images/12.webp', '/images/11.webp'] },
+  { status: 'COMPLETE', title: 'Interactive 3D Portfolio', badge: 'Creative Portfolio', role: 'Creative Developer', period: '2025', desc: [
     'Immersive web experience integrated with Three.js and custom shaders.',
     'Delivers high-performance, interactive 3D models seamlessly within the browser.',
     'Showcases advanced creative development skills and performance optimization.'
-  ], tags: ['React', 'Three.js', 'WebGL'], link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/cover-portfolio.webp', '/images/portfolio.webp', '/images/2port.webp'] },
+  ], tags: ['React', 'Three.js', 'WebGL'], link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/car.webp', '/images/portfolio.webp', '/images/2port.webp', '/images/cover-portfolio.webp'] },
+  { status: 'COMPLETE', title: 'Drug Store POS', badge: 'Business System', role: 'Business App', period: '2024', desc: [
+    'Comprehensive Point-of-Sale and inventory management system designed specifically for pharmacies.',
+    'Monitors daily transactions, alerts on low stock thresholds, and tracks medicine expiration dates.',
+    'Ensures pharmacy compliance and efficient stock rotation.'
+  ], tags: ['PHP', 'MySQL', 'POS'], imgs: ['/images/2.webp', '/images/POS2.webp', '/images/5.webp', '/images/3.webp'] },
+  { status: 'COMPLETE', title: 'Tutorial Center', badge: 'Learning Platform', role: 'Learning Tool', period: '2024', desc: [
+    'Online school platform featuring secure student portals and course enrollment workflows.',
+    'Provides teachers and students with progress tracking dashboards and unified access to resources.',
+    'Modernizes the learning experience for tutorial and review centers.'
+  ], tags: ['PHP', 'MySQL', 'EdTech'], imgs: ['/images/7.webp', '/images/tutorial.webp', '/images/8.webp'] },
+  { status: 'COMPLETE', title: 'Espasyo', badge: 'Management System', role: 'Co-Developer & Co-Researcher', period: 'Aug 2024 – Oct 2024', desc: [
+    'Collaborated in the design, development, and testing of an integrated event and venue rental management system.',
+    'Contributed to system research, technical documentation, software testing, and feature validation.',
+    'Co-authored research published in the International Journal of Academic Multidisciplinary Research (IJAMR), Vol. 8, Issue 11.'
+  ], tags: ['Billing', 'Inventory', 'Web Platform'], imgs: ['/images/espasyo-1.webp', '/images/espasyo.webp', '/images/paper.webp'] },
 ]
 
 export const ACHIEVEMENTS = [
@@ -71,9 +71,9 @@ export const ACHIEVEMENTS = [
 ]
 
 export const XP_LOG = [
-  { place: 'Creciendo Philippines', role: 'Backend Developer Intern', period: 'Nov 2025 – Feb 2026 | 400 Hours', desc: ['Developed backend systems using Express.js and MongoDB for improved functionality.', 'Built and tested RESTful APIs with Postman for reliable data processing.'] },
-  { place: 'Lightweight Solutions', role: 'Full Stack Developer Intern', period: 'Mar 2026 – May 2026 | 400 Hours', desc: ['Developed scalable SaaS features using React and Python for business workflows.', 'Collaborated to improve responsive UI design and user experience.'] },
-  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: ['Facilitated cloud learning sessions and training for IT skill development.'] },
+  { place: 'Creciendo Philippines', role: 'Backend Developer Intern', period: 'Nov 2025 – Feb 2026 | 400 Hours', desc: ['Developed backend features using Express.js and MongoDB to support system functionality and business requirements.', 'Built, tested, and maintained RESTful APIs, ensuring reliable backend integration and accurate data processing.', 'Assisted in debugging, validating API endpoints, and improving performance with Postman.'] },
+  { place: 'Lightweight Solutions', role: 'Web Developer Intern', period: 'Mar 2026 – May 2026 | 400 Hours', desc: ['Developed scalable full-stack features using React.js and Python for SaaS applications.', 'Built responsive user interfaces and collaborated with cross-functional teams to enhance usability.', 'Tested, debugged, and validated application features to improve functionality and reliability.'] },
+  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: ['Organized and facilitated cloud learning sessions to help students develop core IT and cloud capabilities.', 'Coordinated hands-on workshops covering AWS fundamentals and cloud computing concepts.', 'Collaborated with club officers to design educational resources and host learning events.'] },
 ]
 
 export const PERSONAL: { title: string, desc: string[], tags: string[], link?: string, imgs: string[], wip?: boolean, role?: string, period?: string, status?: string }[] = [
@@ -92,7 +92,7 @@ export const PERSONAL: { title: string, desc: string[], tags: string[], link?: s
     'Implements complex web animations using custom CSS timelines and keyframe effects.',
     'Provides a charming, personalized storytelling loop without relying on heavy frontend frameworks.'
   ], tags: ['React', 'Tailwind', 'UI/UX'], link: 'https://happy-b-day-murex.vercel.app/', imgs: ['/images/Birthday - Star Alert!.webp'] },
-  { title: 'GroundSpot', role: 'Full Stack Developer', period: '2025 - Present', status: 'BETA', desc: [
+  { title: 'GroundSpot', role: 'Web Developer', period: '2025 - Present', status: 'BETA', desc: [
     'Modern facility and space booking platform currently in active development.',
     'Features dynamic scheduling calendars, real-time availability checks, and secure user authentication.',
     'Aims to streamline the workflow for property managers and end-users looking for temporary spaces.'

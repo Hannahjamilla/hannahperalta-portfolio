@@ -1,31 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'Playfair Display', 'Georgia', serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
 
 @layer base {
   body { 
     @apply antialiased m-0 p-0 overflow-x-hidden; 
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Playfair Display', 'Georgia', serif;
   }
   html { scroll-behavior: smooth; }
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.3); border-radius: 0; }
 }
 
 @layer utilities {
-  .glow-cyan { text-shadow: 0 0 10px rgba(34,211,238,0.5), 0 0 30px rgba(34,211,238,0.2); }
-  .glow-box-cyan { box-shadow: 0 0 15px rgba(34,211,238,0.10), inset 0 0 15px rgba(34,211,238,0.03); }
-  .glow-box-green { box-shadow: 0 0 15px rgba(74,222,128,0.10), inset 0 0 15px rgba(74,222,128,0.03); }
-  .glow-box-amber { box-shadow: 0 0 15px rgba(251,191,36,0.10), inset 0 0 15px rgba(251,191,36,0.03); }
-  .glow-box-purple { box-shadow: 0 0 15px rgba(192,132,252,0.10), inset 0 0 15px rgba(192,132,252,0.03); }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  .animate-blink { animation: blink 1s step-end infinite; }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-  .animate-float { animation: float 4s ease-in-out infinite; }
   @keyframes slideRight { 0% { transform: translateX(100%); } 100% { transform: translateX(0); } }
   .animate-slide-right { animation: slideRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
   @keyframes slideBottom { 0% { transform: translateY(100%); } 100% { transform: translateY(0); } }

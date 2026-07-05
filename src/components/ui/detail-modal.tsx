@@ -23,7 +23,7 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
       setIsPlaying(false)
     } else {
       window.speechSynthesis.cancel()
-      let textToRead = [
+      const textToRead = [
         data.title?.replace(/DR\.\s*/gi, ''),
         data.subtitle,
         data.period?.replace(/\|\s*\+63.*$/g, ''),

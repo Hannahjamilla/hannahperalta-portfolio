@@ -97,4 +97,9 @@ export const PERSONAL: { title: string, desc: string[], tags: string[], link?: s
     'Features dynamic scheduling calendars, real-time availability checks, and secure user authentication.',
     'Aims to streamline the workflow for property managers and end-users looking for temporary spaces.'
   ], tags: ['React', 'Tailwind', 'Supabase'], link: 'https://ground-spot-frontend-web.vercel.app/', imgs: ['/images/GrooundSpot.webp', '/images/Login-GroundSpot.webp', '/images/GrooundSpot-dashboard.webp'], wip: true },
+  { title: 'Tasklet', role: 'Frontend Developer', period: '2025', status: 'COMPLETE', desc: [
+    'Student Productivity Hub — a purely frontend web app helping students stay organized, focused, and motivated. Tagline: "Turning \'I\'ll do it later\' into \'done\'".',
+    'Features a Pomodoro Timer with adjustable focus/break times, Study Tips cards covering active recall and spaced repetition, and downloadable daily/weekly planner templates.',
+    'Includes a rotating Motivational Quotes section powered by local data arrays — no backend or database required; everything runs statically in the browser.'
+  ], tags: ['React 19 + TS', 'Vite', 'Tailwind CSS v4'], link: 'https://tasklet-for-you.vercel.app/', imgs: ['/images/4-tasklet.webp', '/images/1-tasklet.webp', '/images/2-tasklet.webp', '/images/3-tasklet.webp', '/images/5-tasklet.webp', '/images/6-tasklet.webp'] },
 ]

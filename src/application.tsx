@@ -428,16 +428,16 @@ export default function App() {
                 </h2>
                 <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Fun Side Projects & Sandbox Experiments</p>
               </div>
-              {/* 2-col on mobile (newspaper classifieds), 4-col on desktop */}
-              <div className="grid grid-cols-2 lg:grid-cols-4">
+              {/* 2-col on mobile, 6-col sub-grid on desktop → 3 per row, last 2 centered */}
+              <div className="grid grid-cols-2 lg:grid-cols-6">
                 {PERSONAL.map((p, i) => (
                   <div 
                     key={i} 
-                    className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:border-b-0 lg:border-r last:lg:border-r-0 ${border} flex flex-col justify-between cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`} 
+                    className={`p-3 md:p-6 border-b border-r [&:nth-child(2n)]:border-r-0 lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 last:border-r-0 [&:last-child:nth-child(odd)]:col-span-2 ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`} 
                     onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
                   >
                     <div>
-                      <div className={`w-full aspect-[16/10] p-1.5 mb-5 overflow-hidden relative`}>
+                      <div className={`w-full aspect-[16/10] max-h-[160px] lg:max-h-none p-1.5 mb-5 overflow-hidden relative`}>
                         <img src={p.imgs[0]} className="w-full h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-102 transition-all duration-500 rounded" />
                       </div>
                       
@@ -458,7 +458,7 @@ export default function App() {
                         ))}
                       </div>
                       {p.wip ? (
-                        <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>● Beta</span>
+                        <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>● WIP</span>
                       ) : (
                         <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentBurgundy}`}>● Live</span>
                       )}

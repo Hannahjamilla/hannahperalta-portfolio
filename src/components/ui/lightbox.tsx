@@ -19,13 +19,17 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
   const isMoreInfoSlide = idx === imgs.length
 
   return (
-    <div className="fixed inset-0 z-[70] flex flex-col items-center justify-center p-4 sm:p-0 sm:flex-row sm:items-stretch sm:justify-end" onClick={onClose}>
-      <div className="absolute inset-0 backdrop-blur-md bg-black/5" />
+    <div className="fixed inset-0 z-[70] flex flex-col items-center justify-end sm:flex-row sm:items-stretch sm:justify-end" onClick={onClose}>
+      <div className="absolute inset-0 backdrop-blur-md bg-black/40 sm:bg-black/5" />
 
-      <div className={`relative z-10 w-full max-w-4xl flex flex-col ${
-        'sm:rounded-none sm:rounded-l-3xl overflow-y-auto sm:h-full sm:max-h-none transition-transform animate-slide-bottom sm:animate-slide-right sm:p-6 lg:p-8 ' +
-        t(dark, 'sm:bg-[#0f0f1a] sm:border sm:border-r-0 sm:border-y-0 sm:border-white/10', 'sm:bg-[#fdfbf7] sm:border sm:border-r-0 sm:border-y-0 sm:border-amber-900/10 sm:shadow-2xl')
+      <div className={`relative z-10 w-full flex flex-col max-h-[88vh] overflow-y-auto rounded-t-3xl sm:rounded-none sm:rounded-l-3xl sm:h-full sm:max-h-none transition-transform animate-slide-bottom sm:animate-slide-right sm:p-6 lg:p-8 p-5 ${
+        t(dark, 'bg-[#0f0f1a] border border-b-0 border-white/10 sm:border sm:border-r-0 sm:border-y-0 sm:border-white/10', 'bg-[#fdfbf7] border border-b-0 border-amber-900/10 sm:border sm:border-r-0 sm:border-y-0 sm:border-amber-900/10 sm:shadow-2xl')
       }`} onClick={e => e.stopPropagation()}>
+
+        {/* Drag handle pill — mobile only */}
+        <div className="sm:hidden flex justify-center mb-4 -mt-1">
+          <div className={`w-10 h-1 rounded-full ${t(dark, 'bg-white/20', 'bg-black/15')}`} />
+        </div>
 
         {/* Game UI Header */}
         <div className={`w-full flex justify-between items-end mb-4 border-b-2 pb-2 ${t(dark, 'border-cyan-900', 'border-amber-200/60')}`}>

@@ -4,12 +4,12 @@ import { Terminal, Database, LayoutTemplate, Globe } from 'lucide-react'
 
 export function TopNav({ dark, toggle, border }: { dark: boolean, toggle: () => void, border: string }) {
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-12 backdrop-blur-xl bg-white/70 dark:bg-black/70 border-b ${border}`}>
-      <div className="font-serif font-normal tracking-wide uppercase text-xl sm:text-2xl pt-1">
+    <nav className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-6 py-4 md:px-12 backdrop-blur-xl bg-white/70 dark:bg-black/70 border-b ${border}`}>
+      <div className="font-serif font-normal tracking-wide uppercase text-lg sm:text-2xl pt-1 shrink-0">
         H.J. Peralta
       </div>
-      <div className="flex items-center gap-2.5 md:gap-6 text-[8px] sm:text-[10px] md:text-xs font-mono font-bold uppercase tracking-widest">
-        <a href="#profile" className="hover:underline underline-offset-4 decoration-2 hidden sm:block">Home</a>
+      <div className="flex items-center gap-2.5 sm:gap-4 md:gap-6 text-[8px] sm:text-[10px] md:text-xs font-mono font-bold uppercase tracking-widest pl-2">
+        <a href="#profile" className="hover:underline underline-offset-4 decoration-2">Home</a>
         <a href="#experience" className="hover:underline underline-offset-4 decoration-2">Work</a>
         <a href="#projects" className="hover:underline underline-offset-4 decoration-2">Projects</a>
         <button onClick={toggle} className="border border-current px-2 py-1 md:px-3 md:py-1.5 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors shrink-0 ml-1">

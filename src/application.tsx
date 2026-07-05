@@ -268,11 +268,11 @@ export default function App() {
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
                   <div className="w-full flex justify-center">
-                    <img src={QUESTS[0].imgs[0]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 rounded-md" />
+                    <img src={QUESTS[0].imgs[0]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" />
                   </div>
                   {QUESTS[0].imgs[1] && (
                     <div className="w-full flex justify-center">
-                      <img src={QUESTS[0].imgs[1]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 rounded-md" />
+                      <img src={QUESTS[0].imgs[1]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" />
                     </div>
                   )}
                 </div>
@@ -287,7 +287,7 @@ export default function App() {
                 className={`flex gap-3 p-3 border-b ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}
               >
                 <div className="w-[45%] shrink-0 aspect-[4/3] overflow-hidden rounded">
-                  <img src={QUESTS[1].imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                  <img src={QUESTS[1].imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -318,7 +318,7 @@ export default function App() {
                     className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}
                   >
                     <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
-                      <img src={q.imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                      <img src={q.imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" />
                     </div>
                     {q.badge && (
                       <div className="mb-1.5 mt-2">
@@ -349,7 +349,7 @@ export default function App() {
                 >
                   <div>
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-2`}>
-                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 rounded" />
+                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" />
                     </div>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
                       {q.badge && (
@@ -387,7 +387,7 @@ export default function App() {
                 >
                   <div>
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-1.5`}>
-                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 rounded" />
+                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" />
                     </div>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
                       {q.badge && (

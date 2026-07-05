@@ -107,7 +107,7 @@ export default function App() {
                   <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-3 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-lg rounded md:rounded-xl overflow-hidden flex-shrink-0`}>
                     <picture>
                       <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
-                      <img src="/images/Hannah-casual4.webp" className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-[1.02] transition-all duration-[1s]" alt="Hannah Jamilla DR. Peralta" />
+                      <img src="/images/Hannah-casual4.webp" className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-[1.02] active:grayscale-0 active:scale-[1.02] transition-all duration-[1s]" alt="Hannah Jamilla DR. Peralta" />
                     </picture>
                   </div>
                   {/* Mobile-only bio blurb next to photo */}

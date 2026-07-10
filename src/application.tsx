@@ -84,12 +84,12 @@ export default function App() {
             </div>
 
             <div className={`py-5 md:py-12 px-4 md:px-6 text-center flex flex-col items-center pointer-events-auto bg-[#faf9f6]/30 dark:bg-black/10`}>
-              <h1 className={`text-[8.5vw] md:text-[6.5vw] lg:text-[72px] xl:text-[80px] font-serif font-black tracking-tighter leading-none mb-2 ${t(dark, 'text-zinc-200', 'text-[#1c1813]')}`}>
-                Hannah Jamilla DR. Peralta
+              <h1 className={`text-[7vw] md:text-[5.5vw] lg:text-[60px] xl:text-[68px] font-serif font-black tracking-tighter leading-none mb-2 ${t(dark, 'text-zinc-200', 'text-[#1c1813]')}`}>
+                Hannah Jamilla Del Rosario Peralta
               </h1>
               {/* Thick rule under name — classic newspaper */}
               <div className={`w-full max-w-sm h-[3px] mb-3 ${dark ? 'bg-white/20' : 'bg-[#1c1813]/25'}`} />
-              <h2 className="text-sm md:text-xl font-mono font-bold uppercase tracking-widest mb-3 opacity-90">Junior Web Developer</h2>
+              <h2 className="text-sm md:text-xl font-mono font-bold uppercase tracking-widest mb-3 opacity-90">Web Developer | Systems Analysis | AI & Process Improvement</h2>
               <p className={`text-sm md:text-lg font-serif italic max-w-2xl ${muted} leading-relaxed`}>
                 Web developer with hands-on experience building modern applications. Passionate about crafting user-centered interfaces and developing practical features that help everyday users.
               </p>
@@ -108,7 +108,7 @@ export default function App() {
                   <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-3 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-lg rounded md:rounded-xl overflow-hidden flex-shrink-0`}>
                     <picture onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
                       <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
-                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[1s] hover:scale-[1.02] ${colorProfile ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0'}`} alt="Hannah Jamilla DR. Peralta" />
+                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[1s] hover:scale-[1.02] ${colorProfile ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" />
                     </picture>
                   </div>
                   {/* Mobile-only bio blurb next to photo */}
@@ -116,7 +116,7 @@ export default function App() {
                     <p className={`text-[10px] font-mono font-black uppercase tracking-widest mb-1.5 ${accentBurgundy}`}>About Me</p>
                     <h2 className="text-2xl font-serif font-black uppercase tracking-tight leading-none mb-2">Hello!</h2>
                     <p className="text-sm font-serif leading-relaxed opacity-95">
-                      I'm Hannah. I combine clean layouts with functional code to build web applications that help people.
+                      I'm Hannah. I build web applications that solve problems and improve user workflows.
                     </p>
                   </div>
                 </div>
@@ -128,13 +128,13 @@ export default function App() {
                   <h2 className={`text-3xl md:text-4xl font-serif font-black uppercase tracking-tight mb-4 ${accentBurgundy}`}>About Me</h2>
                   <div className={`font-serif text-base md:text-lg leading-relaxed space-y-4 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
                     <p className="first-letter:text-5xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
-                      I'm a Web Developer with hands-on experience building modern, responsive applications through internships and academic projects. I enjoy writing code, bringing interfaces to life, and crafting practical features using React.js, Node.js, Laravel, and database systems.
+                      I'm a Web Developer with experience building modern, responsive applications through internships and academic projects. I specialize in creating user-focused interfaces and developing practical features using React.js, Node.js, Laravel, and database systems.
                     </p>
                     <p>
-                      Rather than just writing pure code, my core motivation is to make technology helpful for everyday people. I focus on creating intuitive frontend designs and structuring clean backend features that solve actual day-to-day tasks.
+                      My approach centers on building technology that serves real-world needs. I focus on designing intuitive user experiences and developing reliable backend systems that address practical business requirements.
                     </p>
                     <p>
-                      I value simple, user-first solutions and hope to continuously expand my technical expertise while contributing as a collaborative and growth-oriented member of software development teams.
+                      I value clean, user-centered solutions and aim to continuously expand my technical skills while contributing effectively to development teams.
                     </p>
                   </div>
                   <a
@@ -153,7 +153,7 @@ export default function App() {
               {/* Mobile-only additional biography blurb */}
               <div className={`md:hidden p-4 border-t ${border} -mx-5 -mb-5 mt-6 bg-black/[0.01] dark:bg-white/[0.01]`}>
                 <p className={`font-serif text-sm leading-relaxed mb-4 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
-                  Below you'll find my work and projects. I focus on combining clean layouts with functional code to build web applications that help people.
+                  Below you'll find my work and projects. I develop web applications focused on usability and practical solutions.
                 </p>
                 <a
                   href="https://ping-me-seven-vert.vercel.app/"
@@ -185,7 +185,7 @@ export default function App() {
           <section id="experience" className={`border-b ${border}`}>
             <div className={`px-5 py-4 border-b ${border} ${bgTeal}`}>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                <span className="inline-block w-3 h-3 bg-current rotate-45" /> My Work Experience
+                <span className="inline-block w-3 h-3 bg-current rotate-45" /> Work Experience
               </h2>
             </div>
 
@@ -509,7 +509,7 @@ export default function App() {
           <section id="skills" className={`border-b-0`}>
             <div className={`px-5 py-4 border-b ${border} bg-black/5 dark:bg-white/5`}>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                <span className="inline-block w-3 h-3 bg-current rotate-45" /> My Skills
+                <span className="inline-block w-3 h-3 bg-current rotate-45" /> Skills
               </h2>
             </div>
             <div className="p-6 md:p-8 xl:p-10 relative overflow-hidden bg-black/5 dark:bg-white/5">

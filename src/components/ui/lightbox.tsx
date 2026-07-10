@@ -1,22 +1,57 @@
 import { useState, useEffect } from 'react'
 import { useTheme, t } from '../../context/theme-context'
 
+// Preload adjacent images for smooth navigation
+const preloadImage = (src: string) => {
+  const img = new Image()
+  img.src = src
+}
+
 export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClose }: any) {
   const { dark } = useTheme()
   const [idx, setIdx] = useState(0)
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
 
   const hasMoreInfo = !!(desc || tags || link || role)
   const totalSlides = imgs.length + (hasMoreInfo ? 1 : 0)
+  const isMoreInfoSlide = idx === imgs.length
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
   }, [])
 
+  // Preload current and adjacent images
+  useEffect(() => {
+    const preloadImages = () => {
+      // Always preload current image
+      if (imgs[idx] && !loadedImages.has(imgs[idx])) {
+        preloadImage(imgs[idx])
+        setLoadedImages(prev => new Set([...prev, imgs[idx]]))
+      }
+      
+      // Preload next image
+      const nextIdx = (idx + 1) % imgs.length
+      if (imgs[nextIdx] && !loadedImages.has(imgs[nextIdx])) {
+        preloadImage(imgs[nextIdx])
+        setLoadedImages(prev => new Set([...prev, imgs[nextIdx]]))
+      }
+      
+      // Preload previous image
+      const prevIdx = (idx - 1 + imgs.length) % imgs.length
+      if (imgs[prevIdx] && !loadedImages.has(imgs[prevIdx])) {
+        preloadImage(imgs[prevIdx])
+        setLoadedImages(prev => new Set([...prev, imgs[prevIdx]]))
+      }
+    }
+
+    if (!isMoreInfoSlide && imgs.length > 0) {
+      preloadImages()
+    }
+  }, [idx, imgs, loadedImages, isMoreInfoSlide])
+
   const next = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i + 1) % totalSlides) }
   const prev = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i - 1 + totalSlides) % totalSlides) }
-
-  const isMoreInfoSlide = idx === imgs.length
 
   return (
     <div className="fixed inset-0 z-[70] flex flex-col items-center justify-end sm:flex-row sm:items-stretch sm:justify-end" onClick={onClose}>
@@ -117,6 +152,8 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
                 src={imgs[idx]}
                 alt={alt}
                 className="max-w-full max-h-full object-contain animate-fade-in drop-shadow-lg"
+                loading="lazy"
+                decoding="async"
               />
             )}
           </div>

@@ -108,7 +108,7 @@ export default function App() {
                   <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-3 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-lg rounded md:rounded-xl overflow-hidden flex-shrink-0`}>
                     <picture onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
                       <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
-                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[1s] hover:scale-[1.02] ${colorProfile ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" />
+                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[1s] hover:scale-[1.02] ${colorProfile ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
                     </picture>
                   </div>
                   {/* Mobile-only bio blurb next to photo */}
@@ -227,13 +227,13 @@ export default function App() {
             </div>
 
             {/* Lead Story — First project gets full-width hero treatment */}
-            <div 
-              onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })} 
-              className={`border-b ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-all`}
-            >
+            <div className={`border-b ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-all`}>
               {/* Mobile: text on top, image stacked below */}
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div className={`p-4 md:p-10 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r ${border}`}>
+                <div 
+                  onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })} 
+                  className={`p-4 md:p-10 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r ${border} cursor-pointer`}
+                >
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4 text-[10px] font-mono uppercase tracking-widest font-black opacity-80">
                     {QUESTS[0].badge && (
                       <span className={`inline-block px-2 py-1 text-[9px] border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[0].badge}</span>
@@ -268,12 +268,21 @@ export default function App() {
                   </div>
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
-                  <div className="w-full flex justify-center">
-                    <img src={QUESTS[0].imgs[0]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" />
+                  <div 
+                    className="w-full flex justify-center cursor-pointer"
+                    onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
+                  >
+                    <img src={QUESTS[0].imgs[0]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" loading="lazy" />
                   </div>
                   {QUESTS[0].imgs[1] && (
-                    <div className="w-full flex justify-center">
-                      <img src={QUESTS[0].imgs[1]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" />
+                    <div 
+                      className="w-full flex justify-center cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightbox({ imgs: [QUESTS[0].imgs[1]], alt: `${QUESTS[0].title} - Certificate`, wip: false, desc: undefined, tags: undefined, link: undefined, role: undefined, status: undefined, period: undefined });
+                      }}
+                    >
+                      <img src={QUESTS[0].imgs[1]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" loading="lazy" />
                     </div>
                   )}
                 </div>
@@ -288,7 +297,7 @@ export default function App() {
                 className={`flex gap-3 p-3 border-b ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}
               >
                 <div className="w-[45%] shrink-0 aspect-[4/3] overflow-hidden rounded">
-                  <img src={QUESTS[1].imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" />
+                  <img src={QUESTS[1].imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" loading="lazy" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -319,7 +328,7 @@ export default function App() {
                     className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}
                   >
                     <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
-                      <img src={q.imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" />
+                      <img src={q.imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" loading="lazy" />
                     </div>
                     {q.badge && (
                       <div className="mb-1.5 mt-2">
@@ -350,7 +359,7 @@ export default function App() {
                 >
                   <div>
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-2`}>
-                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" />
+                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
                     </div>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
                       {q.badge && (
@@ -388,7 +397,7 @@ export default function App() {
                 >
                   <div>
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-1.5`}>
-                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" />
+                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
                     </div>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
                       {q.badge && (
@@ -438,7 +447,7 @@ export default function App() {
                   >
                     <div>
                       <div className={`w-full h-[110px] lg:h-auto lg:aspect-[16/10] p-1.5 mb-4 overflow-hidden relative flex items-center justify-center`}>
-                        <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" />
+                        <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
                       </div>
                       
                       <div className="flex items-center gap-3 mb-2 text-[9px] font-mono font-bold uppercase tracking-widest opacity-70">

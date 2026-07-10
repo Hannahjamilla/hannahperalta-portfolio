@@ -82,16 +82,7 @@ export const PERSONAL: { title: string, desc: string[], tags: string[], link?: s
     'Features sleek UI/UX with smooth transitions, responsive layouts, and highly intuitive contact forms.',
     'Designed to serve as an engaging secondary gateway for potential clients and employers.'
   ], tags: ['React', 'Tailwind', 'Framer Motion'], link: 'https://ping-me-seven-vert.vercel.app/', imgs: ['/images/PingMe.webp'] },
-  { title: 'Hello World - Goosebumps', role: 'UI/UX Designer', period: 'Oct 2024', status: 'COMPLETE', desc: [
-    'Atmospheric digital web experience featuring spooky typography and thematic color palettes.',
-    'Combines creative web design principles with unique narrative elements to deliver an interactive story.',
-    'Optimized for both desktop and mobile viewports with accessibility in mind.'
-  ], tags: ['React', 'Tailwind', 'CSS Animation'], link: 'https://hello-world-gamma-plum.vercel.app/', imgs: ['/images/Hello word - goosebumps.webp'] },
-  { title: 'Birthday - Star Alert!', role: 'Creative Developer', period: '2024', status: 'COMPLETE', desc: [
-    'Interactive celebratory greeting card experience created for special occasions.',
-    'Implements complex web animations using custom CSS timelines and keyframe effects.',
-    'Provides a charming, personalized storytelling loop without relying on heavy frontend frameworks.'
-  ], tags: ['React', 'Tailwind', 'UI/UX'], link: 'https://happy-b-day-murex.vercel.app/', imgs: ['/images/Birthday - Star Alert!.webp'] },
+
   { title: 'GroundSpot', role: 'Web Developer', period: '2025 - Present', status: 'BETA', desc: [
     'Modern facility and space booking platform currently in active development.',
     'Features dynamic scheduling calendars, real-time availability checks, and secure user authentication.',

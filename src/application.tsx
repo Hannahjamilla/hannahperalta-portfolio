@@ -3,7 +3,7 @@ import { ArrowUpRight, ArrowUp } from 'lucide-react'
 import type { DetailData } from './types'
 import { ThemeCtx, t } from './context/theme-context'
 import { DetailModal, Lightbox } from './components/lazy-components'
-import { QUESTS, ACHIEVEMENTS, XP_LOG, PERSONAL } from './data/constants'
+import { QUESTS, ACHIEVEMENTS, XP_LOG, PERSONAL, EDUCATION } from './data/constants'
 import { TechnicalSkills } from './components/layout-helpers'
 
 // Custom hook to get current time for newspaper header
@@ -97,22 +97,28 @@ export default function App() {
               {/* Thick rule under name — classic newspaper */}
               <div className={`w-full max-w-sm h-[3px] mb-3 ${dark ? 'bg-white/20' : 'bg-[#1c1813]/25'}`} />
               <h2 className="text-sm md:text-xl font-mono font-bold uppercase tracking-widest mb-3 opacity-90">Web Developer | Systems Analysis | AI & Process Improvement</h2>
+              {/* Vintage Newspaper Banner Strip for Editor's Note */}
+              <div className={`my-2 py-1 px-6 border-y-2 border-double ${t(dark, 'border-zinc-700 text-[#ff6b6b]', 'border-[#d0c9b8] text-[#a11d1d]')} flex items-center justify-center gap-3 text-[10.5px] font-mono font-black uppercase tracking-[0.3em]`}>
+                <span className="w-1.5 h-1.5 bg-current rotate-45" />
+                <span>EDITOR'S NOTE</span>
+                <span className="w-1.5 h-1.5 bg-current rotate-45" />
+              </div>
               <p className={`text-sm md:text-lg font-serif italic max-w-2xl ${muted} leading-relaxed`}>
-                Web developer with hands-on experience building modern applications. Passionate about crafting user-centered interfaces and developing practical features that help everyday users.
+                Every project starts with a simple question: How can this be easier for people to use? That's the idea behind everything you'll find here—from clean interfaces to thoughtful features.
               </p>
             </div>
           </section>
 
           {/* ── FRONT PAGE — NEW LAYOUT ── */}
           <section className={`border-b ${border}`}>
-            <div className="p-5 md:p-10">
+            <div className="p-4 md:p-7 lg:p-8">
 
               {/* Left Col: Photo */}
               {/* Photo component (floated on tablet/desktop) */}
-              <div className="md:float-left md:w-[35%] md:mr-8 md:mb-4">
+              <div className="md:float-left md:w-[26%] md:max-w-[250px] md:mr-8 md:mb-2">
                 {/* Mobile: newspaper side-by-side photo + caption */}
                 <div className="flex gap-4 md:block">
-                  <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-3 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-lg rounded md:rounded-xl overflow-hidden flex-shrink-0`}>
+                  <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-2 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-md rounded md:rounded-lg overflow-hidden flex-shrink-0`}>
                     <picture onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
                       <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
                       <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[1s] hover:scale-[1.02] ${colorProfile ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
@@ -120,21 +126,26 @@ export default function App() {
                   </div>
                   {/* Mobile-only bio blurb next to photo */}
                   <div className="flex-1 md:hidden flex flex-col justify-center">
-                    <p className={`text-[10px] font-mono font-black uppercase tracking-widest mb-1.5 ${accentBurgundy}`}>About Me</p>
-                    <h2 className="text-2xl font-serif font-black uppercase tracking-tight leading-none mb-2">Hello!</h2>
+                    <p className={`text-[10px] font-mono font-black uppercase tracking-widest mb-1.5 ${accentBurgundy}`}>Author</p>
+                    <h2 className="text-2xl font-serif font-black uppercase tracking-tight leading-none mb-2">Hello World!</h2>
                     <p className="text-sm font-serif leading-relaxed opacity-95">
-                      I'm Hannah. I build web applications that solve problems and improve user workflows.
+                      That's my approach — I build for humans, not just screens. The kind of apps that just make sense the moment you open them.
                     </p>
                   </div>
                 </div>
-                <p className="text-[9px] font-serif italic mt-2 text-center opacity-60 hidden md:block">A recent photo of me at my desk.</p>
+                <p className="text-[9px] font-serif italic mt-1.5 text-center opacity-60 hidden md:block">A recent photo of me at my desk.</p>
               </div>
 
               {/* Biography content wrapping around photo */}
               <div className="hidden md:block">
-                  <h2 className={`text-3xl md:text-4xl font-serif font-black uppercase tracking-tight mb-4 ${accentBurgundy}`}>About Me</h2>
-                  <div className={`font-serif text-base md:text-lg leading-relaxed space-y-4 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
-                    <p className="first-letter:text-5xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
+                  <h2 className={`text-2xl md:text-3xl font-serif font-black uppercase tracking-tight mb-1.5 ${accentBurgundy}`}>Author</h2>
+                  <div className="flex items-center gap-3 mb-3.5">
+                    <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
+                    <span className={`text-[9px] font-mono font-black uppercase tracking-[0.3em] px-2.5 py-1 border border-current ${accentBurgundy}`}>✦ Hello World ✦</span>
+                    <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
+                  </div>
+                  <div className={`font-serif text-sm md:text-[15px] leading-relaxed space-y-3 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
+                    <p className="first-letter:text-4xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
                       I'm a Web Developer with experience building modern, responsive applications through internships and academic projects. I specialize in creating user-focused interfaces and developing practical features using React.js, Node.js, Laravel, and database systems.
                     </p>
                     <p>
@@ -144,43 +155,28 @@ export default function App() {
                       I value clean, user-centered solutions and aim to continuously expand my technical skills while contributing effectively to development teams.
                     </p>
                   </div>
-                  <a
-                    href="https://ping-me-seven-vert.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`mt-6 inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest border px-4 py-2.5 w-fit transition-all hover:gap-3 ${t(dark, 'border-white/30 text-zinc-200 hover:bg-white hover:text-black', 'border-[#1c1813]/40 text-[#1c1813] hover:bg-[#1c1813] hover:text-[#F4F1EA]')}`}
-                  >
-                    Contact Me or Send an Inquiry ↗
-                  </a>
+
                 </div>
 
               {/* Clear floats so subsequent rows render underneath */}
               <div className="clear-both" />
 
-              {/* Mobile-only additional biography blurb */}
-              <div className={`md:hidden p-4 border-t ${border} -mx-5 -mb-5 mt-6 bg-black/[0.01] dark:bg-white/[0.01]`}>
-                <p className={`font-serif text-sm leading-relaxed mb-4 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
-                  Below you'll find my work and projects. I develop web applications focused on usability and practical solutions.
+              {/* Biography closing blurb */}
+              <div className={`p-4 border-t ${border} -mx-5 -mb-5 mt-6 bg-black/[0.01] dark:bg-white/[0.01]`}>
+                <p className={`font-serif text-sm leading-relaxed ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
+                  Here's a look at what I've been building. Each project reflects my passion for creating web applications that are intuitive, practical, and designed with real users in mind.
                 </p>
-                <a
-                  href="https://ping-me-seven-vert.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-widest border px-3 py-2 transition-all ${t(dark, 'border-white/30 text-zinc-200 hover:bg-white hover:text-black', 'border-[#1c1813]/40 text-[#1c1813] hover:bg-[#1c1813] hover:text-[#F4F1EA]')}`}
-                >
-                  Contact Me ↗
-                </a>
               </div>
 
             </div>
 
             {/* Links row */}
             <div className={`grid grid-cols-2 border-t ${border}`}>
-              <a href="https://github.com/Hannahjamilla" target="_blank" className={`p-4 md:p-8 border-b-0 border-r ${border} ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center`}>
-                <h3 className="font-serif font-black uppercase text-sm md:text-lg tracking-wide flex items-center gap-1">My GitHub <span className="transition-transform group-hover:translate-x-1">↗</span></h3>
-                <p className="font-serif italic text-[10px] md:text-xs mt-1 opacity-80 group-hover:opacity-100">See all my code and side projects.</p>
+              <a href="https://ping-me-seven-vert.vercel.app/" target="_blank" rel="noopener noreferrer" className={`p-4 md:p-6 border-r ${border} ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center`}>
+                <h3 className="font-serif font-black uppercase text-sm md:text-lg tracking-wide flex items-center gap-1">Say Hello & Collaborate <span className="transition-transform group-hover:translate-x-1">↗</span></h3>
+                <p className="font-serif italic text-[10px] md:text-xs mt-1 opacity-80 group-hover:opacity-100">Got a project idea? Let's talk.</p>
               </a>
-              <a href="mailto:hannahjamillap@gmail.com" className={`p-4 md:p-8 ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center`}>
+              <a href="mailto:hannahjamillap@gmail.com" className={`p-4 md:p-6 ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center`}>
                 <h3 className="font-serif font-black uppercase text-sm md:text-lg tracking-wide flex items-center gap-1">Email Me <span className="transition-transform group-hover:translate-x-1">↗</span></h3>
                 <p className="font-serif italic text-[10px] md:text-xs mt-1 opacity-80 group-hover:opacity-100">Get in touch for work or just to say hi.</p>
               </a>
@@ -503,7 +499,7 @@ export default function App() {
                 {ACHIEVEMENTS.map((a, i) => (
                   <div 
                     key={i} 
-                    className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:border-b-0 lg:border-r [&:nth-child(3n)]:lg:border-r-0 ${border} flex items-start gap-2 md:gap-4 cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`} 
+                    className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:[&:nth-child(-n+3)]:border-b lg:[&:nth-child(n+4)]:border-b-0 lg:border-r [&:nth-child(3n)]:lg:border-r-0 ${border} flex items-start gap-2 md:gap-4 cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`} 
                     onClick={() => setDetailModal({ title: a.title, date: a.date, desc: a.desc })}
                   >
                     <div className={`mt-0.5 p-1.5 md:p-2 rounded-lg ${t(dark, 'bg-zinc-800/80 text-[#ff6b6b] border border-red-500/20', 'bg-white text-[#a11d1d] border border-red-200')} shrink-0 group-hover:scale-[1.05] transition-transform hidden sm:block`}>
@@ -519,17 +515,90 @@ export default function App() {
                 ))}
               </div>
             </div>
+
+            {/* Education */}
+            <div id="education" className={`border-t ${border}`}>
+              <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
+                <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
+                  <span className="inline-block w-3 h-3 bg-current rotate-45" /> Education
+                </h2>
+                <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-80 mt-1">Academic Background</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                {EDUCATION.map((edu, i) => (
+                  <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between hover:bg-black/5 dark:hover:bg-white/5 transition-colors group`}>
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${accentGold}`}>{edu.period}</span>
+                        <span className={`px-2 py-0.5 text-[9px] font-mono font-bold border border-current opacity-70`}>{edu.badge}</span>
+                      </div>
+                      
+                      <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors">{edu.school}</h3>
+
+                      <p className={`text-xs font-serif italic mb-3 ${muted}`}>{edu.location}</p>
+
+                      <h4 className={`text-sm md:text-base font-serif font-bold ${edu.specialization ? 'pb-3 border-b ' + border : ''}`}>{edu.degree}</h4>
+                    </div>
+
+                    {edu.specialization && (
+                      <p className="text-xs md:text-sm font-serif leading-relaxed mt-3 opacity-90">
+                        <span className="font-bold">Specialization:</span> {edu.specialization}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </section>
 
           {/* ── SKILLS & INFO ── */}
-          <section id="skills" className={`border-b-0`}>
-            <div className={`px-5 py-4 border-b ${border} bg-black/5 dark:bg-white/5`}>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                <span className="inline-block w-3 h-3 bg-current rotate-45" /> Skills
+          <section id="skills" className={`border-b ${border}`}>
+            <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
+              <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
+                <span className="inline-block w-3 h-3 bg-current rotate-45" /> Technical Skills
               </h2>
+              <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-80 mt-1">My core technologies and tools</p>
             </div>
-            <div className="p-6 md:p-8 xl:p-10 relative overflow-hidden bg-black/5 dark:bg-white/5">
-              <TechnicalSkills dark={dark} border={border} />
+            <TechnicalSkills dark={dark} border={border} />
+          </section>
+
+          {/* ── GITHUB CONTRIBUTIONS ── */}
+          <section id="github" className={`border-b ${border}`}>
+            <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
+              <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
+                <span className="inline-block w-3 h-3 bg-current rotate-45" /> GitHub Contributions
+              </h2>
+              <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-80 mt-1">A look at my daily coding activity and projects over the past year</p>
+            </div>
+
+            <div className="p-4 md:p-6">
+              <a 
+                href="https://github.com/Hannahjamilla" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className={`block p-4 sm:p-6 border ${border} transition-all group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')}`}
+              >
+                <div className={`flex items-center justify-between gap-2 mb-3 pb-3 border-b border-dashed ${border}`}>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider">@Hannahjamilla</span>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest flex items-center gap-1 group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors">
+                    View Profile ↗
+                  </span>
+                </div>
+
+                <div className="w-full flex justify-center py-2 overflow-hidden">
+                  <img 
+                    src={`https://ghchart.rshah.org/${dark ? 'ff6b6b' : 'a11d1d'}/Hannahjamilla`}
+                    alt="Hannah Jamilla's GitHub Contributions" 
+                    className={`w-full max-w-full h-auto object-contain ${dark ? 'opacity-90' : 'mix-blend-multiply opacity-95'} transition-opacity`}
+                    loading="lazy"
+                  />
+                </div>
+
+                <p className="font-serif italic text-xs mt-3 opacity-70 text-center">
+                  A snapshot of my daily commits and contribution activity on GitHub.
+                </p>
+              </a>
             </div>
           </section>
 
@@ -537,7 +606,7 @@ export default function App() {
           <footer className={`w-full py-6 px-6 sm:px-10 border-t ${border} flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[10px] uppercase tracking-widest`}>
             <p className="flex items-center gap-3 opacity-60">
               <span className="w-2 h-2 bg-current rotate-45" />
-              Printed Locally. Copyright © {new Date().getFullYear()}
+              Thoughtfully designed. © {new Date().getFullYear()}
             </p>
 
             <div className="flex items-center gap-3">

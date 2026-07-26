@@ -26,13 +26,12 @@
 
   /* Scrapbook Background Utilities */
   .bg-scrapbook-light {
-    background-color: #EBE5D5;
+    background-color: #D8DFE8;
     background-image: 
-      linear-gradient(rgba(180, 168, 142, 0.2) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(180, 168, 142, 0.2) 1px, transparent 1px),
-      radial-gradient(rgba(140, 125, 95, 0.15) 1px, transparent 1px);
-    background-size: 24px 24px, 24px 24px, 12px 12px;
-    background-position: 0 0, 0 0, 6px 6px;
+      linear-gradient(rgba(80, 100, 140, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(80, 100, 140, 0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
   }
 
   .bg-scrapbook-dark {

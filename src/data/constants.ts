@@ -76,6 +76,25 @@ export const XP_LOG = [
   { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: ['Organized and facilitated cloud learning sessions to help students develop core IT and cloud capabilities.', 'Coordinated hands-on workshops covering AWS fundamentals and cloud computing concepts.', 'Collaborated with club officers to design educational resources and host learning events.'] },
 ]
 
+export const EDUCATION = [
+  {
+    school: 'National University',
+    location: 'Baliwag, Bulacan',
+    degree: 'Bachelor of Science in Information Technology',
+    specialization: 'Specialization in Web and Mobile Application Development',
+    period: 'July 2026',
+    badge: 'Higher Education'
+  },
+  {
+    school: 'St. Dominic Academy',
+    location: 'Pulilan, Bulacan',
+    degree: 'Accountancy, Business, and Management (ABM)',
+    period: 'May 2022',
+    badge: 'Senior High School'
+  }
+]
+
+
 export const PERSONAL: { title: string, desc: string[], tags: string[], link?: string, imgs: string[], wip?: boolean, role?: string, period?: string, status?: string }[] = [
   { title: 'PingMe', role: 'Frontend Developer', period: '2024', status: 'COMPLETE', desc: [
     'Interactive minimalist platform built for project inquiries, networking, and professional assistance.',

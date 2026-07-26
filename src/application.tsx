@@ -1,10 +1,10 @@
 import { useEffect, useState, Suspense } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ArrowUp } from 'lucide-react'
 import type { DetailData } from './types'
 import { ThemeCtx, t } from './context/theme-context'
 import { DetailModal, Lightbox } from './components/lazy-components'
 import { QUESTS, ACHIEVEMENTS, XP_LOG, PERSONAL } from './data/constants'
-import { TechnicalSkills, TopNav } from './components/layout-helpers'
+import { TechnicalSkills } from './components/layout-helpers'
 
 // Custom hook to get current time for newspaper header
 const useDateString = () => {
@@ -28,7 +28,7 @@ export default function App() {
   const toggle = () => setDark(p => !p)
 
   // Authentic Newspaper Palette
-  const bg = t(dark, 'bg-[#151515] text-[#e0e0e0]', 'bg-[#F4F1EA] text-[#1c1813]')
+  const bg = t(dark, 'bg-scrapbook-dark text-[#e0e0e0]', 'bg-scrapbook-light text-[#1c1813]')
   const border = t(dark, 'border-white/15', 'border-[#d0c9b8]')
   const borderDarker = t(dark, 'border-white/30', 'border-[#1c1813]')
   const muted = t(dark, 'text-[#737373]', 'text-[#5d5a55]')
@@ -62,18 +62,25 @@ export default function App() {
     <ThemeCtx.Provider value={{ dark, toggle }}>
       <div className={`min-h-screen w-full ${bg} transition-colors duration-700 flex flex-col items-center selection:bg-red-600/30 selection:text-current font-serif`}>
 
-        <TopNav dark={dark} toggle={toggle} border={border} />
-
-        <main role="main" className={`w-full max-w-[1120px] border-x-0 lg:border-x-[1px] border-b-[1px] ${borderDarker} mt-16 lg:mt-[74px] flex flex-col shadow-2xl ${t(dark, 'shadow-black/50 bg-[#161616]', 'shadow-black/5 bg-[#faf9f6]')}`}>
+        <main role="main" className={`w-full max-w-[1120px] border-x-0 lg:border-x-[1px] border-b-[1px] ${borderDarker} mt-0 flex flex-col shadow-2xl ${t(dark, 'shadow-black/50 bg-[#161616]', 'shadow-black/5 bg-[#faf9f6]')}`}>
 
           {/* ── THE MASTHEAD ── */}
           <section id="profile" className={`flex flex-col border-b pointer-events-none ${border}`}>
 
             {/* Header Strip */}
-            <div className={`flex flex-row items-center justify-between py-1.5 md:py-3 px-4 md:px-10 border-b ${border} text-[9px] sm:text-xs font-mono uppercase tracking-widest font-black ${t(dark, 'bg-white/5 text-slate-350', 'bg-[#F2EBD9] text-[#5c5643]')}`}>
-              <span>Hannah's Portfolio</span>
-              <span className="hidden sm:block">Welcome to my space</span>
-              <span>{dateString}</span>
+            <div className={`flex items-center justify-between gap-3 sm:gap-4 md:gap-6 py-2 md:py-2.5 px-3 sm:px-6 md:px-10 border-b ${border} text-[9px] sm:text-[11px] md:text-xs font-mono uppercase tracking-wider md:tracking-widest font-black ${t(dark, 'bg-white/5 text-slate-350', 'bg-[#F2EBD9] text-[#5c5643]')}`}>
+              <span className="whitespace-nowrap shrink-0">HanMade | Digital Archive</span>
+              <span className="hidden lg:block whitespace-nowrap text-center truncate">Ideas, Code & Creations</span>
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span className="hidden sm:inline whitespace-nowrap">{dateString}</span>
+                <button 
+                  onClick={toggle} 
+                  className="pointer-events-auto border border-current px-2 py-0.5 text-[8px] sm:text-[10px] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors shrink-0 whitespace-nowrap font-bold"
+                  title="Toggle Theme"
+                >
+                  {dark ? 'Day' : 'Night'} Edition
+                </button>
+              </div>
             </div>
 
             {/* Newspaper masthead rule */}
@@ -499,13 +506,13 @@ export default function App() {
                     className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:border-b-0 lg:border-r [&:nth-child(3n)]:lg:border-r-0 ${border} flex items-start gap-2 md:gap-4 cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`} 
                     onClick={() => setDetailModal({ title: a.title, date: a.date, desc: a.desc })}
                   >
-                    <div className={`mt-0.5 p-1.5 md:p-2 rounded-lg ${t(dark, 'bg-zinc-800/80 text-yellow-450 border border-yellow-500/20', 'bg-white text-[#854d0e] border border-amber-200')} shrink-0 group-hover:scale-[1.05] transition-transform hidden sm:block`}>
+                    <div className={`mt-0.5 p-1.5 md:p-2 rounded-lg ${t(dark, 'bg-zinc-800/80 text-[#ff6b6b] border border-red-500/20', 'bg-white text-[#a11d1d] border border-red-200')} shrink-0 group-hover:scale-[1.05] transition-transform hidden sm:block`}>
                       <a.icon size={22} strokeWidth={1.5} />
                     </div>
                     
                     <div className="flex flex-col justify-center min-w-0">
                       <span className="text-[9px] font-mono font-black uppercase tracking-widest mb-1 opacity-70">{a.date}</span>
-                      <h3 className="text-sm md:text-[17px] font-serif font-black uppercase tracking-wide leading-tight group-hover:text-amber-850 dark:group-hover:text-amber-300 transition-colors">{a.title}</h3>
+                      <h3 className="text-sm md:text-[17px] font-serif font-black uppercase tracking-wide leading-tight group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors">{a.title}</h3>
                       <p className={`text-xs md:text-xs font-serif mt-1.5 md:mt-2 leading-relaxed ${muted} line-clamp-2 md:line-clamp-3`}>{a.desc}</p>
                     </div>
                   </div>
@@ -526,16 +533,26 @@ export default function App() {
             </div>
           </section>
 
-        </main>
+          {/* FOOTER */}
+          <footer className={`w-full py-6 px-6 sm:px-10 border-t ${border} flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[10px] uppercase tracking-widest`}>
+            <p className="flex items-center gap-3 opacity-60">
+              <span className="w-2 h-2 bg-current rotate-45" />
+              Printed Locally. Copyright © {new Date().getFullYear()}
+            </p>
 
-        {/* FOOTER */}
-        <footer className="w-full max-w-[1120px] py-6 px-4 my-8 border-y flex flex-col md:flex-row justify-between items-center gap-6 font-mono text-[10px] uppercase tracking-widest opacity-60 border-current">
-          <p className="flex items-center gap-3">
-            <span className="w-2 h-2 bg-current rotate-45" />
-            Printed Locally. Copyright © {new Date().getFullYear()}
-          </p>
-          <p className="font-bold">Built by Hannah Peralta</p>
-        </footer>
+            <div className="flex items-center gap-3">
+              <p className="font-bold opacity-60">Built by Hannah Peralta</p>
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="p-1.5 border border-current hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all cursor-pointer group opacity-80 hover:opacity-100 flex items-center justify-center"
+                title="Back to start"
+                aria-label="Back to start"
+              >
+                <ArrowUp size={14} className="transition-transform group-hover:-translate-y-0.5" />
+              </button>
+            </div>
+          </footer>
+        </main>
 
         {lightbox && <Suspense fallback={<div />}><Lightbox {...lightbox} onClose={() => setLightbox(null)} /></Suspense>}
         {detailModal && <Suspense fallback={<div />}><DetailModal data={detailModal} onClose={() => setDetailModal(null)} /></Suspense>}

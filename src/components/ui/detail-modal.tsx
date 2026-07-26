@@ -48,10 +48,10 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
   }
   
   return (
-    <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center" onClick={onClose}>
-      <div className="absolute inset-0 backdrop-blur-md bg-black/5" />
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-stretch justify-end p-0" onClick={onClose}>
+      <div className="absolute inset-0 backdrop-blur-md bg-black/40 sm:bg-black/50" />
       <div
-        className={`relative z-10 w-full sm:max-w-md md:max-w-2xl lg:max-w-4xl sm:mx-6 rounded-t-3xl sm:rounded-3xl overflow-hidden min-h-[50vh] sm:min-h-0 max-h-[90vh] flex flex-col transition-transform animate-slide-bottom sm:animate-slide-right ${t(dark, 'bg-[#0f0f1a] border border-white/10', 'bg-[#fdfbf7] border border-amber-900/10 shadow-2xl')}`}
+        className={`relative z-10 w-full sm:w-[65vw] sm:max-w-[850px] rounded-t-3xl sm:rounded-none sm:rounded-l-2xl overflow-hidden min-h-[50vh] sm:min-h-0 max-h-[90vh] sm:max-h-full flex flex-col justify-center transition-transform animate-slide-bottom sm:animate-slide-right ${t(dark, 'bg-[#0f0f1a] border-t sm:border-t-0 sm:border-l border-white/10 shadow-2xl shadow-black/80', 'bg-[#fdfbf7] border-t sm:border-t-0 sm:border-l border-amber-900/10 shadow-2xl')}`}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}

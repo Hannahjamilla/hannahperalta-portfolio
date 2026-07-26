@@ -29,50 +29,52 @@ export const CLOUD_TOOLS = [
 ]
 
 export const QUESTS = [
-  { status: 'COMPLETE', title: 'BaryoConnect', badge: 'Community App', role: 'Project Manager & Lead Researcher', period: 'Feb 2025 – May 2025', desc: [
-    'Led project planning and coordinated development activities, collaborating with team members throughout the application lifecycle.',
-    'Developed responsive frontend features using Flutter and Firebase, translating stakeholder requirements into user-centered interfaces.',
-    'Represented National University at PSITE IRCITE 2025, presenting a community-based governance application.'
+  { status: 'COMPLETE', title: 'BaryoConnect', badge: 'Smart Community App', role: 'Project Manager | Frontend Developer', period: 'Feb. 2025 – May 2025', desc: [
+    'A smart community platform connecting residents with municipal staff for real-time announcements, citizen reports, service requests, and community feedback.',
+    'Led project planning, team coordination, requirements gathering, and mobile UI development using Flutter and Firebase, ensuring real-time data sync and reliable user authentication.',
+    'Presented the research paper at PSITE IRCITE 2025, demonstrating how digital portals empower netizens to track municipal request resolutions and actively participate in local governance.'
   ], tags: ['Flutter', 'Firebase', 'Mobile App'], imgs: ['/images/baryo.webp', '/images/IRCITE-cert.webp', '/images/IRCITE-1.webp', '/images/IRCITE-2.webp', '/images/16.webp', '/images/15.webp'] },
-  { status: 'COMPLETE', title: 'DialiEase', badge: 'Capstone Project', role: 'Web Developer', period: 'Nov 2024 – Jan 2026', desc: [
-    'Developed a healthcare monitoring system using React.js, Laravel 12, MySQL, and RESTful APIs.',
-    'Implemented frontend and backend features, integrated APIs, and optimized database operations to improve system performance.',
-    'Performed testing, debugging, and feature validation to ensure application reliability and usability.'
-  ], tags: ['React.js', 'Laravel', 'MySQL'], imgs: ['/images/10.webp', '/images/12.webp', '/images/11.webp'] },
-  { status: 'COMPLETE', title: 'Interactive 3D Portfolio', badge: 'Creative Portfolio', role: 'Creative Developer', period: '2025', desc: [
-    'Immersive web experience integrated with Three.js and custom shaders.',
-    'Delivers high-performance, interactive 3D models seamlessly within the browser.',
-    'Showcases advanced creative development skills and performance optimization.'
+  { status: 'COMPLETE', title: 'DialiEase', badge: 'CAPD Management System', role: 'Full-Stack Web Developer | Co-Researcher', period: 'Nov. 2024 – Jan. 2026', desc: [
+    'A specialized healthcare web application for medical staff to remotely monitor Continuous Ambulatory Peritoneal Dialysis (CAPD) patients and daily fluid logs.',
+    'Features clinical dashboards to monitor patient peritoneal dialysis exchange logs, fluid balance, ultrafiltration rates, and treatment compliance.',
+    'Developed full-stack web features in React.js, Laravel, and MySQL while managing software testing and technical documentation.',
+    'IoT Integration: DialiEase also features a custom-built IoT weighing scale device that automatically measures and records patient fluid weight after each CAPD exchange.',
+    'The smart scale transmits real-time weight readings directly into the system, eliminating manual data entry errors and enabling accurate automated fluid balance calculations for medical staff.'
+  ], tags: ['React.js', 'Laravel', 'MySQL', 'IoT', 'Arduino'], imgs: ['/images/10.webp', '/images/12.webp', '/images/11.webp', '/images/CAPD-IOT-1.webp', '/images/CAPD-IOT-2.webp', '/images/CAPD-IOT-3.webp'] },
+  { status: 'COMPLETE', title: 'Interactive 3D Portfolio', badge: 'Creative Portfolio', role: 'Full-Stack Developer', period: '2025', desc: [
+    'An immersive 3D web portfolio featuring real-time graphics, dynamic lighting, and custom shaders embedded directly in the browser.',
+    'Built with React, Three.js, and WebGL to deliver high-performance 3D scene rendering and interactive camera controls.',
+    'Showcases creative web development techniques, custom GLSL shaders, and optimized 3D model asset pipelines.'
   ], tags: ['React', 'Three.js', 'WebGL'], link: 'https://hannahjamilla.vercel.app/', imgs: ['/images/car.webp', '/images/portfolio.webp', '/images/2port.webp', '/images/cover-portfolio.webp'] },
-  { status: 'COMPLETE', title: 'Drug Store POS', badge: 'Business System', role: 'Business App', period: '2024', desc: [
-    'Comprehensive Point-of-Sale and inventory management system designed specifically for pharmacies.',
-    'Monitors daily transactions, alerts on low stock thresholds, and tracks medicine expiration dates.',
-    'Ensures pharmacy compliance and efficient stock rotation.'
+  { status: 'COMPLETE', title: 'Drug Store POS', badge: 'Business System', role: 'Full-Stack Web Developer', period: '2024', desc: [
+    'A Point-of-Sale and inventory management system for pharmacies and retail stores to track sales, product stocks, and medicine expiration dates.',
+    'Tracks daily store sales, alerts management on low stock thresholds, and monitors medicine expiration dates for safety compliance.',
+    'Built with PHP and MySQL to streamline pharmacy operations, checkout workflows, and inventory audit logs.'
   ], tags: ['PHP', 'MySQL', 'POS'], imgs: ['/images/2.webp', '/images/POS2.webp', '/images/5.webp', '/images/3.webp'] },
-  { status: 'COMPLETE', title: 'Tutorial Center', badge: 'Learning Platform', role: 'Learning Tool', period: '2024', desc: [
-    'Online school platform featuring secure student portals and course enrollment workflows.',
-    'Provides teachers and students with progress tracking dashboards and unified access to resources.',
-    'Modernizes the learning experience for tutorial and review centers.'
+  { status: 'COMPLETE', title: 'Tutorial Center', badge: 'Learning Platform', role: 'Full-Stack Web Developer', period: '2024', desc: [
+    'An EdTech learning platform for tutors to track student progress and manage classes, featuring student study portals and enrollment workflows.',
+    'Provides tutors with student performance tracking dashboards, grade tracking, and class management tools.',
+    'Offers students a unified portal for self-paced study materials, class schedules, and interactive learning resources.'
   ], tags: ['PHP', 'MySQL', 'EdTech'], imgs: ['/images/7.webp', '/images/tutorial.webp', '/images/8.webp'] },
-  { status: 'COMPLETE', title: 'Espasyo', badge: 'Management System', role: 'Co-Developer & Co-Researcher', period: 'Aug 2024 – Oct 2024', desc: [
-    'Collaborated in the design, development, and testing of an integrated event and venue rental management system.',
-    'Contributed to system research, technical documentation, software testing, and feature validation.',
-    'Co-authored research published in the International Journal of Academic Multidisciplinary Research (IJAMR), Vol. 8, Issue 11.'
-  ], tags: ['Billing', 'Inventory', 'Web Platform'], imgs: ['/images/espasyo-1.webp', '/images/espasyo.webp', '/images/paper.webp'] },
+  { status: 'COMPLETE', title: 'Espasyo', badge: 'Rental Ecosystem', role: 'Co-Developer | Co-Researcher', period: 'Aug. 2024 – Oct. 2024', desc: [
+    'An event venue booking and rental ecosystem featuring space availability checks, reservation tracking, payment management, and attendee RSVP tools.',
+    'Streamlines venue scheduling, payment tracking, and attendee event RSVP management for property owners and event planners.',
+    'Co-developed full-stack features and co-authored research published in the International Journal of Academic Multidisciplinary Research (IJAMR), Vol. 8, Issue 11 (2024).'
+  ], tags: ['Billing', 'Payment', 'Inventory'], imgs: ['/images/espasyo-1.webp', '/images/espasyo.webp', '/images/paper.webp'] },
 ]
 
 export const ACHIEVEMENTS = [
-  { icon: Trophy, title: 'IRCITE 2025 Paper Presenter', date: 'Apr 2025', desc: 'Presented a research paper on BaryoConnect at the International Research Conference on Information Technology Education (IRCITE) 2025. Contributed to discussions on bridging citizen-local authority communication through innovative digital platforms.' },
-  { icon: Trophy, title: 'TOPCIT Examinee', date: 'Jul 2025', desc: 'Successfully completed the Test of Practical Competency in IT (TOPCIT), demonstrating foundational and practical capabilities in computer science, software engineering, and information security.' },
-  { icon: ShieldCheck, title: 'Microsoft SC-900', date: 'Mar 2025', desc: 'Achieved the Microsoft Security, Compliance, and Identity Fundamentals (SC-900) certification, proving a strong foundational understanding of cloud security principles and Microsoft security solutions.' },
-  { icon: FileBadge, title: 'Alison Diploma in E-Commerce', date: 'Oct 2025', desc: 'Earned a comprehensive diploma in E-Commerce, mastering concepts related to digital marketing, online business models, and secure payment gateway integrations.' },
-  { icon: BookOpen, title: 'Published Researcher (IJAMR)', date: 'Jun 2024', desc: 'Published an academic research paper in the International Journal of Advanced Multidisciplinary Research (IJAMR), detailing the technical and business framework of the Espasyo event place reservation system.' },
-  { icon: GraduationCap, title: 'ABM with Honors & Loyalty', date: 'May 2022', desc: 'Graduated with Honors from the Accountancy, Business, and Management (ABM) academic strand. Recognized with a Loyalty Award for consistent academic excellence and dedication to the institution.' },
+  { icon: Trophy, title: 'IRCITE 2025 Paper Presenter', date: 'Apr 2025', desc: 'Presented research on BaryoConnect community governance platform at PSITE IRCITE 2025.' },
+  { icon: Trophy, title: 'TOPCIT Examinee', date: 'Jul 2025', desc: 'Completed TOPCIT exam, validating practical competency in software engineering and IT.' },
+  { icon: ShieldCheck, title: 'Microsoft SC-900', date: 'Mar 2025', desc: 'Certified in Microsoft Security, Compliance, and Identity Fundamentals.' },
+  { icon: FileBadge, title: 'Alison Diploma in E-Commerce', date: 'Oct 2025', desc: 'Earned diploma in e-commerce, digital marketing, and online business models.' },
+  { icon: BookOpen, title: 'Published Researcher (IJAMR)', date: 'Jun 2024', desc: 'Published research in IJAMR Vol. 8 Issue 11 on the Espasyo rental system framework.' },
+  { icon: GraduationCap, title: 'ABM with Honors & Loyalty', date: 'May 2022', desc: 'Graduated SHS ABM strand with Honors and Loyalty Award for academic excellence.' },
 ]
 
 export const XP_LOG = [
   { place: 'Creciendo Philippines', role: 'Backend Developer Intern', period: 'Nov 2025 – Feb 2026 | 400 Hours', desc: ['Developed backend features using Express.js and MongoDB to support system functionality and business requirements.', 'Built, tested, and maintained RESTful APIs, ensuring reliable backend integration and accurate data processing.', 'Assisted in debugging, validating API endpoints, and improving performance with Postman.'] },
-  { place: 'Lightweight Solutions', role: 'Web Developer Intern', period: 'Mar 2026 – May 2026 | 400 Hours', desc: ['Developed scalable full-stack features using React.js and Python for SaaS applications.', 'Built responsive user interfaces and collaborated with cross-functional teams to enhance usability.', 'Tested, debugged, and validated application features to improve functionality and reliability.'] },
+  { place: 'Lightweight Solutions', role: 'Full-Stack Web Developer Intern', period: 'Mar 2026 – May 2026 | 400 Hours', desc: ['Developed scalable full-stack features using React.js and Python for SaaS applications.', 'Built responsive user interfaces and collaborated with cross-functional teams to enhance usability.', 'Tested, debugged, and validated application features to improve functionality and reliability.'] },
   { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: ['Organized and facilitated cloud learning sessions to help students develop core IT and cloud capabilities.', 'Coordinated hands-on workshops covering AWS fundamentals and cloud computing concepts.', 'Collaborated with club officers to design educational resources and host learning events.'] },
 ]
 
@@ -96,18 +98,18 @@ export const EDUCATION = [
 
 
 export const PERSONAL: { title: string, desc: string[], tags: string[], link?: string, imgs: string[], wip?: boolean, role?: string, period?: string, status?: string }[] = [
-  { title: 'PingMe', role: 'Frontend Developer', period: '2024', status: 'COMPLETE', desc: [
+  { title: 'PingMe', role: 'Full-Stack Developer', period: '2024', status: 'COMPLETE', desc: [
     'Interactive minimalist platform built for project inquiries, networking, and professional assistance.',
     'Features sleek UI/UX with smooth transitions, responsive layouts, and highly intuitive contact forms.',
     'Designed to serve as an engaging secondary gateway for potential clients and employers.'
   ], tags: ['React', 'Tailwind', 'Framer Motion'], link: 'https://ping-me-seven-vert.vercel.app/', imgs: ['/images/PingMe.webp'] },
 
-  { title: 'GroundSpot', role: 'Web Developer', period: '2025 - Present', status: 'BETA', desc: [
+  { title: 'GroundSpot', role: 'Full-Stack Developer', period: '2025 - Present', status: 'BETA', desc: [
     'Modern facility and space booking platform currently in active development.',
     'Features dynamic scheduling calendars, real-time availability checks, and secure user authentication.',
     'Aims to streamline the workflow for property managers and end-users looking for temporary spaces.'
   ], tags: ['React', 'Tailwind', 'Supabase'], link: 'https://ground-spot-frontend-web.vercel.app/', imgs: ['/images/GrooundSpot.webp', '/images/Login-GroundSpot.webp', '/images/GrooundSpot-dashboard.webp'], wip: true },
-  { title: 'Tasklet', role: 'Frontend Developer', period: '2025', status: 'COMPLETE', desc: [
+  { title: 'Tasklet', role: 'Full-Stack Developer', period: '2025', status: 'COMPLETE', desc: [
     'A web app designed to help students beat procrastination and stay productive.',
     'Features a customizable focus timer, study technique guides, and downloadable planning templates.',
     'Includes motivational quotes to keep students inspired throughout their study sessions.'

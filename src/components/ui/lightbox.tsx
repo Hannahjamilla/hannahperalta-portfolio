@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { useTheme, t } from '../../context/theme-context'
 
 // Preload adjacent images for smooth navigation
@@ -54,17 +55,18 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
   const prev = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i - 1 + totalSlides) % totalSlides) }
 
   return (
-    <div className="fixed inset-0 z-[70] flex flex-col items-center justify-end sm:flex-row sm:items-stretch sm:justify-end" onClick={onClose}>
-      <div className="absolute inset-0 backdrop-blur-md bg-black/40 sm:bg-black/5" />
+    <div className="fixed inset-0 z-[70] flex items-end lg:items-stretch justify-end p-0" onClick={onClose}>
+      <div className="absolute inset-0 backdrop-blur-md bg-black/40 lg:bg-black/50" />
 
-      <div className={`relative z-10 w-full flex flex-col max-h-[88vh] overflow-y-auto rounded-t-3xl sm:rounded-none sm:rounded-l-3xl sm:h-full sm:max-h-none transition-transform animate-slide-bottom sm:animate-slide-right sm:p-6 lg:p-8 p-5 ${
-        t(dark, 'bg-[#0f0f1a] border border-b-0 border-white/10 sm:border sm:border-r-0 sm:border-y-0 sm:border-white/10', 'bg-[#fdfbf7] border border-b-0 border-amber-900/10 sm:border sm:border-r-0 sm:border-y-0 sm:border-amber-900/10 sm:shadow-2xl')
+      <div className={`relative z-10 w-full lg:w-[65vw] lg:max-w-[850px] max-h-[92vh] lg:max-h-full lg:h-full overflow-y-auto rounded-t-3xl lg:rounded-none lg:rounded-l-2xl flex flex-col justify-start lg:justify-center p-5 lg:p-8 ${
+        t(dark, 'bg-[#0f0f1a] border-t lg:border-t-0 lg:border-l border-white/10 shadow-2xl shadow-black/80', 'bg-[#fdfbf7] border-t lg:border-t-0 lg:border-l border-amber-900/10 shadow-2xl')
       }`} onClick={e => e.stopPropagation()}>
 
-        {/* Drag handle pill — mobile only */}
-        <div className="sm:hidden flex justify-center mb-4 -mt-1">
+        {/* Drag handle pill — mobile & tablet only */}
+        <div className="lg:hidden flex justify-center mb-4 -mt-1">
           <div className={`w-10 h-1 rounded-full ${t(dark, 'bg-white/20', 'bg-black/15')}`} />
         </div>
+
 
         {/* Game UI Header */}
         <div className={`w-full flex justify-between items-end mb-4 border-b-2 pb-2 ${t(dark, 'border-cyan-900', 'border-amber-200/60')}`}>
@@ -85,16 +87,16 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
           </button>
         </div>
 
-        {/* Main Image Frame */}
-        <div className={`relative w-full border p-2 sm:p-4 ${t(dark, 'border-cyan-800/50 bg-black/50 shadow-sm hover:shadow-md', 'border-amber-200/50 bg-white shadow-xl')}`}>
-          <div className={`relative w-full h-[50vh] sm:h-[65vh] flex ${isMoreInfoSlide ? 'items-start' : 'items-center'} justify-center overflow-y-auto overflow-x-hidden ${t(dark, 'bg-[#0a0a0f]/80', 'bg-[#fcfaf5]')}`}>
+        {/* Main Content Area — fixed height so modal never resizes between slides */}
+        <div className={`relative w-full border p-2 lg:p-4 ${t(dark, 'border-cyan-800/50 bg-black/50 shadow-sm', 'border-amber-200/50 bg-white shadow-xl')}`}>
+          <div className={`relative w-full h-[32vh] sm:h-[38vh] lg:h-[55vh] flex ${isMoreInfoSlide ? 'items-start' : 'items-center justify-center'} overflow-y-auto overflow-x-hidden ${t(dark, 'bg-[#0a0a0f]/80', 'bg-[#fcfaf5]')}`}>
             {isMoreInfoSlide ? (
-              <div className="p-5 sm:p-8 w-full min-h-full flex flex-col text-left animate-fade-in relative z-10">
+              <div className="p-5 lg:p-8 w-full min-h-full flex flex-col text-left animate-fade-in relative z-10">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-dashed border-gray-200 dark:border-white/10">
-                  <h2 className={`text-2xl sm:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{alt}</h2>
+                  <h2 className={`text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{alt}</h2>
                   {link && (
-                    <a href={link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all shadow-sm shrink-0 self-start sm:self-auto ${t(dark, 'border-cyan-700/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/50 hover:-translate-y-0.5', 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:-translate-y-0.5')}`}>
-                      OPEN LIVE <span className="font-sans font-black text-sm leading-none">↗</span>
+                    <a href={link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 rounded-xl text-xs lg:text-sm font-bold border transition-all shadow-sm shrink-0 self-start sm:self-auto ${t(dark, 'border-cyan-700/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/50 hover:-translate-y-0.5', 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:-translate-y-0.5')}`}>
+                      OPEN LIVE <ArrowUpRight size={14} className="stroke-[2.5]" />
                     </a>
                   )}
                 </div>
@@ -144,7 +146,6 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
                     </div>
                   </div>
                 )}
-                {/* OPEN LIVE migrated to the top header */}
               </div>
             ) : (
               <img
@@ -158,6 +159,7 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
             )}
           </div>
         </div>
+
 
         {/* Navigation Controls */}
         {totalSlides > 1 && (

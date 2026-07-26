@@ -34,10 +34,10 @@ export default function App() {
   const muted = t(dark, 'text-[#737373]', 'text-[#5d5a55]')
 
   // Signature Newspaper Accent Color (Editorial Crimson)
-  const singleAccent = t(dark, 'text-[#ff6b6b] font-bold', 'text-[#a11d1d] font-bold') 
+  const singleAccent = t(dark, 'text-[#ff6b6b] font-bold', 'text-[#a11d1d] font-bold')
   const singleBgAccent = t(dark, 'border-b-4 border-double border-[#ff6b6b] text-[#ff6b6b]', 'border-b-4 border-double border-[#a11d1d] text-[#a11d1d]')
-  
-  const accentBurgundy = singleAccent 
+
+  const accentBurgundy = singleAccent
   const bgBurgundy = singleBgAccent
   const accentTeal = singleAccent
   const bgTeal = singleBgAccent
@@ -58,6 +58,23 @@ export default function App() {
     setTimeout(() => { preloadImages(['/images/Hannah-casual4.webp']); }, 1000);
   }, [])
 
+  // Scroll reveal observer
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible')
+          entry.target.classList.remove('reveal-hidden')
+        }
+      })
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+
+    const targets = document.querySelectorAll('.reveal-on-scroll')
+    targets.forEach(el => observer.observe(el))
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <ThemeCtx.Provider value={{ dark, toggle }}>
       <div className={`min-h-screen w-full ${bg} transition-colors duration-700 flex flex-col items-center selection:bg-red-600/30 selection:text-current font-serif`}>
@@ -73,8 +90,8 @@ export default function App() {
               <span className="hidden lg:block whitespace-nowrap text-center truncate">Ideas, Code & Creations</span>
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                 <span className="hidden sm:inline whitespace-nowrap">{dateString}</span>
-                <button 
-                  onClick={toggle} 
+                <button
+                  onClick={toggle}
                   className="pointer-events-auto border border-current px-2 py-0.5 text-[8px] sm:text-[10px] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors shrink-0 whitespace-nowrap font-bold"
                   title="Toggle Theme"
                 >
@@ -133,30 +150,30 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-                <p className="text-[9px] font-serif italic mt-1.5 text-center opacity-60 hidden md:block">A recent photo of me at my desk.</p>
+                <p className="text-[9px] font-serif italic mt-1.5 text-center opacity-60 hidden md:block">The face behind the code.</p>
               </div>
 
               {/* Biography content wrapping around photo */}
               <div className="hidden md:block">
-                  <h2 className={`text-2xl md:text-3xl font-serif font-black uppercase tracking-tight mb-1.5 ${accentBurgundy} group-hover:underline underline-offset-4 decoration-2`}>Author</h2>
-                  <div className="flex items-center gap-3 mb-3.5">
-                    <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
-                    <span className={`text-[9px] font-mono font-black uppercase tracking-[0.3em] px-2.5 py-1 border border-current ${accentBurgundy}`}>✦ Hello World ✦</span>
-                    <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
-                  </div>
-                  <div className={`font-serif text-sm md:text-[15px] leading-relaxed space-y-3 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
-                    <p className="first-letter:text-4xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
-                      I'm a Web Developer with experience building modern, responsive applications through internships and academic projects. I specialize in creating user-focused interfaces and developing practical features using React.js, Node.js, Laravel, and database systems.
-                    </p>
-                    <p>
-                      My approach centers on building technology that serves real-world needs. I focus on designing intuitive user experiences and developing reliable backend systems that address practical business requirements.
-                    </p>
-                    <p>
-                      I value clean, user-centered solutions and aim to continuously expand my technical skills while contributing effectively to development teams.
-                    </p>
-                  </div>
-
+                <h2 className={`text-2xl md:text-3xl font-serif font-black uppercase tracking-tight mb-1.5 ${accentBurgundy} group-hover:underline underline-offset-4 decoration-2`}>Author</h2>
+                <div className="flex items-center gap-3 mb-3.5">
+                  <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
+                  <span className={`text-[9px] font-mono font-black uppercase tracking-[0.3em] px-2.5 py-1 border border-current ${accentBurgundy}`}>✦ Hello World ✦</span>
+                  <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
                 </div>
+                <div className={`font-serif text-sm md:text-[15px] leading-relaxed space-y-3 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
+                  <p className="first-letter:text-4xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
+                    I'm a Web Developer with experience building modern, responsive applications through internships and academic projects. I specialize in creating user-focused interfaces and developing practical features using React.js, Node.js, Laravel, and database systems.
+                  </p>
+                  <p>
+                    My approach centers on building technology that serves real-world needs. I focus on designing intuitive user experiences and developing reliable backend systems that address practical business requirements.
+                  </p>
+                  <p>
+                    I value clean, user-centered solutions and aim to continuously expand my technical skills while contributing effectively to development teams.
+                  </p>
+                </div>
+
+              </div>
 
               {/* Clear floats so subsequent rows render underneath */}
               <div className="clear-both" />
@@ -185,17 +202,18 @@ export default function App() {
           </section>
 
           {/* ── PROFESSIONAL CHRONICLE (EXPERIENCE) ── */}
-          <section id="experience" className={`border-b ${border}`}>
+          <section id="experience" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
             <div className={`px-5 py-4 border-b ${border} ${bgTeal}`}>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                <span className="inline-block w-3 h-3 bg-current rotate-45" /> Work Experience
+              <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
+                <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Work Experience
               </h2>
+              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Professional Roles & Internships</p>
             </div>
 
             {/* 1-col on mobile, 3-col on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-3">
               {XP_LOG.map((exp, i) => (
-                <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 md:border-r last:border-b-0 last:md:border-r-0 ${border} flex flex-col justify-between h-full ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group`}>
+                <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 md:border-r last:border-b-0 last:md:border-r-0 ${border} flex flex-col justify-between h-full ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
                   <div className="flex flex-col h-full justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-4">
@@ -221,32 +239,36 @@ export default function App() {
           </section>
 
           {/* ── FEATURED STORIES (PROJECTS) ── */}
-          <section id="projects" className={`border-b ${border}`}>
-            <div className={`px-5 py-4 border-b ${border} ${bgBurgundy} flex flex-col md:flex-row items-baseline justify-between`}>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                <span className="inline-block w-3 h-3 bg-current rotate-45" /> Featured Projects
+          <section id="projects" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
+            <div className={`px-5 py-4 border-b ${border} ${bgBurgundy}`}>
+              <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
+                <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Featured Projects
               </h2>
-              <span className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-2 md:mt-0">Some things I've built</span>
+              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Some things I've built</p>
             </div>
 
             {/* Lead Story — First project gets full-width hero treatment */}
             <div className={`border-b ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-all`}>
               {/* Mobile: text on top, image stacked below */}
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div 
-                  onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })} 
+                <div
+                  onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
                   className={`p-4 md:p-10 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r ${border} cursor-pointer`}
                 >
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4 text-[10px] font-mono uppercase tracking-widest font-black opacity-80">
+                  <div className="flex flex-col gap-1.5 mb-4">
                     {QUESTS[0].badge && (
-                      <span className={`inline-block px-2 py-1 text-[9px] border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[0].badge}</span>
+                      <div>
+                        <span className={`inline-block px-2 py-0.5 text-[9px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[0].badge}</span>
+                      </div>
                     )}
-                    <span className={accentBurgundy}>{QUESTS[0].role}</span>
-                    <span>&bull;</span>
-                    <span>{QUESTS[0].period}</span>
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] font-mono uppercase tracking-widest font-black opacity-80">
+                      <span className={accentBurgundy}>{QUESTS[0].role}</span>
+                      <span>&bull;</span>
+                      <span>{QUESTS[0].period}</span>
+                    </div>
                   </div>
                   <h3 className="text-xl md:text-4xl lg:text-[44px] font-serif font-black uppercase tracking-wide mb-3 md:mb-5 group-hover:underline underline-offset-4 decoration-2 decoration-rose-455 leading-tight">{QUESTS[0].title}</h3>
-                  <div className="font-serif text-sm md:text-base leading-relaxed opacity-95 space-y-4 text-inherit">
+                  <div className="font-serif text-sm md:text-base leading-relaxed opacity-95 space-y-3 text-inherit">
                     <p className="first-letter:text-5xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
                       {QUESTS[0].desc[0]}
                     </p>
@@ -254,7 +276,7 @@ export default function App() {
                       <p key={j}>{d}</p>
                     ))}
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-2 mt-6">
                     {QUESTS[0].tags.map(tg => (
                       <span key={tg} className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-350 border border-zinc-700', 'bg-white text-zinc-700 border border-[#e2dcb6]')}`}>{tg}</span>
@@ -266,19 +288,25 @@ export default function App() {
                       <ArrowUpRight size={14} /> See Details
                     </div>
                     {QUESTS[0].link && (
-                      <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${accentBurgundy}`}>● Live</span>
+                      <a
+                        href={QUESTS[0].link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className={`text-[10px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
+                      >● Live</a>
                     )}
                   </div>
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
-                  <div 
+                  <div
                     className="w-full flex justify-center cursor-pointer"
                     onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
                   >
                     <img src={QUESTS[0].imgs[0]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" loading="lazy" />
                   </div>
                   {QUESTS[0].imgs[1] && (
-                    <div 
+                    <div
                       className="w-full flex justify-center cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -295,56 +323,113 @@ export default function App() {
             {/* ── MOBILE: Mixed Newspaper Hierarchy (hidden on md+) ── */}
             <div className="md:hidden">
               {/* Sub-headline: 2nd project gets prominent treatment */}
-              <div 
-                onClick={() => setLightbox({ imgs: QUESTS[1].imgs, alt: QUESTS[1].title, wip: (QUESTS[1] as any).wip, desc: QUESTS[1].desc, tags: QUESTS[1].tags, link: QUESTS[1].link, role: QUESTS[1].role, status: QUESTS[1].status, period: QUESTS[1].period })} 
-                className={`flex gap-3 p-3 border-b ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}
+              <div
+                onClick={() => setLightbox({ imgs: QUESTS[1].imgs, alt: QUESTS[1].title, wip: (QUESTS[1] as any).wip, desc: QUESTS[1].desc, tags: QUESTS[1].tags, link: QUESTS[1].link, role: QUESTS[1].role, status: QUESTS[1].status, period: QUESTS[1].period })}
+                className={`p-4 border-b ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between`}
               >
-                <div className="w-[45%] shrink-0 aspect-[4/3] overflow-hidden rounded">
-                  <img src={QUESTS[1].imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" loading="lazy" />
-                </div>
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    {QUESTS[1].badge && (
-                      <div className="mb-2">
-                         <span className={`inline-block px-1.5 py-0.5 text-[7px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[1].badge}</span>
+                <div>
+                  {/* Capstone Project title before image */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-2 h-2 bg-current rotate-45 opacity-80 shrink-0" />
+                    <span className={`text-[11px] font-mono font-black uppercase tracking-[0.22em] ${accentBurgundy}`}>Capstone Project</span>
+                  </div>
+
+                  {/* Two images side by side */}
+                  <div className="grid grid-cols-2 gap-2 mb-4">
+                    <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center">
+                      <img src={QUESTS[1].imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
+                    </div>
+                    {QUESTS[1].imgs[1] && (
+                      <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center">
+                        <img src={QUESTS[1].imgs[1]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
                       </div>
                     )}
-                    <span className={`text-[8px] font-mono font-black uppercase tracking-widest ${accentBurgundy}`}>{QUESTS[1].role} • {QUESTS[1].period}</span>
-                    <h3 className="text-base font-serif font-black uppercase tracking-wide leading-tight mt-1 group-hover:underline">{QUESTS[1].title}</h3>
-                    <p className="font-serif text-xs leading-relaxed opacity-80 mt-1 line-clamp-2">{QUESTS[1].desc[0]}</p>
                   </div>
-                  <div className="flex items-center gap-1.5 mt-2">
-                    {QUESTS[1].tags.slice(0, 2).map(tg => (
-                      <span key={tg} className={`px-1.5 py-0.5 rounded text-[7px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-600 border border-zinc-200')}`}>{tg}</span>
+
+                  {/* Text content */}
+                  <div>
+                    {QUESTS[1].badge && (
+                      <div className="mb-1.5">
+                        <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[1].badge}</span>
+                      </div>
+                    )}
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-2 text-[8px] font-mono font-black uppercase tracking-widest">
+                      <span className={accentBurgundy}>{QUESTS[1].role}</span>
+                      <span className="opacity-40">•</span>
+                      <span className="opacity-60">{QUESTS[1].period}</span>
+                    </div>
+                    <h3 className="text-xl font-serif font-black uppercase tracking-wide leading-tight mb-2 group-hover:underline underline-offset-4 decoration-2">{QUESTS[1].title}</h3>
+                    <p className="font-serif text-sm leading-relaxed opacity-85">{QUESTS[1].desc[0]}</p>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="flex justify-between items-center mt-4 pt-3 border-t border-dashed border-current/20">
+                  <div className="flex flex-wrap gap-1.5">
+                    {QUESTS[1].tags.map(tg => (
+                      <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-600 border border-zinc-200')}`}>{tg}</span>
                     ))}
-                    {QUESTS[1].link && <span className={`ml-auto text-[8px] font-mono font-black ${accentBurgundy}`}>● Live</span>}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-widest ${accentBurgundy} group-hover:translate-x-0.5 transition-transform`}>
+                      <ArrowUpRight size={11} /> Details
+                    </span>
+                    {QUESTS[1].link && (
+                      <a
+                        href={QUESTS[1].link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
+                      >LIVE</a>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* Compact 2-col briefs for remaining projects */}
+              {/* Single label before the grid */}
+              <div className={`flex items-center gap-1.5 px-3 pt-3 pb-1`}>
+                <span className="w-1 h-1 bg-current rotate-45 opacity-70" />
+                <span className={`text-[9px] font-mono font-black uppercase tracking-[0.2em] ${accentBurgundy}`}>Here's What Else I've Built</span>
+              </div>
               <div className="grid grid-cols-2">
                 {QUESTS.slice(2).map((q, i) => (
-                  <div 
-                    key={i} 
-                    onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })} 
-                    className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}
+                  <div
+                    key={i}
+                    onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                    className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
                   >
-                    <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
-                      <img src={q.imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" loading="lazy" />
-                    </div>
-                    {q.badge && (
-                      <div className="mb-1.5 mt-2">
-                        <span className={`inline-block px-1.5 py-0.5 text-[6px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                    <div>
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
+                        <img src={q.imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" loading="lazy" />
                       </div>
-                    )}
-                    <span className={`text-[7px] font-mono font-black uppercase tracking-widest opacity-60`}>{q.period}</span>
-                    <h3 className="text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 group-hover:underline">{q.title}</h3>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className={`text-[8px] font-mono font-bold uppercase tracking-widest ${accentGold}`}>
-                        <ArrowUpRight size={10} className="inline" /> Details
-                      </span>
-                      {q.link && <span className={`text-[8px] font-mono font-black ${accentBurgundy}`}>● Live</span>}
+                      {q.badge && (
+                        <div className="mb-1 mt-1.5">
+                          <span className={`inline-block px-1.5 py-0.5 text-[6.5px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                        </div>
+                      )}
+                      <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-[7px] font-mono font-black uppercase tracking-widest mb-1 opacity-70">
+                        <span>{q.role ? q.role.split('|')[0].trim() : ''}</span>
+                        {q.role && <span>&bull;</span>}
+                        <span>{q.period}</span>
+                      </div>
+                      <h3 className="text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 group-hover:underline">{q.title}</h3>
+                    </div>
+
+                    <div className="mt-3 pt-2 border-t border-dashed border-current/20 flex items-center justify-between text-[8.5px] font-mono font-bold uppercase tracking-widest">
+                      <div className={`flex items-center gap-1 ${accentGold} group-hover:translate-x-0.5 transition-transform`}>
+                        <ArrowUpRight size={11} /> Details
+                      </div>
+                      {q.link && (
+                        <a
+                          href={q.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
+                        >LIVE</a>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -355,19 +440,21 @@ export default function App() {
             {/* Secondary: 2-col */}
             <div className="hidden md:grid grid-cols-2 border-b border-inherit">
               {QUESTS.slice(1, 3).map((q, i) => (
-                <div 
-                  key={i} 
-                  onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })} 
-                  className={`p-8 border-r last:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]') } transition-colors flex flex-col justify-between`}
+                <div
+                  key={i}
+                  onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                  className={`p-8 border-r last:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
                 >
                   <div>
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-2`}>
                       <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
-                      {q.badge && (
-                        <span className={`inline-block px-2 py-1 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
-                      )}
+                    {q.badge && (
+                      <div className="mb-1.5">
+                        <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                      </div>
+                    )}
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
                       <span className={accentIndigo}>{q.role}</span>
                       <span>&bull;</span>
                       <span>{q.period}</span>
@@ -380,136 +467,242 @@ export default function App() {
                       ))}
                     </div>
                   </div>
-                  <div className={`mt-6 pt-4 border-t ${border} flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
+                  <div className={`mt-6 pt-4 border-t border-dashed border-current/20 flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
                     <div className={`flex items-center gap-2 ${accentIndigo} group-hover:translate-x-1 duration-300 transition-transform`}>
                       <ArrowUpRight size={12} /> Details
                     </div>
-                    {q.link && <span className={`inline-flex items-center gap-1 ${accentBurgundy}`}>● Live</span>}
+                    {q.link && (
+                      <a
+                        href={q.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
+                      >LIVE</a>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Tertiary: 3-col on desktop */}
-            <div className="hidden md:grid lg:grid-cols-3">
+            {/* Tertiary: 2-col grid on tablet (md), 3-col grid on desktop (lg) */}
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3">
               {QUESTS.slice(3).map((q, i) => (
-                <div 
-                  key={i} 
-                  onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })} 
-                  className={`p-8 border-b lg:border-b-0 border-r lg:border-r last:lg:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]') } transition-colors flex flex-col justify-between`}
+                <div
+                  key={i}
+                  onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                  className={`p-6 lg:p-8 border-b lg:border-b-0 border-r md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:border-r last:lg:border-r-0 ${i === 2 ? 'md:col-span-2 lg:col-span-1 md:w-full md:border-t md:border-b lg:border-t-0 lg:border-b-0 md:border-r-0 lg:border-r' : 'border-b md:border-b'} ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
                 >
-                  <div>
-                    <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-1.5`}>
-                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
+                  {i === 2 ? (
+                    <div className="flex flex-col justify-between h-full">
+                      {/* Split layout on tablet: left image, right details */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 items-center">
+                        <div className="aspect-[16/10] w-full relative overflow-hidden p-1.5">
+                          <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
+                        </div>
+
+                        <div>
+                          {q.badge && (
+                            <div className="mb-1.5">
+                              <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                            </div>
+                          )}
+                          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
+                            <span className={accentGold}>{q.role}</span>
+                            <span>&bull;</span>
+                            <span>{q.period}</span>
+                          </div>
+                          <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
+                          <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
+                          <div className="flex flex-wrap gap-1.5 mt-4">
+                            {q.tags.map(tg => (
+                              <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-650 border border-zinc-200')}`}>{tg}</span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className={`mt-6 pt-4 border-t border-dashed border-current/20 flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
+                        <div className={`flex items-center gap-2 ${accentGold} group-hover:translate-x-1 duration-300 transition-transform`}>
+                          <ArrowUpRight size={12} /> Details
+                        </div>
+                        {q.link && (
+                          <a
+                            href={q.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
+                          >LIVE</a>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
-                      {q.badge && (
-                        <span className={`inline-block px-2 py-1 text-[8px] border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
-                      )}
-                      <span className={accentGold}>{q.role}</span>
-                      <span>&bull;</span>
-                      <span>{q.period}</span>
-                    </div>
-                    <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
-                    <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
-                    <div className="flex flex-wrap gap-1.5 mt-4">
-                      {q.tags.map(tg => (
-                        <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-650 border border-zinc-200')}`}>{tg}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className={`mt-6 pt-4 border-t ${border} flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
-                    <div className={`flex items-center gap-2 ${accentGold} group-hover:translate-x-1 duration-300 transition-transform`}>
-                      <ArrowUpRight size={12} /> Details
-                    </div>
-                    {q.link && <span className={`inline-flex items-center gap-1 ${accentBurgundy}`}>● Live</span>}
-                  </div>
+                  ) : (
+                    <>
+                      <div>
+                        <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-1.5`}>
+                          <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
+                        </div>
+                        {q.badge && (
+                          <div className="mb-1.5">
+                            <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                          </div>
+                        )}
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
+                          <span className={accentGold}>{q.role}</span>
+                          <span>&bull;</span>
+                          <span>{q.period}</span>
+                        </div>
+                        <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
+                        <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
+                        <div className="flex flex-wrap gap-1.5 mt-4">
+                          {q.tags.map(tg => (
+                            <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-650 border border-zinc-200')}`}>{tg}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className={`mt-6 pt-4 border-t border-dashed border-current/20 flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
+                        <div className={`flex items-center gap-2 ${accentGold} group-hover:translate-x-1 duration-300 transition-transform`}>
+                          <ArrowUpRight size={12} /> Details
+                        </div>
+                        {q.link && (
+                          <a
+                            href={q.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
+                          >LIVE</a>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
           </section>
 
           {/* ── CLASSIFIEDS & RECOGNITIONS — Stacked Full Width ── */}
-          <section className={`border-b ${border}`}>
+          <section className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
 
             {/* Personal Projects / Classifieds */}
             <div>
               <div className={`px-5 py-4 border-b ${border} ${bgIndigo}`}>
-                <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                  <span className="inline-block w-3 h-3 bg-current rotate-45" /> Other Projects
+                <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
+                  <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Other Projects
                 </h2>
                 <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Fun Side Projects & Sandbox Experiments</p>
               </div>
               {/* 2-col on mobile, 6-col sub-grid on desktop → 3 per row, last 2 centered */}
               <div className="grid grid-cols-2 lg:grid-cols-6">
-                {PERSONAL.map((p, i) => (
-                  <div 
-                    key={i} 
-                    className={`p-3 md:p-6 border-b border-r [&:nth-child(2n)]:border-r-0 lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 last:border-r-0 [&:last-child:nth-child(odd)]:col-span-2 ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`} 
-                    onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
-                  >
-                    <div>
-                      <div className={`w-full h-[110px] lg:h-auto lg:aspect-[16/10] p-1.5 mb-4 overflow-hidden relative flex items-center justify-center`}>
-                        <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
-                      </div>
-                      
-                      <div className="flex items-center gap-3 mb-2 text-[9px] font-mono font-bold uppercase tracking-widest opacity-70">
-                        <span className={accentIndigo}>{p.role}</span>
-                        {p.period && <><span>&bull;</span><span>{p.period}</span></>}
-                      </div>
-                      
-                      <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1.5 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
-                      
-                      <p className={`text-xs md:text-sm font-serif leading-relaxed flex-1 ${muted}`}>{p.desc[0]}</p>
+                {PERSONAL.map((p, i) => {
+                  const isTasklet = p.title === 'Tasklet';
+                  return (
+                    <div
+                      key={i}
+                      className={`p-3 md:p-6 border-b border-r ${isTasklet ? 'col-span-2 border-r-0' : '[&:nth-child(2n)]:border-r-0'} lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 last:border-r-0 ${!isTasklet ? '[&:last-child:nth-child(odd)]:col-span-2' : ''} ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
+                      onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                    >
+                      {/* Tasklet: side-by-side on tablet (md), stacked on mobile & desktop (lg) */}
+                      {isTasklet ? (
+                        <>
+                          <div className="flex gap-3 md:grid md:grid-cols-2 lg:block items-center">
+                            <div className="w-[38%] shrink-0 md:w-full h-auto aspect-[4/3] md:aspect-[16/10] p-1 md:p-1.5 mb-0 md:mb-4 overflow-hidden relative flex items-center justify-center">
+                              <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
+                            </div>
+                            <div className="flex-1 flex flex-col justify-center md:block">
+                              <div className="flex items-center gap-3 mb-1 md:mb-2 text-[8px] md:text-[9px] font-mono font-bold uppercase tracking-widest opacity-70">
+                                <span className={accentIndigo}>{p.role}</span>
+                                {p.period && <><span>&bull;</span><span>{p.period}</span></>}
+                              </div>
+                              <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
+                              <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted} line-clamp-2 md:line-clamp-none`}>{p.desc[0]}</p>
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center mt-3 md:mt-4 pt-3 md:pt-4 border-t border-dashed border-inherit">
+                            <div className="flex flex-wrap gap-1">
+                              {p.tags.slice(0, 2).map(t => (
+                                <span key={t} className={`px-1.5 py-0.5 rounded text-[8px] font-mono font-bold ${dark ? 'bg-zinc-800 text-zinc-350' : 'bg-white text-zinc-650'}`}>{t}</span>
+                              ))}
+                            </div>
+                            {p.link && (
+                              <a
+                                href={p.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={e => e.stopPropagation()}
+                                className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
+                              >LIVE</a>
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        /* All other projects: original stacked layout */
+                        <>
+                          <div>
+                            <div className={`w-full h-[110px] lg:h-auto lg:aspect-[16/10] p-1.5 mb-4 overflow-hidden relative flex items-center justify-center`}>
+                              <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
+                            </div>
+
+                            <div className="flex items-center gap-3 mb-2 text-[9px] font-mono font-bold uppercase tracking-widest opacity-70">
+                              <span className={accentIndigo}>{p.role}</span>
+                              {p.period && <><span>&bull;</span><span>{p.period}</span></>}
+                            </div>
+
+                            <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1.5 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
+
+                            <p className={`text-xs md:text-sm font-serif leading-relaxed flex-1 ${muted}`}>{p.desc[0]}</p>
+                          </div>
+
+                          <div className="flex justify-between items-center mt-4 pt-4 border-t border-dashed border-inherit">
+                            <div className="flex flex-wrap gap-1">
+                              {p.tags.slice(0, 2).map(t => (
+                                <span key={t} className={`px-1.5 py-0.5 rounded text-[8px] font-mono font-bold ${dark ? 'bg-zinc-800 text-zinc-350' : 'bg-white text-zinc-650'}`}>{t}</span>
+                              ))}
+                            </div>
+                            {p.wip ? (
+                              <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>● WIP</span>
+                            ) : p.link ? (
+                              <a
+                                href={p.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={e => e.stopPropagation()}
+                                className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
+                              >● Live</a>
+                            ) : null}
+                          </div>
+                        </>
+                      )}
                     </div>
-                    
-                    <div className="flex justify-between items-center mt-4 pt-4 border-t border-dashed border-inherit">
-                      <div className="flex flex-wrap gap-1">
-                        {p.tags.slice(0, 2).map(t => (
-                          <span key={t} className={`px-1.5 py-0.5 rounded text-[8px] font-mono font-bold ${dark ? 'bg-zinc-800 text-zinc-350' : 'bg-white text-zinc-650'}`}>{t}</span>
-                        ))}
-                      </div>
-                      {p.wip ? (
-                        <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>● WIP</span>
-                      ) : p.link ? (
-                        <a
-                          href={p.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={e => e.stopPropagation()}
-                          className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
-                        >● Live</a>
-                      ) : null}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
             {/* Awards & Certifications */}
             <div className={`border-t ${border}`}>
               <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
-                <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                  <span className="inline-block w-3 h-3 bg-current rotate-45" /> Awards & Certifications
+                <h2 className="text-lg sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
+                  <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Awards & Certifications
                 </h2>
-                <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-80 mt-1">My achievements and certificates</p>
+                <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">My achievements and certificates</p>
               </div>
               {/* 2-col on mobile (newspaper recognitions), 3-col on desktop */}
               <div className="grid grid-cols-2 lg:grid-cols-3">
                 {ACHIEVEMENTS.map((a, i) => (
-                  <div 
-                    key={i} 
-                    className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:[&:nth-child(-n+3)]:border-b lg:[&:nth-child(n+4)]:border-b-0 lg:border-r [&:nth-child(3n)]:lg:border-r-0 ${border} flex items-start gap-2 md:gap-4 cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`} 
-                    onClick={() => setDetailModal({ title: a.title, date: a.date, desc: a.desc })}
+                  <div
+                    key={i}
+                    className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:[&:nth-child(-n+3)]:border-b lg:[&:nth-child(n+4)]:border-b-0 lg:border-r [&:nth-child(3n)]:lg:border-r-0 ${border} flex items-start gap-2 md:gap-4 ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
                   >
-                    <div className={`mt-0.5 p-1.5 md:p-2 rounded-lg ${t(dark, 'bg-zinc-800/80 text-[#ff6b6b] border border-red-500/20', 'bg-white text-[#a11d1d] border border-red-200')} shrink-0 group-hover:scale-[1.05] transition-transform hidden sm:block`}>
+                    <div className={`mt-0.5 p-1.5 md:p-2 rounded-lg ${t(dark, 'bg-zinc-800/80 text-[#ff6b6b] border border-red-500/20', 'bg-white text-[#a11d1d] border border-red-200')} shrink-0 hidden sm:block`}>
                       <a.icon size={22} strokeWidth={1.5} />
                     </div>
-                    
+
                     <div className="flex flex-col justify-center min-w-0">
                       <span className="text-[9px] font-mono font-black uppercase tracking-widest mb-1 opacity-70">{a.date}</span>
-                      <h3 className="text-sm md:text-[17px] font-serif font-black uppercase tracking-wide leading-tight group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors">{a.title}</h3>
-                      <p className={`text-xs md:text-xs font-serif mt-1.5 md:mt-2 leading-relaxed ${muted} line-clamp-2 md:line-clamp-3`}>{a.desc}</p>
+                      <h3 className="text-sm md:text-[17px] font-serif font-black uppercase tracking-wide leading-tight">{a.title}</h3>
+                      <p className={`text-xs md:text-xs font-serif mt-1.5 md:mt-2 leading-relaxed ${muted}`}>{a.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -519,21 +712,21 @@ export default function App() {
             {/* Education */}
             <div id="education" className={`border-t ${border}`}>
               <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
-                <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                  <span className="inline-block w-3 h-3 bg-current rotate-45" /> Education
+                <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
+                  <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Education
                 </h2>
-                <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-80 mt-1">Academic Background</p>
+                <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Academic Background</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2">
                 {EDUCATION.map((edu, i) => (
-                  <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group`}>
+                  <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
                         <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${accentGold}`}>{edu.period}</span>
                         <span className={`px-2 py-0.5 text-[9px] font-mono font-bold border border-current opacity-70`}>{edu.badge}</span>
                       </div>
-                      
+
                       <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{edu.school}</h3>
 
                       <p className={`text-xs font-serif italic mb-3 ${muted}`}>{edu.location}</p>
@@ -553,30 +746,30 @@ export default function App() {
           </section>
 
           {/* ── SKILLS & INFO ── */}
-          <section id="skills" className={`border-b ${border}`}>
+          <section id="skills" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
             <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
-              <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                <span className="inline-block w-3 h-3 bg-current rotate-45" /> Technical Skills
+              <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
+                <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Technical Skills
               </h2>
-              <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-80 mt-1">My core technologies and tools</p>
+              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">My core technologies and tools</p>
             </div>
             <TechnicalSkills dark={dark} border={border} />
           </section>
 
           {/* ── GITHUB CONTRIBUTIONS ── */}
-          <section id="github" className={`border-b ${border}`}>
+          <section id="github" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
             <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
-              <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-3">
-                <span className="inline-block w-3 h-3 bg-current rotate-45" /> GitHub Contributions
+              <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
+                <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> GitHub Contributions
               </h2>
-              <p className="text-[10px] font-mono font-bold uppercase tracking-widest opacity-80 mt-1">A look at my daily coding activity and projects over the past year</p>
+              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">A look at my daily coding activity and projects over the past year</p>
             </div>
 
             <div className="p-4 md:p-6">
-              <a 
-                href="https://github.com/Hannahjamilla" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://github.com/Hannahjamilla"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`block p-4 sm:p-6 border ${border} transition-all group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')}`}
               >
                 <div className={`flex items-center justify-between gap-2 mb-3 pb-3 border-b border-dashed ${border}`}>
@@ -587,9 +780,9 @@ export default function App() {
                 </div>
 
                 <div className="w-full flex justify-center py-2 overflow-hidden">
-                  <img 
+                  <img
                     src={`https://ghchart.rshah.org/${dark ? 'ff6b6b' : 'a11d1d'}/Hannahjamilla`}
-                    alt="Hannah Jamilla's GitHub Contributions" 
+                    alt="Hannah Jamilla's GitHub Contributions"
                     className={`w-full max-w-full h-auto object-contain ${dark ? 'opacity-90' : 'mix-blend-multiply opacity-95'} transition-opacity`}
                     loading="lazy"
                   />

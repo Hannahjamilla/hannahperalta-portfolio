@@ -48,26 +48,24 @@ const skillsData = [
 
 export function TechnicalSkills({ dark, border = 'border-[#d0c9b8] dark:border-zinc-800' }: { border?: string, dark: boolean }) {
   const hoverCls = dark ? 'hover:bg-[#202020] text-zinc-200' : 'hover:bg-[#ebe5d5] text-[#1c1813]'
-  const cardBase = `p-4 md:p-6 flex items-start gap-3 md:gap-4 group transition-colors ${hoverCls}`
+  const cardBase = `p-2.5 sm:p-4 md:p-6 flex flex-col sm:flex-row items-start gap-1.5 sm:gap-3 md:gap-4 group transition-colors ${hoverCls}`
 
-  const cardContent = (s: typeof skillsData[0], globalIdx: number) => (
+  const cardContent = (s: typeof skillsData[0]) => (
     <>
-      <div className={`mt-0.5 p-2 rounded-lg ${dark
+      <div className={`p-1 sm:p-2 rounded-md ${dark
           ? 'bg-zinc-800/80 text-[#ff6b6b] border border-red-500/20'
           : 'bg-white text-[#a11d1d] border border-red-200'
-        } shrink-0 group-hover:scale-[1.05] transition-transform`}>
-        <s.icon size={18} strokeWidth={1.5} />
+        } shrink-0 group-hover:scale-[1.05] transition-transform mt-0.5`}>
+        <s.icon size={14} className="sm:w-[18px] sm:h-[18px]" strokeWidth={1.5} />
       </div>
-      <div className="flex flex-col min-w-0 flex-1">
-        <span className="text-[9px] font-mono font-black uppercase tracking-widest mb-1 opacity-70">
-          CATEGORY #{globalIdx + 1}
-        </span>
-        <h3 className="text-xs sm:text-sm lg:text-[15px] font-serif font-black uppercase tracking-wide group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors leading-tight mb-2">
+
+      <div className="flex flex-col min-w-0 flex-1 w-full">
+        <h3 className="text-[11px] sm:text-sm lg:text-[15px] font-serif font-black uppercase tracking-wide group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors leading-tight mb-1 sm:mb-2">
           {s.group}
         </h3>
         <div className="flex flex-wrap gap-1">
           {s.items.map((item, idx) => (
-            <span key={idx} className={`px-1.5 py-0.5 rounded-sm text-[8px] sm:text-[9px] font-mono border transition-all duration-200 ${dark
+            <span key={idx} className={`px-1 sm:px-1.5 py-0.5 rounded-sm text-[7.5px] sm:text-[9px] font-mono border transition-all duration-200 ${dark
                 ? 'border-zinc-800 bg-[#212124] text-zinc-300 group-hover:border-[#ff6b6b]/40'
                 : 'border-[#e0d6bc] bg-[#FAF6EC] text-[#2b271d] group-hover:border-[#a11d1d]/40'
               }`}>{item}</span>
@@ -79,14 +77,16 @@ export function TechnicalSkills({ dark, border = 'border-[#d0c9b8] dark:border-z
 
   return (
     <div>
-      {/* Mobile & Small screens (< md): 1-column clean stacked layout */}
-      <div className="md:hidden flex flex-col">
+      {/* Mobile & Small screens (< md): 2-column newspaper grid layout */}
+      <div className="md:hidden grid grid-cols-2">
         {skillsData.map((s, i) => (
           <div
             key={i}
-            className={`${cardBase} ${border} ${i < skillsData.length - 1 ? 'border-b' : ''}`}
+            className={`${cardBase} ${border} border-b ${i % 2 === 0 ? 'border-r' : ''} ${
+              i === skillsData.length - 1 && skillsData.length % 2 !== 0 ? 'col-span-2 border-r-0' : ''
+            }`}
           >
-            {cardContent(s, i)}
+            {cardContent(s)}
           </div>
         ))}
       </div>
@@ -97,7 +97,7 @@ export function TechnicalSkills({ dark, border = 'border-[#d0c9b8] dark:border-z
         <div className="grid grid-cols-3">
           {skillsData.slice(0, 3).map((s, colIdx) => (
             <div key={colIdx} className={`${cardBase} ${border} border-b ${colIdx < 2 ? 'border-r' : ''}`}>
-              {cardContent(s, colIdx)}
+              {cardContent(s)}
             </div>
           ))}
         </div>
@@ -111,7 +111,7 @@ export function TechnicalSkills({ dark, border = 'border-[#d0c9b8] dark:border-z
               className={`${cardBase} ${border} border-r ${colIdx === 0 ? 'border-l' : ''}`}
               style={{ width: '33.333%' }}
             >
-              {cardContent(s, 3 + colIdx)}
+              {cardContent(s)}
             </div>
           ))}
           <div className="flex-1" />

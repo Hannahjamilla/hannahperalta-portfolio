@@ -103,7 +103,7 @@ export default function App() {
                 <span>EDITOR'S NOTE</span>
                 <span className="w-1.5 h-1.5 bg-current rotate-45" />
               </div>
-              <p className={`text-sm md:text-lg font-serif italic max-w-2xl ${muted} leading-relaxed`}>
+              <p className={`text-sm md:text-lg font-serif italic max-w-2xl ${t(dark, 'text-[#f2ebd9]', 'text-[#1c1813]')} leading-relaxed font-medium`}>
                 Every project starts with a simple question: How can this be easier for people to use? That's the idea behind everything you'll find here—from clean interfaces to thoughtful features.
               </p>
             </div>
@@ -111,7 +111,7 @@ export default function App() {
 
           {/* ── FRONT PAGE — NEW LAYOUT ── */}
           <section className={`border-b ${border}`}>
-            <div className="p-4 md:p-7 lg:p-8">
+            <div className={`p-4 md:p-7 lg:p-8 group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}>
 
               {/* Left Col: Photo */}
               {/* Photo component (floated on tablet/desktop) */}
@@ -121,13 +121,13 @@ export default function App() {
                   <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-2 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-md rounded md:rounded-lg overflow-hidden flex-shrink-0`}>
                     <picture onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
                       <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
-                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[1s] hover:scale-[1.02] ${colorProfile ? 'grayscale-0 scale-[1.02]' : 'grayscale hover:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
+                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[2s] ${colorProfile ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
                     </picture>
                   </div>
                   {/* Mobile-only bio blurb next to photo */}
                   <div className="flex-1 md:hidden flex flex-col justify-center">
                     <p className={`text-[10px] font-mono font-black uppercase tracking-widest mb-1.5 ${accentBurgundy}`}>Author</p>
-                    <h2 className="text-2xl font-serif font-black uppercase tracking-tight leading-none mb-2">Hello World!</h2>
+                    <h2 className="text-2xl font-serif font-black uppercase tracking-tight leading-none mb-2 group-hover:underline underline-offset-4 decoration-2">Hello World!</h2>
                     <p className="text-sm font-serif leading-relaxed opacity-95">
                       That's my approach — I build for humans, not just screens. The kind of apps that just make sense the moment you open them.
                     </p>
@@ -138,7 +138,7 @@ export default function App() {
 
               {/* Biography content wrapping around photo */}
               <div className="hidden md:block">
-                  <h2 className={`text-2xl md:text-3xl font-serif font-black uppercase tracking-tight mb-1.5 ${accentBurgundy}`}>Author</h2>
+                  <h2 className={`text-2xl md:text-3xl font-serif font-black uppercase tracking-tight mb-1.5 ${accentBurgundy} group-hover:underline underline-offset-4 decoration-2`}>Author</h2>
                   <div className="flex items-center gap-3 mb-3.5">
                     <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
                     <span className={`text-[9px] font-mono font-black uppercase tracking-[0.3em] px-2.5 py-1 border border-current ${accentBurgundy}`}>✦ Hello World ✦</span>
@@ -195,14 +195,14 @@ export default function App() {
             {/* 1-col on mobile, 3-col on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-3">
               {XP_LOG.map((exp, i) => (
-                <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 md:border-r last:border-b-0 last:md:border-r-0 ${border} flex flex-col justify-between h-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors group`}>
+                <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 md:border-r last:border-b-0 last:md:border-r-0 ${border} flex flex-col justify-between h-full ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group`}>
                   <div className="flex flex-col h-full justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-4">
-                        <span className={`w-2 h-2 ${accentTeal} bg-current rotate-45`} />
+                        <span className={`w-2 h-2 ${accentTeal} bg-current rotate-45 transition-transform group-hover:scale-125 group-hover:rotate-90 duration-300`} />
                         <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>{exp.period}</span>
                       </div>
-                      <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-2 leading-tight transition-colors">{exp.place}</h3>
+                      <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{exp.place}</h3>
                       <h4 className={`text-sm italic font-serif mb-5 pb-3 border-b ${border} ${muted}`}>{exp.role}</h4>
 
                       <div className="space-y-3 font-serif text-sm leading-relaxed opacity-95 text-inherit">
@@ -458,7 +458,7 @@ export default function App() {
                         {p.period && <><span>&bull;</span><span>{p.period}</span></>}
                       </div>
                       
-                      <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1.5 md:mb-2 leading-tight group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors">{p.title}</h3>
+                      <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1.5 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
                       
                       <p className={`text-xs md:text-sm font-serif leading-relaxed flex-1 ${muted}`}>{p.desc[0]}</p>
                     </div>
@@ -527,14 +527,14 @@ export default function App() {
 
               <div className="grid grid-cols-1 md:grid-cols-2">
                 {EDUCATION.map((edu, i) => (
-                  <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between hover:bg-black/5 dark:hover:bg-white/5 transition-colors group`}>
+                  <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group`}>
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
                         <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${accentGold}`}>{edu.period}</span>
                         <span className={`px-2 py-0.5 text-[9px] font-mono font-bold border border-current opacity-70`}>{edu.badge}</span>
                       </div>
                       
-                      <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors">{edu.school}</h3>
+                      <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{edu.school}</h3>
 
                       <p className={`text-xs font-serif italic mb-3 ${muted}`}>{edu.location}</p>
 

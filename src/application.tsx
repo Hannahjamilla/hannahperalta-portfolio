@@ -30,7 +30,7 @@ export default function App() {
   // Authentic Newspaper Palette
   const bg = t(dark, 'bg-scrapbook-dark text-[#e0e0e0]', 'bg-scrapbook-light text-[#1c1813]')
   const border = t(dark, 'border-white/15', 'border-[#d0c9b8]')
-  const borderDarker = t(dark, 'border-white/30', 'border-[#1c1813]')
+  const borderDarker = t(dark, 'border-white/30', 'border-[#c4b99a]')
   const muted = t(dark, 'text-[#737373]', 'text-[#5d5a55]')
 
   // Signature Newspaper Accent Color (Editorial Crimson)

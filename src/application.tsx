@@ -16,6 +16,25 @@ const useDateString = () => {
   return date
 }
 
+const renderRoleChips = (roleStr?: string, dark: boolean = false) => {
+  if (!roleStr) return null
+  const roles = roleStr.split('|').map(r => r.trim()).filter(Boolean)
+  return (
+    <div className="flex flex-wrap items-center gap-1">
+      {roles.map((r, idx) => (
+        <span
+          key={idx}
+          className={`inline-block px-1.5 py-0.5 rounded text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border ${
+            t(dark, 'bg-[#2a241e] text-[#f5d089] border-[#665435]', 'bg-[#f4efe4] text-[#7a591e] border-[#d4c5a9]')
+          }`}
+        >
+          {r}
+        </span>
+      ))}
+    </div>
+  )
+}
+
 
 
 export default function App() {
@@ -43,7 +62,6 @@ export default function App() {
   const bgTeal = singleBgAccent
   const accentGold = singleAccent
   const bgGold = singleBgAccent
-  const accentIndigo = singleAccent
   const bgIndigo = singleBgAccent
 
 
@@ -77,28 +95,35 @@ export default function App() {
 
   return (
     <ThemeCtx.Provider value={{ dark, toggle }}>
-      <div className={`min-h-screen w-full ${bg} transition-colors duration-700 flex flex-col items-center selection:bg-red-600/30 selection:text-current font-serif`}>
+      <div className={`min-h-screen w-full ${bg} transition-colors duration-700 flex flex-col items-center selection:bg-red-600/30 selection:text-current font-serif px-3 sm:px-6 md:px-8 lg:px-10 pb-3 sm:pb-6 md:pb-8 lg:pb-10 pt-0`}>
 
-        <main role="main" className={`w-full max-w-[1120px] border-x-0 lg:border-x-[1px] border-b-[1px] ${borderDarker} mt-0 flex flex-col shadow-2xl ${t(dark, 'shadow-black/50 bg-[#161616]', 'shadow-black/5 bg-[#faf9f6]')}`}>
+        {/* ── Super Subtle Loading Screen ── */}
+        <div className={`loader-screen ${t(dark, 'bg-[#0E0F14]', 'bg-[#faf9f6]')}`}>
+          <span className={`loader-text ${t(dark, 'text-zinc-200', 'text-[#1c1813]')}`}>HanMade</span>
+          <div className={`loader-line ${t(dark, 'bg-[#ff6b6b]', 'bg-[#a11d1d]')}`} />
+          <span className={`loader-sub ${t(dark, 'text-zinc-500', 'text-[#5d5a55]')}`}>Digital Archive</span>
+        </div>
+
+        <main role="main" className={`portfolio-content w-full max-w-[1120px] border-t-0 border-x border-b ${borderDarker} flex flex-col shadow-2xl ${t(dark, 'shadow-black/50 bg-[#161616]', 'shadow-black/5 bg-[#faf9f6]')}`}>
+
+          {/* Header Strip - Fixed/Sticky Top Navigation across all screens */}
+          <div className={`sticky top-0 z-50 flex items-center justify-between gap-3 sm:gap-4 md:gap-6 py-2 md:py-2.5 px-3 sm:px-6 md:px-10 border-b ${border} text-[9px] sm:text-[11px] md:text-xs font-mono uppercase tracking-wider md:tracking-widest font-black ${t(dark, 'bg-[#161616] text-slate-300', 'bg-[#F2EBD9] text-[#5c5643]')} shadow-sm`}>
+            <span className="whitespace-nowrap shrink-0">HanMade | Digital Archive</span>
+            <span className="hidden lg:block whitespace-nowrap text-center truncate">Ideas, Code & Creations</span>
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <span className="hidden sm:inline whitespace-nowrap">{dateString}</span>
+              <button
+                onClick={toggle}
+                className="pointer-events-auto border border-current px-2 py-0.5 text-[8px] sm:text-[10px] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors shrink-0 whitespace-nowrap font-bold cursor-pointer"
+                title="Toggle Theme"
+              >
+                {dark ? 'Day' : 'Night'} Edition
+              </button>
+            </div>
+          </div>
 
           {/* ── THE MASTHEAD ── */}
           <section id="profile" className={`flex flex-col border-b pointer-events-none ${border}`}>
-
-            {/* Header Strip */}
-            <div className={`flex items-center justify-between gap-3 sm:gap-4 md:gap-6 py-2 md:py-2.5 px-3 sm:px-6 md:px-10 border-b ${border} text-[9px] sm:text-[11px] md:text-xs font-mono uppercase tracking-wider md:tracking-widest font-black ${t(dark, 'bg-white/5 text-slate-350', 'bg-[#F2EBD9] text-[#5c5643]')}`}>
-              <span className="whitespace-nowrap shrink-0">HanMade | Digital Archive</span>
-              <span className="hidden lg:block whitespace-nowrap text-center truncate">Ideas, Code & Creations</span>
-              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span className="hidden sm:inline whitespace-nowrap">{dateString}</span>
-                <button
-                  onClick={toggle}
-                  className="pointer-events-auto border border-current px-2 py-0.5 text-[8px] sm:text-[10px] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors shrink-0 whitespace-nowrap font-bold"
-                  title="Toggle Theme"
-                >
-                  {dark ? 'Day' : 'Night'} Edition
-                </button>
-              </div>
-            </div>
 
             {/* Newspaper masthead rule */}
             <div className="flex items-center px-4 md:px-10 py-0.5">
@@ -251,20 +276,17 @@ export default function App() {
             <div className={`border-b ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-all`}>
               {/* Mobile: text on top, image stacked below */}
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div
-                  onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
-                  className={`p-4 md:p-10 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r ${border} cursor-pointer`}
-                >
+                <div className={`p-4 md:p-10 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r ${border}`}>
                   <div className="flex flex-col gap-1.5 mb-4">
                     {QUESTS[0].badge && (
                       <div>
                         <span className={`inline-block px-2 py-0.5 text-[9px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[0].badge}</span>
                       </div>
                     )}
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] font-mono uppercase tracking-widest font-black opacity-80">
-                      <span className={accentBurgundy}>{QUESTS[0].role}</span>
-                      <span>&bull;</span>
-                      <span>{QUESTS[0].period}</span>
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
+                      {renderRoleChips(QUESTS[0].role, dark)}
+                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                      <span className="text-[10px] font-mono uppercase tracking-widest font-black opacity-80">{QUESTS[0].period}</span>
                     </div>
                   </div>
                   <h3 className="text-xl md:text-4xl lg:text-[44px] font-serif font-black uppercase tracking-wide mb-3 md:mb-5 group-hover:underline underline-offset-4 decoration-2 decoration-rose-455 leading-tight">{QUESTS[0].title}</h3>
@@ -277,42 +299,41 @@ export default function App() {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mt-6">
-                    {QUESTS[0].tags.map(tg => (
-                      <span key={tg} className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-350 border border-zinc-700', 'bg-white text-zinc-700 border border-[#e2dcb6]')}`}>{tg}</span>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 flex items-center justify-between">
-                    <div className={`flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest ${accentBurgundy} group-hover:translate-x-1 duration-300 transition-transform origin-left`}>
-                      <ArrowUpRight size={14} /> See Details
+                  <div className="mt-5">
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      {QUESTS[0].tags.map(tg => (
+                        <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[8.5px] sm:text-[9px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
+                      ))}
                     </div>
-                    {QUESTS[0].link && (
-                      <a
-                        href={QUESTS[0].link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className={`text-[10px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
-                      >● Live</a>
-                    )}
+                    <div className="pt-3 border-t border-dashed border-current/25 flex items-center gap-2">
+                       <button
+                        onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
+                        className={`cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-[9.5px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                      >
+                        <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> SEE DETAILS
+                      </button>
+                      {QUESTS[0].link && (
+                        <a
+                          href={QUESTS[0].link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className={`cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-[9.5px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                                  <span className="sm:hidden">VISIT ↗</span>
+                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
-                  <div
-                    className="w-full flex justify-center cursor-pointer"
-                    onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
-                  >
+                  <div className="w-full flex justify-center">
                     <img src={QUESTS[0].imgs[0]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" loading="lazy" />
                   </div>
                   {QUESTS[0].imgs[1] && (
-                    <div
-                      className="w-full flex justify-center cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightbox({ imgs: [QUESTS[0].imgs[1]], alt: `${QUESTS[0].title} - Certificate`, wip: false, desc: undefined, tags: undefined, link: undefined, role: undefined, status: undefined, period: undefined });
-                      }}
-                    >
+                    <div className="w-full flex justify-center">
                       <img src={QUESTS[0].imgs[1]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" loading="lazy" />
                     </div>
                   )}
@@ -323,10 +344,7 @@ export default function App() {
             {/* ── MOBILE: Mixed Newspaper Hierarchy (hidden on md+) ── */}
             <div className="md:hidden">
               {/* Sub-headline: 2nd project gets prominent treatment */}
-              <div
-                onClick={() => setLightbox({ imgs: QUESTS[1].imgs, alt: QUESTS[1].title, wip: (QUESTS[1] as any).wip, desc: QUESTS[1].desc, tags: QUESTS[1].tags, link: QUESTS[1].link, role: QUESTS[1].role, status: QUESTS[1].status, period: QUESTS[1].period })}
-                className={`p-4 border-b ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between`}
-              >
+              <div className={`p-4 border-b ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between`}>
                 <div>
                   {/* Capstone Project title before image */}
                   <div className="flex items-center gap-2 mb-2">
@@ -353,35 +371,41 @@ export default function App() {
                         <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[1].badge}</span>
                       </div>
                     )}
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-2 text-[8px] font-mono font-black uppercase tracking-widest">
-                      <span className={accentBurgundy}>{QUESTS[1].role}</span>
-                      <span className="opacity-40">•</span>
-                      <span className="opacity-60">{QUESTS[1].period}</span>
+                    <div className="flex flex-wrap items-center gap-1.5 mb-2">
+                      {renderRoleChips(QUESTS[1].role, dark)}
+                      <span className="opacity-40 font-mono text-[9px]">•</span>
+                      <span className="text-[8px] font-mono font-black uppercase tracking-widest opacity-60">{QUESTS[1].period}</span>
                     </div>
                     <h3 className="text-xl font-serif font-black uppercase tracking-wide leading-tight mb-2 group-hover:underline underline-offset-4 decoration-2">{QUESTS[1].title}</h3>
                     <p className="font-serif text-sm leading-relaxed opacity-85">{QUESTS[1].desc[0]}</p>
                   </div>
                 </div>
 
-                {/* Footer */}
-                <div className="flex justify-between items-center mt-4 pt-3 border-t border-dashed border-current/20">
-                  <div className="flex flex-wrap gap-1.5">
+                <div className="mt-4">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
                     {QUESTS[1].tags.map(tg => (
-                      <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-600 border border-zinc-200')}`}>{tg}</span>
+                      <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
                     ))}
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-widest ${accentBurgundy} group-hover:translate-x-0.5 transition-transform`}>
-                      <ArrowUpRight size={11} /> Details
-                    </span>
+                  <div className="pt-3 border-t border-dashed border-current/25 flex items-center gap-2">
+                    <button
+                      onClick={() => setLightbox({ imgs: QUESTS[1].imgs, alt: QUESTS[1].title, wip: (QUESTS[1] as any).wip, desc: QUESTS[1].desc, tags: QUESTS[1].tags, link: QUESTS[1].link, role: QUESTS[1].role, status: QUESTS[1].status, period: QUESTS[1].period })}
+                      className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                    >
+                      <ArrowUpRight size={11} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                    </button>
                     {QUESTS[1].link && (
                       <a
                         href={QUESTS[1].link}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
-                        className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
-                      >LIVE</a>
+                        className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                                  <span className="sm:hidden">VISIT ↗</span>
+                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                      </a>
                     )}
                   </div>
                 </div>
@@ -397,8 +421,7 @@ export default function App() {
                 {QUESTS.slice(2).map((q, i) => (
                   <div
                     key={i}
-                    onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
-                    className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
+                    className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
                   >
                     <div>
                       <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
@@ -409,26 +432,32 @@ export default function App() {
                           <span className={`inline-block px-1.5 py-0.5 text-[6.5px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
                         </div>
                       )}
-                      <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-[7px] font-mono font-black uppercase tracking-widest mb-1 opacity-70">
-                        <span>{q.role ? q.role.split('|')[0].trim() : ''}</span>
-                        {q.role && <span>&bull;</span>}
-                        <span>{q.period}</span>
+                      <div className="flex flex-wrap items-center gap-1 mb-1">
+                        {renderRoleChips(q.role, dark)}
+                        {q.period && <><span className="opacity-40 font-mono text-[8px]">&bull;</span><span className="text-[7px] font-mono font-black uppercase tracking-widest opacity-70">{q.period}</span></>}
                       </div>
                       <h3 className="text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 group-hover:underline">{q.title}</h3>
                     </div>
 
-                    <div className="mt-3 pt-2 border-t border-dashed border-current/20 flex items-center justify-between text-[8.5px] font-mono font-bold uppercase tracking-widest">
-                      <div className={`flex items-center gap-1 ${accentGold} group-hover:translate-x-0.5 transition-transform`}>
-                        <ArrowUpRight size={11} /> Details
-                      </div>
+                    <div className="mt-3.5 pt-2.5 border-t border-dashed border-current/25 flex items-center justify-between gap-1 text-[8.5px] font-mono font-bold uppercase tracking-widest">
+                      <button
+                        onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                        className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7.5px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-[#c6bfb0] hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                      >
+                        <ArrowUpRight size={10} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                      </button>
                       {q.link && (
                         <a
                           href={q.link}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={e => e.stopPropagation()}
-                          className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
-                        >LIVE</a>
+                          className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7.5px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                        >
+                          <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                          <span className="sm:hidden">VISIT ↗</span>
+                          <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                        </a>
                       )}
                     </div>
                   </div>
@@ -436,16 +465,14 @@ export default function App() {
               </div>
             </div>
 
-            {/* ── DESKTOP: Standard newspaper grids (hidden on mobile) ── */}
-            {/* Secondary: 2-col */}
+                {/* Secondary: 2-col */}
             <div className="hidden md:grid grid-cols-2 border-b border-inherit">
               {QUESTS.slice(1, 3).map((q, i) => (
                 <div
                   key={i}
-                  onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
-                  className={`p-8 border-r last:border-r-0 ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
+                  className={`p-8 border-r last:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
                 >
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-2`}>
                       <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
                     </div>
@@ -454,32 +481,41 @@ export default function App() {
                         <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
                       </div>
                     )}
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
-                      <span className={accentIndigo}>{q.role}</span>
-                      <span>&bull;</span>
-                      <span>{q.period}</span>
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      {renderRoleChips(q.role, dark)}
+                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                      <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
                     </div>
                     <h3 className="text-2xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
-                    <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
-                    <div className="flex flex-wrap gap-1.5 mt-4">
+                    <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
+                  </div>
+                  <div className="mt-5">
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
                       {q.tags.map(tg => (
-                        <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-805 text-zinc-300', 'bg-white text-zinc-650 border border-zinc-200')}`}>{tg}</span>
+                        <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[8.5px] sm:text-[9px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
                       ))}
                     </div>
-                  </div>
-                  <div className={`mt-6 pt-4 border-t border-dashed border-current/20 flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
-                    <div className={`flex items-center gap-2 ${accentIndigo} group-hover:translate-x-1 duration-300 transition-transform`}>
-                      <ArrowUpRight size={12} /> Details
+                    <div className="pt-3 border-t border-dashed border-current/25 flex items-center gap-1.5">
+                      <button
+                        onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                        className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                      >
+                        <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                      </button>
+                      {q.link && (
+                        <a
+                          href={q.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                                  <span className="sm:hidden">VISIT ↗</span>
+                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                        </a>
+                      )}
                     </div>
-                    {q.link && (
-                      <a
-                        href={q.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
-                      >LIVE</a>
-                    )}
                   </div>
                 </div>
               ))}
@@ -490,56 +526,67 @@ export default function App() {
               {QUESTS.slice(3).map((q, i) => (
                 <div
                   key={i}
-                  onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
-                  className={`p-6 lg:p-8 border-b lg:border-b-0 border-r md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:border-r last:lg:border-r-0 ${i === 2 ? 'md:col-span-2 lg:col-span-1 md:w-full md:border-t md:border-b lg:border-t-0 lg:border-b-0 md:border-r-0 lg:border-r' : 'border-b md:border-b'} ${border} group cursor-pointer ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
+                  className={`p-6 lg:p-8 border-b lg:border-b-0 border-r md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:border-r last:lg:border-r-0 ${i === 2 ? 'md:col-span-2 lg:col-span-1 md:w-full md:border-t md:border-b lg:border-t-0 lg:border-b-0 md:border-r-0 lg:border-r' : 'border-b md:border-b'} ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
                 >
                   {i === 2 ? (
                     <div className="flex flex-col justify-between h-full">
                       {/* Split layout on tablet: left image, right details */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 items-center">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 items-center flex-1">
                         <div className="aspect-[16/10] w-full relative overflow-hidden p-1.5">
                           <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
                         </div>
 
-                        <div>
-                          {q.badge && (
-                            <div className="mb-1.5">
-                              <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                        <div className="flex flex-col h-full justify-between">
+                          <div>
+                            {q.badge && (
+                              <div className="mb-1.5">
+                                <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                              </div>
+                            )}
+                            <div className="flex flex-wrap items-center gap-2 mb-3">
+                              {renderRoleChips(q.role, dark)}
+                              <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                              <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
                             </div>
-                          )}
-                          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
-                            <span className={accentGold}>{q.role}</span>
-                            <span>&bull;</span>
-                            <span>{q.period}</span>
+                            <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
+                            <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
                           </div>
-                          <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
-                          <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
-                          <div className="flex flex-wrap gap-1.5 mt-4">
-                            {q.tags.map(tg => (
-                              <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-650 border border-zinc-200')}`}>{tg}</span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
 
-                      <div className={`mt-6 pt-4 border-t border-dashed border-current/20 flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
-                        <div className={`flex items-center gap-2 ${accentGold} group-hover:translate-x-1 duration-300 transition-transform`}>
-                          <ArrowUpRight size={12} /> Details
+                          <div className="mt-4">
+                            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+                              {q.tags.map(tg => (
+                                <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
+                              ))}
+                            </div>
+                            <div className="pt-2 border-t border-dashed border-current/25 flex items-center gap-1.5">
+                              <button
+                                onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                                className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                              >
+                                <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                              </button>
+                              {q.link && (
+                                <a
+                                  href={q.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={e => e.stopPropagation()}
+                                  className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                                >
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                                  <span className="sm:hidden">VISIT ↗</span>
+                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                                </a>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                        {q.link && (
-                          <a
-                            href={q.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={e => e.stopPropagation()}
-                            className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
-                          >LIVE</a>
-                        )}
+
                       </div>
                     </div>
                   ) : (
                     <>
-                      <div>
+                      <div className="flex-1 flex flex-col">
                         <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-1.5`}>
                           <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
                         </div>
@@ -548,32 +595,41 @@ export default function App() {
                             <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
                           </div>
                         )}
-                        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-3 text-[9px] font-mono uppercase tracking-widest font-black opacity-80">
-                          <span className={accentGold}>{q.role}</span>
-                          <span>&bull;</span>
-                          <span>{q.period}</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          {renderRoleChips(q.role, dark)}
+                          <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                          <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
                         </div>
                         <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
-                        <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
-                        <div className="flex flex-wrap gap-1.5 mt-4">
+                        <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
+                      </div>
+                      <div className="mt-5">
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
                           {q.tags.map(tg => (
-                            <span key={tg} className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${t(dark, 'bg-zinc-800 text-zinc-300', 'bg-white text-zinc-650 border border-zinc-200')}`}>{tg}</span>
+                            <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
                           ))}
                         </div>
-                      </div>
-                      <div className={`mt-6 pt-4 border-t border-dashed border-current/20 flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-widest`}>
-                        <div className={`flex items-center gap-2 ${accentGold} group-hover:translate-x-1 duration-300 transition-transform`}>
-                          <ArrowUpRight size={12} /> Details
+                        <div className="pt-3 border-t border-dashed border-current/25 flex items-center gap-1.5">
+                          <button
+                            onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                            className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                          >
+                            <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                          </button>
+                          {q.link && (
+                            <a
+                              href={q.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={e => e.stopPropagation()}
+                              className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                                  <span className="sm:hidden">VISIT ↗</span>
+                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                            </a>
+                          )}
                         </div>
-                        {q.link && (
-                          <a
-                            href={q.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={e => e.stopPropagation()}
-                            className={`inline-flex items-center gap-1 hover:underline underline-offset-2 ${accentBurgundy}`}
-                          >LIVE</a>
-                        )}
                       </div>
                     </>
                   )}
@@ -600,8 +656,7 @@ export default function App() {
                   return (
                     <div
                       key={i}
-                      className={`p-3 md:p-6 border-b border-r ${isTasklet ? 'col-span-2 border-r-0' : '[&:nth-child(2n)]:border-r-0'} lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 last:border-r-0 ${!isTasklet ? '[&:last-child:nth-child(odd)]:col-span-2' : ''} ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between cursor-pointer group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
-                      onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                      className={`p-3 md:p-6 border-b border-r ${isTasklet ? 'col-span-2 border-r-0' : '[&:nth-child(2n)]:border-r-0'} lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 last:border-r-0 ${!isTasklet ? '[&:last-child:nth-child(odd)]:col-span-2' : ''} ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
                     >
                       {/* Tasklet: side-by-side on tablet (md), stacked on mobile & desktop (lg) */}
                       {isTasklet ? (
@@ -611,29 +666,41 @@ export default function App() {
                               <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
                             </div>
                             <div className="flex-1 flex flex-col justify-center md:block">
-                              <div className="flex items-center gap-3 mb-1 md:mb-2 text-[8px] md:text-[9px] font-mono font-bold uppercase tracking-widest opacity-70">
-                                <span className={accentIndigo}>{p.role}</span>
-                                {p.period && <><span>&bull;</span><span>{p.period}</span></>}
+                              <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
+                                {renderRoleChips(p.role, dark)}
+                                {p.period && <><span className="opacity-40 font-mono text-[9px]">&bull;</span><span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-70">{p.period}</span></>}
                               </div>
                               <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
                               <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted} line-clamp-2 md:line-clamp-none`}>{p.desc[0]}</p>
                             </div>
                           </div>
-                          <div className="flex justify-between items-center mt-3 md:mt-4 pt-3 md:pt-4 border-t border-dashed border-inherit">
-                            <div className="flex flex-wrap gap-1">
-                              {p.tags.slice(0, 2).map(t => (
-                                <span key={t} className={`px-1.5 py-0.5 rounded text-[8px] font-mono font-bold ${dark ? 'bg-zinc-800 text-zinc-350' : 'bg-white text-zinc-650'}`}>{t}</span>
+                          <div className="mt-4">
+                            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+                              {p.tags.slice(0, 3).map(tg => (
+                                <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[7.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
                               ))}
                             </div>
-                            {p.link && (
-                              <a
-                                href={p.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={e => e.stopPropagation()}
-                                className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
-                              >LIVE</a>
-                            )}
+                            <div className="pt-2.5 border-t border-dashed border-current/25 flex items-center gap-1.5">
+                              <button
+                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                                className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                              >
+                                <ArrowUpRight size={11} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                              </button>
+                              {p.link && (
+                                <a
+                                  href={p.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={e => e.stopPropagation()}
+                                  className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                                >
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                                  <span className="sm:hidden">VISIT ↗</span>
+                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                                </a>
+                              )}
+                            </div>
                           </div>
                         </>
                       ) : (
@@ -644,33 +711,43 @@ export default function App() {
                               <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
                             </div>
 
-                            <div className="flex items-center gap-3 mb-2 text-[9px] font-mono font-bold uppercase tracking-widest opacity-70">
-                              <span className={accentIndigo}>{p.role}</span>
-                              {p.period && <><span>&bull;</span><span>{p.period}</span></>}
+                            <div className="flex flex-wrap items-center gap-2 mb-2">
+                              {renderRoleChips(p.role, dark)}
+                              {p.period && <><span className="opacity-40 font-mono text-[9px]">&bull;</span><span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-70">{p.period}</span></>}
                             </div>
 
                             <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1.5 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
 
-                            <p className={`text-xs md:text-sm font-serif leading-relaxed flex-1 ${muted}`}>{p.desc[0]}</p>
+                            <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted}`}>{p.desc[0]}</p>
                           </div>
 
-                          <div className="flex justify-between items-center mt-4 pt-4 border-t border-dashed border-inherit">
-                            <div className="flex flex-wrap gap-1">
-                              {p.tags.slice(0, 2).map(t => (
-                                <span key={t} className={`px-1.5 py-0.5 rounded text-[8px] font-mono font-bold ${dark ? 'bg-zinc-800 text-zinc-350' : 'bg-white text-zinc-650'}`}>{t}</span>
+                          <div className="mt-4">
+                            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+                              {p.tags.slice(0, 3).map(tg => (
+                                <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[7.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
                               ))}
                             </div>
-                            {p.wip ? (
-                              <span className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>● WIP</span>
-                            ) : p.link ? (
-                              <a
-                                href={p.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={e => e.stopPropagation()}
-                                className={`inline-flex items-center gap-1 text-[9px] font-mono font-black uppercase tracking-widest hover:underline underline-offset-2 ${accentBurgundy}`}
-                              >● Live</a>
-                            ) : null}
+                            <div className="pt-2.5 border-t border-dashed border-current/25 flex items-center gap-1.5">
+                              <button
+                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                                className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                              >
+                                <ArrowUpRight size={11} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                              </button>
+                              {p.link && (
+                                <a
+                                  href={p.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={e => e.stopPropagation()}
+                                  className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                                >
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                                  <span className="sm:hidden">VISIT ↗</span>
+                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                                </a>
+                              )}
+                            </div>
                           </div>
                         </>
                       )}
@@ -766,17 +843,19 @@ export default function App() {
             </div>
 
             <div className="p-4 md:p-6">
-              <a
-                href="https://github.com/Hannahjamilla"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`block p-4 sm:p-6 border ${border} transition-all group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')}`}
+              <div
+                className={`p-4 sm:p-6 border ${border} transition-all group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')}`}
               >
                 <div className={`flex items-center justify-between gap-2 mb-3 pb-3 border-b border-dashed ${border}`}>
                   <span className="text-xs font-mono font-bold uppercase tracking-wider">@Hannahjamilla</span>
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest flex items-center gap-1 group-hover:text-[#a11d1d] dark:group-hover:text-[#ff6b6b] transition-colors">
-                    View Profile ↗
-                  </span>
+                  <a
+                    href="https://github.com/Hannahjamilla"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`cursor-pointer inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1 rounded text-[9.5px] sm:text-[11px] font-mono font-bold uppercase tracking-wider border transition-all duration-200 shadow-xs hover:-translate-y-0.5 active:translate-y-0 group/btn ${t(dark, 'bg-[#2a241e] text-[#f5d089] border-[#665435] hover:bg-[#3d3329] hover:border-[#f5d089]', 'bg-[#f4efe4] text-[#7a591e] border-[#d4c5a9] hover:bg-[#eae2d0] hover:border-[#7a591e]')}`}
+                  >
+                    View Profile <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                  </a>
                 </div>
 
                 <div className="w-full flex justify-center py-2 overflow-hidden">
@@ -791,7 +870,7 @@ export default function App() {
                 <p className="font-serif italic text-xs mt-3 opacity-70 text-center">
                   A snapshot of my daily commits and contribution activity on GitHub.
                 </p>
-              </a>
+              </div>
             </div>
           </section>
 

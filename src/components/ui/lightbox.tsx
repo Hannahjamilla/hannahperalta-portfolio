@@ -104,8 +104,14 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
                 <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-xl border ${t(dark, 'bg-white/5 border-white/5', 'bg-gray-50 border-gray-100')}`}>
                   {role && (
                     <div className="flex flex-col">
-                      <span className={`text-[10px] font-mono font-bold uppercase tracking-widest mb-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Role</span>
-                      <span className={`text-sm font-semibold ${t(dark, 'text-cyan-400', 'text-indigo-600')}`}>{role}</span>
+                      <span className={`text-[10px] font-mono font-bold uppercase tracking-widest mb-1.5 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Role</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {role.split('|').map((r: string, idx: number) => (
+                          <span key={idx} className={`px-2.5 py-1 rounded-md text-xs font-mono font-bold border ${t(dark, 'bg-cyan-950/40 text-cyan-300 border-cyan-800/50', 'bg-indigo-50 text-indigo-700 border-indigo-200')}`}>
+                            {r.trim()}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   )}
                   {period && (

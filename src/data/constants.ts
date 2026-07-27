@@ -29,12 +29,12 @@ export const CLOUD_TOOLS = [
 ]
 
 export const QUESTS = [
-  { status: 'COMPLETE', title: 'BaryoConnect', badge: 'Smart Community App', role: 'Project Manager | Frontend Developer', period: 'Feb. 2025 – May 2025', desc: [
+  { status: 'COMPLETE', title: 'BaryoConnect', badge: 'Smart Community App', role: 'Project Manager | Frontend Developer | Paper Presenter | Lead Researcher', period: 'Feb. 2025 – May 2025', desc: [
     'A smart community platform connecting residents with municipal staff for real-time announcements, citizen reports, service requests, and community feedback.',
     'Led project planning, team coordination, requirements gathering, and mobile UI development using Flutter and Firebase, ensuring real-time data sync and reliable user authentication.',
     'Presented the research paper at PSITE IRCITE 2025, demonstrating how digital portals empower netizens to track municipal request resolutions and actively participate in local governance.'
   ], tags: ['Flutter', 'Firebase', 'Mobile App'], imgs: ['/images/baryo.webp', '/images/IRCITE-cert.webp', '/images/IRCITE-1.webp', '/images/IRCITE-2.webp', '/images/16.webp', '/images/15.webp'] },
-  { status: 'COMPLETE', title: 'DialiEase', badge: 'CAPD Management System', role: 'Full-Stack Web Developer | Co-Researcher', period: 'Nov. 2024 – Jan. 2026', desc: [
+  { status: 'COMPLETE', title: 'DialiEase', badge: 'CAPD Management System', role: 'Full-Stack Web Developer | Software Tester | Co-Researcher', period: 'Nov. 2024 – Jan. 2026', desc: [
     'A specialized healthcare web application for medical staff to remotely monitor Continuous Ambulatory Peritoneal Dialysis (CAPD) patients and daily fluid logs.',
     'Features clinical dashboards to monitor patient peritoneal dialysis exchange logs, fluid balance, ultrafiltration rates, and treatment compliance.',
     'Developed full-stack web features in React.js, Laravel, and MySQL while managing software testing and technical documentation.',

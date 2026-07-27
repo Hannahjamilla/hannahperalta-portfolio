@@ -42,7 +42,10 @@ export default function App() {
   const [lightbox, setLightbox] = useState<any>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
   const [colorProfile, setColorProfile] = useState(false)
+  const [coloredImgs, setColoredImgs] = useState<Record<string, boolean>>({})
   const dateString = useDateString()
+
+  const toggleImgColor = (url: string) => setColoredImgs(prev => ({ ...prev, [url]: !prev[url] }))
 
   const toggle = () => setDark(p => !p)
 
@@ -330,11 +333,11 @@ export default function App() {
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
                   <div className="w-full flex justify-center">
-                    <img src={QUESTS[0].imgs[0]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" loading="lazy" />
+                    <img src={QUESTS[0].imgs[0]} onClick={() => toggleImgColor(QUESTS[0].imgs[0])} className={`max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md ${coloredImgs[QUESTS[0].imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                   </div>
                   {QUESTS[0].imgs[1] && (
                     <div className="w-full flex justify-center">
-                      <img src={QUESTS[0].imgs[1]} className="max-w-full h-auto max-h-[320px] object-contain grayscale transition-transform duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded-md" loading="lazy" />
+                      <img src={QUESTS[0].imgs[1]} onClick={() => toggleImgColor(QUESTS[0].imgs[1])} className={`max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md ${coloredImgs[QUESTS[0].imgs[1]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                     </div>
                   )}
                 </div>
@@ -355,11 +358,11 @@ export default function App() {
                   {/* Two images side by side */}
                   <div className="grid grid-cols-2 gap-2 mb-4">
                     <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center">
-                      <img src={QUESTS[1].imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
+                      <img src={QUESTS[1].imgs[0]} onClick={() => toggleImgColor(QUESTS[1].imgs[0])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[QUESTS[1].imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                     </div>
                     {QUESTS[1].imgs[1] && (
                       <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center">
-                        <img src={QUESTS[1].imgs[1]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
+                        <img src={QUESTS[1].imgs[1]} onClick={() => toggleImgColor(QUESTS[1].imgs[1])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[QUESTS[1].imgs[1]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                       </div>
                     )}
                   </div>
@@ -425,7 +428,7 @@ export default function App() {
                   >
                     <div>
                       <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
-                        <img src={q.imgs[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 transition-all duration-500" loading="lazy" />
+                        <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-cover cursor-pointer transition-all duration-500 ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                       </div>
                       {q.badge && (
                         <div className="mb-1 mt-1.5">
@@ -474,7 +477,7 @@ export default function App() {
                 >
                   <div className="flex-1 flex flex-col">
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-2`}>
-                      <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
+                      <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                     </div>
                     {q.badge && (
                       <div className="mb-1.5">
@@ -533,7 +536,7 @@ export default function App() {
                       {/* Split layout on tablet: left image, right details */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 items-center flex-1">
                         <div className="aspect-[16/10] w-full relative overflow-hidden p-1.5">
-                          <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
+                          <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                         </div>
 
                         <div className="flex flex-col h-full justify-between">
@@ -588,7 +591,7 @@ export default function App() {
                     <>
                       <div className="flex-1 flex flex-col">
                         <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-1.5`}>
-                          <img src={q.imgs[0]} className="w-full h-full object-contain grayscale transition-all duration-[2s] group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0 rounded" loading="lazy" />
+                          <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                         </div>
                         {q.badge && (
                           <div className="mb-1.5">
@@ -663,7 +666,7 @@ export default function App() {
                         <>
                           <div className="flex gap-3 md:grid md:grid-cols-2 lg:block items-center">
                             <div className="w-[38%] shrink-0 md:w-full h-auto aspect-[4/3] md:aspect-[16/10] p-1 md:p-1.5 mb-0 md:mb-4 overflow-hidden relative flex items-center justify-center">
-                              <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
+                              <img src={p.imgs[0]} onClick={() => toggleImgColor(p.imgs[0])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[p.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                             </div>
                             <div className="flex-1 flex flex-col justify-center md:block">
                               <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
@@ -708,7 +711,7 @@ export default function App() {
                         <>
                           <div>
                             <div className={`w-full h-[110px] lg:h-auto lg:aspect-[16/10] p-1.5 mb-4 overflow-hidden relative flex items-center justify-center`}>
-                              <img src={p.imgs[0]} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 rounded" loading="lazy" />
+                              <img src={p.imgs[0]} onClick={() => toggleImgColor(p.imgs[0])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[p.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
                             </div>
 
                             <div className="flex flex-wrap items-center gap-2 mb-2">

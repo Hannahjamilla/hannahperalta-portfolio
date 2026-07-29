@@ -42,10 +42,7 @@ export default function App() {
   const [lightbox, setLightbox] = useState<any>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
   const [colorProfile, setColorProfile] = useState(false)
-  const [coloredImgs, setColoredImgs] = useState<Record<string, boolean>>({})
   const dateString = useDateString()
-
-  const toggleImgColor = (url: string) => setColoredImgs(prev => ({ ...prev, [url]: !prev[url] }))
 
   const toggle = () => setDark(p => !p)
 
@@ -164,10 +161,12 @@ export default function App() {
                 {/* Mobile: newspaper side-by-side photo + caption */}
                 <div className="flex gap-4 md:block">
                   <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-2 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-md rounded md:rounded-lg overflow-hidden flex-shrink-0`}>
-                    <picture onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
-                      <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
-                      <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[2s] ${colorProfile ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
-                    </picture>
+                    <div onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
+                      <picture>
+                        <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
+                        <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[2s] cursor-pointer ${colorProfile ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
+                      </picture>
+                    </div>
                   </div>
                   {/* Mobile-only bio blurb next to photo */}
                   <div className="flex-1 md:hidden flex flex-col justify-center">
@@ -333,11 +332,21 @@ export default function App() {
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
                   <div className="w-full flex justify-center">
-                    <img src={QUESTS[0].imgs[0]} onClick={() => toggleImgColor(QUESTS[0].imgs[0])} className={`max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md ${coloredImgs[QUESTS[0].imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                    <img
+                      src={QUESTS[0].imgs[0]}
+                      onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
+                      className="max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                      loading="lazy"
+                    />
                   </div>
                   {QUESTS[0].imgs[1] && (
                     <div className="w-full flex justify-center">
-                      <img src={QUESTS[0].imgs[1]} onClick={() => toggleImgColor(QUESTS[0].imgs[1])} className={`max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md ${coloredImgs[QUESTS[0].imgs[1]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                      <img
+                        src={QUESTS[0].imgs[1]}
+                        onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
+                        className="max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                        loading="lazy"
+                      />
                     </div>
                   )}
                 </div>
@@ -355,14 +364,24 @@ export default function App() {
                     <span className={`text-[11px] font-mono font-black uppercase tracking-[0.22em] ${accentBurgundy}`}>Capstone Project</span>
                   </div>
 
-                  {/* Two images side by side */}
+                   {/* Two images side by side */}
                   <div className="grid grid-cols-2 gap-2 mb-4">
                     <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center">
-                      <img src={QUESTS[1].imgs[0]} onClick={() => toggleImgColor(QUESTS[1].imgs[0])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[QUESTS[1].imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                      <img
+                        src={QUESTS[1].imgs[0]}
+                        onClick={() => setLightbox({ imgs: QUESTS[1].imgs, alt: QUESTS[1].title, wip: (QUESTS[1] as any).wip, desc: QUESTS[1].desc, tags: QUESTS[1].tags, link: QUESTS[1].link, role: QUESTS[1].role, status: QUESTS[1].status, period: QUESTS[1].period })}
+                        className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                        loading="lazy"
+                      />
                     </div>
                     {QUESTS[1].imgs[1] && (
                       <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center">
-                        <img src={QUESTS[1].imgs[1]} onClick={() => toggleImgColor(QUESTS[1].imgs[1])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[QUESTS[1].imgs[1]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                        <img
+                          src={QUESTS[1].imgs[1]}
+                          onClick={() => setLightbox({ imgs: QUESTS[1].imgs, alt: QUESTS[1].title, wip: (QUESTS[1] as any).wip, desc: QUESTS[1].desc, tags: QUESTS[1].tags, link: QUESTS[1].link, role: QUESTS[1].role, status: QUESTS[1].status, period: QUESTS[1].period })}
+                          className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                          loading="lazy"
+                        />
                       </div>
                     )}
                   </div>
@@ -428,7 +447,12 @@ export default function App() {
                   >
                     <div>
                       <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
-                        <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-cover cursor-pointer transition-all duration-500 ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                        <img
+                          src={q.imgs[0]}
+                          onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                          className="w-full h-full object-cover cursor-pointer transition-all duration-500 grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                          loading="lazy"
+                        />
                       </div>
                       {q.badge && (
                         <div className="mb-1 mt-1.5">
@@ -477,7 +501,12 @@ export default function App() {
                 >
                   <div className="flex-1 flex flex-col">
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-2`}>
-                      <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                      <img
+                        src={q.imgs[0]}
+                        onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                        className="w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                        loading="lazy"
+                      />
                     </div>
                     {q.badge && (
                       <div className="mb-1.5">
@@ -536,7 +565,12 @@ export default function App() {
                       {/* Split layout on tablet: left image, right details */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 items-center flex-1">
                         <div className="aspect-[16/10] w-full relative overflow-hidden p-1.5">
-                          <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                          <img
+                            src={q.imgs[0]}
+                            onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                            className="w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                            loading="lazy"
+                          />
                         </div>
 
                         <div className="flex flex-col h-full justify-between">
@@ -591,7 +625,12 @@ export default function App() {
                     <>
                       <div className="flex-1 flex flex-col">
                         <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-1.5`}>
-                          <img src={q.imgs[0]} onClick={() => toggleImgColor(q.imgs[0])} className={`w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded ${coloredImgs[q.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                          <img
+                            src={q.imgs[0]}
+                            onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
+                            className="w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                            loading="lazy"
+                          />
                         </div>
                         {q.badge && (
                           <div className="mb-1.5">
@@ -666,7 +705,12 @@ export default function App() {
                         <>
                           <div className="flex gap-3 md:grid md:grid-cols-2 lg:block items-center">
                             <div className="w-[38%] shrink-0 md:w-full h-auto aspect-[4/3] md:aspect-[16/10] p-1 md:p-1.5 mb-0 md:mb-4 overflow-hidden relative flex items-center justify-center">
-                              <img src={p.imgs[0]} onClick={() => toggleImgColor(p.imgs[0])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[p.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                              <img
+                                src={p.imgs[0]}
+                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                                className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                                loading="lazy"
+                              />
                             </div>
                             <div className="flex-1 flex flex-col justify-center md:block">
                               <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
@@ -711,7 +755,12 @@ export default function App() {
                         <>
                           <div>
                             <div className={`w-full h-[110px] lg:h-auto lg:aspect-[16/10] p-1.5 mb-4 overflow-hidden relative flex items-center justify-center`}>
-                              <img src={p.imgs[0]} onClick={() => toggleImgColor(p.imgs[0])} className={`max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded ${coloredImgs[p.imgs[0]] ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} loading="lazy" />
+                              <img
+                                src={p.imgs[0]}
+                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                                className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                                loading="lazy"
+                              />
                             </div>
 
                             <div className="flex flex-wrap items-center gap-2 mb-2">

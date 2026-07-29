@@ -11,6 +11,13 @@
     font-family: 'Playfair Display', 'Georgia', serif;
   }
   html { scroll-behavior: smooth; }
+  a, button { cursor: pointer; }
+  /* Tailwind v4 Preflight sets cursor:default on images — override for clickable ones */
+  img.cursor-pointer,
+  picture.cursor-pointer,
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.3); border-radius: 0; }
@@ -149,4 +156,16 @@
     opacity: 0;
     animation: loaderContentFadeIn 0.6s ease-out 1.5s forwards;
   }
+}
+
+/* Global cursor overrides - declared at the bottom to ensure maximum specificity */
+a,
+button,
+[role="button"],
+.cursor-pointer,
+.cursor-pointer img,
+img.cursor-pointer,
+picture.cursor-pointer,
+[onclick] {
+  cursor: pointer !important;
 }

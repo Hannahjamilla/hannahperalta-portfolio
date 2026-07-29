@@ -48,10 +48,10 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
   }
   
   return (
-    <div className="fixed inset-0 z-[70] flex items-end sm:items-stretch justify-end p-0" onClick={onClose}>
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-stretch justify-end p-0 cursor-pointer" onClick={onClose}>
       <div className="absolute inset-0 backdrop-blur-md bg-black/40 sm:bg-black/50" />
       <div
-        className={`relative z-10 w-full sm:w-[65vw] sm:max-w-[850px] rounded-t-3xl sm:rounded-none sm:rounded-l-2xl overflow-hidden min-h-[50vh] sm:min-h-0 max-h-[90vh] sm:max-h-full flex flex-col justify-center transition-transform animate-slide-bottom sm:animate-slide-right ${t(dark, 'bg-[#0f0f1a] border-t sm:border-t-0 sm:border-l border-white/10 shadow-2xl shadow-black/80', 'bg-[#fdfbf7] border-t sm:border-t-0 sm:border-l border-amber-900/10 shadow-2xl')}`}
+        className={`relative z-10 w-full sm:w-[65vw] sm:max-w-[850px] rounded-t-3xl sm:rounded-none sm:rounded-l-2xl overflow-hidden min-h-[50vh] sm:min-h-0 max-h-[90vh] sm:max-h-full flex flex-col justify-center transition-transform animate-slide-bottom sm:animate-slide-right cursor-default ${t(dark, 'bg-[#0f0f1a] border-t sm:border-t-0 sm:border-l border-white/10 shadow-2xl shadow-black/80', 'bg-[#fdfbf7] border-t sm:border-t-0 sm:border-l border-amber-900/10 shadow-2xl')}`}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
@@ -63,7 +63,7 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
             {/* Voice Reader Button */}
             <button 
               onClick={toggleSpeech}
-              className={`flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold border transition-colors ${isPlaying 
+              className={`flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold border transition-colors cursor-pointer ${isPlaying 
                 ? t(dark, 'bg-cyan-950/50 border-cyan-800/50 text-cyan-400', 'bg-indigo-50 border-indigo-200 text-indigo-700')
                 : t(dark, 'bg-white/5 border-white/10 text-gray-400 hover:text-white', 'bg-gray-100 border-gray-200 text-gray-600 hover:text-gray-900')}`}
               title="Read text aloud"
@@ -81,7 +81,7 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
               )}
             </button>
           </div>
-          <button onClick={onClose} className={`text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all shrink-0 ${t(dark, 'border-red-900/50 text-red-400 hover:bg-red-950/40', 'border-red-200 text-red-500 hover:bg-red-50')}`}>[X] CLOSE</button>
+          <button onClick={onClose} className={`text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all shrink-0 cursor-pointer ${t(dark, 'border-red-900/50 text-red-400 hover:bg-red-950/40', 'border-red-200 text-red-500 hover:bg-red-50')}`}>[X] CLOSE</button>
         </div>
 
         {/* Scrollable Body */}
@@ -92,8 +92,8 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
               <img src={imgs[imgIdx]} alt={data.title} className="max-w-full max-h-full object-contain" decoding="async" loading="lazy" />
               {imgs.length > 1 && (
                 <>
-                  <button onClick={() => setImgIdx(i => (i - 1 + imgs.length) % imgs.length)} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm font-bold">‹</button>
-                  <button onClick={() => setImgIdx(i => (i + 1) % imgs.length)} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm font-bold">›</button>
+                  <button onClick={() => setImgIdx(i => (i - 1 + imgs.length) % imgs.length)} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm font-bold cursor-pointer">‹</button>
+                  <button onClick={() => setImgIdx(i => (i + 1) % imgs.length)} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm font-bold cursor-pointer">›</button>
                   <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
                     {imgs.map((_, i) => <span key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === imgIdx ? 'bg-white scale-125' : 'bg-white/40'}`} />)}
                   </div>
@@ -126,7 +126,7 @@ export function DetailModal({ data, onClose }: { data: DetailData; onClose: () =
                   <div className="flex justify-between items-start gap-4">
                     <h2 className={`text-xl md:text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{data.title}</h2>
                     {data.link && (
-                      <a href={data.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs font-bold border transition-all active:scale-95 shrink-0 shadow-sm ${t(dark, 'border-cyan-700/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/50', 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100')}`}>
+                      <a href={data.link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs font-bold border transition-all active:scale-95 shrink-0 shadow-sm cursor-pointer ${t(dark, 'border-cyan-700/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/50', 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100')}`}>
                         OPEN LIVE <span className="font-sans font-black text-xs leading-none">↗</span>
                       </a>
                     )}

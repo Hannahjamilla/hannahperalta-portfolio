@@ -55,10 +55,10 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
   const prev = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i - 1 + totalSlides) % totalSlides) }
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-end lg:items-stretch justify-end p-0" onClick={onClose}>
+    <div className="fixed inset-0 z-[70] flex items-end lg:items-stretch justify-end p-0 cursor-pointer" onClick={onClose}>
       <div className="absolute inset-0 backdrop-blur-md bg-black/40 lg:bg-black/50" />
 
-      <div className={`relative z-10 w-full lg:w-[65vw] lg:max-w-[850px] max-h-[92vh] lg:max-h-full lg:h-full overflow-y-auto rounded-t-3xl lg:rounded-none lg:rounded-l-2xl flex flex-col justify-start lg:justify-center p-5 lg:p-8 ${
+      <div className={`relative z-10 w-full lg:w-[65vw] lg:max-w-[850px] max-h-[92vh] lg:max-h-full lg:h-full overflow-y-auto rounded-t-3xl lg:rounded-none lg:rounded-l-2xl flex flex-col justify-start lg:justify-center p-5 lg:p-8 cursor-default ${
         t(dark, 'bg-[#0f0f1a] border-t lg:border-t-0 lg:border-l border-white/10 shadow-2xl shadow-black/80', 'bg-[#fdfbf7] border-t lg:border-t-0 lg:border-l border-amber-900/10 shadow-2xl')
       }`} onClick={e => e.stopPropagation()}>
 
@@ -81,7 +81,7 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
           </div>
           <button
             onClick={onClose}
-            className={`font-semibold tracking-wide text-xs sm:text-xs px-3 py-2 border transition-all ${t(dark, 'border-red-900/50 text-red-400 hover:bg-red-950/50 hover:border-red-500', 'border-red-200 text-red-600 hover:bg-red-50 hover:border-red-400')}`}
+            className={`font-semibold tracking-wide text-xs sm:text-xs px-3 py-2 border transition-all cursor-pointer ${t(dark, 'border-red-900/50 text-red-400 hover:bg-red-950/50 hover:border-red-500', 'border-red-200 text-red-600 hover:bg-red-50 hover:border-red-400')}`}
           >
             [X] CLOSE
           </button>
@@ -95,7 +95,7 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-dashed border-gray-200 dark:border-white/10">
                   <h2 className={`text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{alt}</h2>
                   {link && (
-                    <a href={link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 rounded-xl text-xs lg:text-sm font-bold border transition-all shadow-sm shrink-0 self-start sm:self-auto ${t(dark, 'border-cyan-700/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/50 hover:-translate-y-0.5', 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:-translate-y-0.5')}`}>
+                    <a href={link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 rounded-xl text-xs lg:text-sm font-bold border transition-all shadow-sm shrink-0 self-start sm:self-auto cursor-pointer ${t(dark, 'border-cyan-700/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/50 hover:-translate-y-0.5', 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:-translate-y-0.5')}`}>
                       OPEN LIVE <ArrowUpRight size={14} className="stroke-[2.5]" />
                     </a>
                   )}
@@ -158,7 +158,8 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
                 key={imgs[idx]}
                 src={imgs[idx]}
                 alt={alt}
-                className="max-w-full max-h-full object-contain animate-fade-in drop-shadow-lg"
+                onClick={next}
+                className="max-w-full max-h-full object-contain animate-fade-in drop-shadow-lg cursor-pointer"
                 loading="lazy"
                 decoding="async"
               />
@@ -172,7 +173,7 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
           <div className="w-full flex justify-between items-center mt-4 sm:mt-6">
             <button
               onClick={prev}
-              className={`font-semibold tracking-wide text-xs sm:text-xs px-4 py-3 border transition-all ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
+              className={`font-semibold tracking-wide text-xs sm:text-xs px-4 py-3 border transition-all cursor-pointer ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
             >
               {'< PREV'}
             </button>
@@ -183,7 +184,7 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
 
             <button
               onClick={next}
-              className={`font-semibold tracking-wide text-xs sm:text-xs px-4 py-3 border transition-all ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
+              className={`font-semibold tracking-wide text-xs sm:text-xs px-4 py-3 border transition-all cursor-pointer ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
             >
               {'NEXT >'}
             </button>

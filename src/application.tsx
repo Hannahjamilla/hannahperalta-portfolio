@@ -101,14 +101,14 @@ export default function App() {
         <div className={`loader-screen ${t(dark, 'bg-[#0E0F14]', 'bg-[#faf9f6]')}`}>
           <span className={`loader-text ${t(dark, 'text-zinc-200', 'text-[#1c1813]')}`}>HanMade</span>
           <div className={`loader-line ${t(dark, 'bg-[#ff6b6b]', 'bg-[#a11d1d]')}`} />
-          <span className={`loader-sub ${t(dark, 'text-zinc-500', 'text-[#5d5a55]')}`}>Digital Archive</span>
+          <span className={`loader-sub ${t(dark, 'text-zinc-500', 'text-[#5d5a55]')}`}>Ideas & Creations</span>
         </div>
 
         <main role="main" className={`portfolio-content w-full max-w-[1120px] border-t-0 border-x border-b ${borderDarker} flex flex-col shadow-2xl ${t(dark, 'shadow-black/50 bg-[#161616]', 'shadow-black/5 bg-[#faf9f6]')}`}>
 
           {/* Header Strip - Fixed/Sticky Top Navigation across all screens */}
           <div className={`sticky top-0 z-50 flex items-center justify-between gap-3 sm:gap-4 md:gap-6 py-2 md:py-2.5 px-3 sm:px-6 md:px-10 border-b ${border} text-[9px] sm:text-[11px] md:text-xs font-mono uppercase tracking-wider md:tracking-widest font-black ${t(dark, 'bg-[#161616] text-slate-300', 'bg-[#F2EBD9] text-[#5c5643]')} shadow-sm`}>
-            <span className="whitespace-nowrap shrink-0">HanMade | Digital Archive</span>
+            <span className="whitespace-nowrap shrink-0">HanMade | Ideas & Creations</span>
             <span className="hidden lg:block whitespace-nowrap text-center truncate">Ideas, Code & Creations</span>
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               <span className="hidden sm:inline whitespace-nowrap">{dateString}</span>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Volume2, VolumeX } from 'lucide-react'
 import { useTheme, t } from '../../context/theme-context'
 
 // Preload adjacent images for smooth navigation
@@ -8,10 +8,11 @@ const preloadImage = (src: string) => {
   img.src = src
 }
 
-export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClose }: any) {
+export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, onClose }: any) {
   const { dark } = useTheme()
   const [idx, setIdx] = useState(0)
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const hasMoreInfo = !!(desc || tags || link || role)
   const totalSlides = imgs.length + (hasMoreInfo ? 1 : 0)
@@ -19,26 +20,26 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+      window.speechSynthesis.cancel()
+    }
   }, [])
 
   // Preload current and adjacent images
   useEffect(() => {
     const preloadImages = () => {
-      // Always preload current image
       if (imgs[idx] && !loadedImages.has(imgs[idx])) {
         preloadImage(imgs[idx])
         setLoadedImages(prev => new Set([...prev, imgs[idx]]))
       }
-      
-      // Preload next image
+
       const nextIdx = (idx + 1) % imgs.length
       if (imgs[nextIdx] && !loadedImages.has(imgs[nextIdx])) {
         preloadImage(imgs[nextIdx])
         setLoadedImages(prev => new Set([...prev, imgs[nextIdx]]))
       }
-      
-      // Preload previous image
+
       const prevIdx = (idx - 1 + imgs.length) % imgs.length
       if (imgs[prevIdx] && !loadedImages.has(imgs[prevIdx])) {
         preloadImage(imgs[prevIdx])
@@ -51,147 +52,364 @@ export function Lightbox({ imgs, alt, wip, desc, tags, link, role, period, onClo
     }
   }, [idx, imgs, loadedImages, isMoreInfoSlide])
 
+  const toggleSpeech = () => {
+    if (isPlaying) {
+      window.speechSynthesis.cancel()
+      setIsPlaying(false)
+    } else {
+      window.speechSynthesis.cancel()
+      const textToRead = [
+        alt,
+        role?.replace(/\|\s*/g, ', '),
+        period,
+        Array.isArray(desc) ? desc.map(d => d.replace(/^[•\-\*]\s*/, '')).join('. ') : desc
+      ].filter(Boolean).join('. ')
+
+      const utterance = new SpeechSynthesisUtterance(textToRead)
+      const voices = window.speechSynthesis.getVoices()
+      const preferredVoice = voices.find(v => v.lang.startsWith('en') && /zira|susan|hazel|heather|female|samantha|victoria|aria|jenny|sonia|google/i.test(v.name))
+        || voices.find(v => v.lang.startsWith('en') && !/david|mark|male|boy|guy/i.test(v.name))
+      if (preferredVoice) utterance.voice = preferredVoice
+
+      utterance.rate = 0.95
+      utterance.onend = () => setIsPlaying(false)
+      utterance.onerror = () => setIsPlaying(false)
+
+      setIsPlaying(true)
+      window.speechSynthesis.speak(utterance)
+      window.speechSynthesis.resume()
+    }
+  }
+
   const next = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i + 1) % totalSlides) }
   const prev = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i - 1 + totalSlides) % totalSlides) }
 
-  return (
-    <div className="fixed inset-0 z-[70] flex items-end lg:items-stretch justify-end p-0 cursor-pointer" onClick={onClose}>
-      <div className="absolute inset-0 backdrop-blur-md bg-black/40 lg:bg-black/50" />
-
-      <div className={`relative z-10 w-full lg:w-[65vw] lg:max-w-[850px] max-h-[92vh] lg:max-h-full lg:h-full overflow-y-auto rounded-t-3xl lg:rounded-none lg:rounded-l-2xl flex flex-col justify-start lg:justify-center p-5 lg:p-8 cursor-default ${
-        t(dark, 'bg-[#0f0f1a] border-t lg:border-t-0 lg:border-l border-white/10 shadow-2xl shadow-black/80', 'bg-[#fdfbf7] border-t lg:border-t-0 lg:border-l border-amber-900/10 shadow-2xl')
-      }`} onClick={e => e.stopPropagation()}>
-
-        {/* Drag handle pill — mobile & tablet only */}
-        <div className="lg:hidden flex justify-center mb-4 -mt-1">
-          <div className={`w-10 h-1 rounded-full ${t(dark, 'bg-white/20', 'bg-black/15')}`} />
-        </div>
-
-
-        {/* Game UI Header */}
-        <div className={`w-full flex justify-between items-end mb-4 border-b-2 pb-2 ${t(dark, 'border-cyan-900', 'border-amber-200/60')}`}>
-          <div className="flex flex-col">
-            <span className={`font-semibold tracking-wide text-xs sm:text-xs uppercase ${t(dark, 'text-cyan-400', 'text-amber-700')}`}>
-              {isMoreInfoSlide ? 'PROJECT_DETAILS' : 'VIEWING_DATA'}
-            </span>
-            <span className={`font-mono text-xs sm:text-sm mt-1.5 flex items-center gap-2 ${t(dark, 'text-gray-400', 'text-gray-600')}`}>
-              {alt}
-              {wip && <span className={`inline-flex px-1.5 py-0.5 rounded text-[10px] font-mono font-bold whitespace-nowrap border ${t(dark, 'bg-amber-950/40 text-amber-400 border-amber-800/50', 'bg-amber-50 text-amber-700 border-amber-200')}`}>Work in Progress</span>}
-            </span>
-          </div>
-          <button
-            onClick={onClose}
-            className={`font-semibold tracking-wide text-xs sm:text-xs px-3 py-2 border transition-all cursor-pointer ${t(dark, 'border-red-900/50 text-red-400 hover:bg-red-950/50 hover:border-red-500', 'border-red-200 text-red-600 hover:bg-red-50 hover:border-red-400')}`}
+  const renderRoleChips = (roleStr?: string) => {
+    if (!roleStr) return null
+    const roles = roleStr.split('|').map(r => r.trim()).filter(Boolean)
+    return (
+      <div className="flex flex-wrap items-center gap-1">
+        {roles.map((r, i) => (
+          <span
+            key={i}
+            className={`inline-block px-1.5 py-0.5 text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider border ${
+              t(dark, 'bg-[#2a241e] text-[#f5d089] border-[#665435]', 'bg-[#f4efe4] text-[#7a591e] border-[#d4c5a9]')
+            }`}
           >
-            [X] CLOSE
-          </button>
+            {r}
+          </span>
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-stretch justify-end p-0 cursor-pointer" onClick={onClose}>
+      {/* Backdrop */}
+      <div className="absolute inset-0 backdrop-blur-md bg-black/40 sm:bg-black/55 transition-opacity" />
+
+      {/* Side Modal (Desktop) / Bottom Sheet (Mobile) Container */}
+      <div
+        className={`relative z-10 w-full sm:w-[85vw] md:w-[65vw] max-w-[850px] rounded-t-3xl sm:rounded-none sm:rounded-l-2xl overflow-hidden min-h-[50vh] sm:min-h-0 max-h-[92vh] sm:max-h-full flex flex-col justify-between transition-transform animate-slide-bottom sm:animate-slide-right cursor-default ${
+          t(
+            dark,
+            'bg-[#141414] text-[#e0e0e0] border-t sm:border-t-0 sm:border-l border-white/15 shadow-2xl shadow-black/80',
+            'bg-[#faf9f6] text-[#1c1813] border-t sm:border-t-0 sm:border-l border-[#d0c9b8] shadow-2xl'
+          )
+        }`}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Mobile Drag Pill */}
+        <div className="sm:hidden flex justify-center py-2 bg-black/5 dark:bg-white/5 border-b border-current/10 shrink-0">
+          <div className="w-10 h-1 rounded-full bg-current opacity-25" />
         </div>
 
-        {/* Main Content Area — fixed height so modal never resizes between slides */}
-        <div className={`relative w-full border p-2 lg:p-4 ${t(dark, 'border-cyan-800/50 bg-black/50 shadow-sm', 'border-amber-200/50 bg-white shadow-xl')}`}>
-          <div className={`relative w-full h-[32vh] sm:h-[38vh] lg:h-[55vh] flex ${isMoreInfoSlide ? 'items-start' : 'items-center justify-center'} overflow-y-auto overflow-x-hidden ${t(dark, 'bg-[#0a0a0f]/80', 'bg-[#fcfaf5]')}`}>
-            {isMoreInfoSlide ? (
-              <div className="p-5 lg:p-8 w-full min-h-full flex flex-col text-left animate-fade-in relative z-10">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-dashed border-gray-200 dark:border-white/10">
-                  <h2 className={`text-2xl lg:text-3xl font-black tracking-tight ${t(dark, 'text-white', 'text-gray-900')}`}>{alt}</h2>
+        {/* Newspaper Masthead Header */}
+        <div className={`border-b-2 border-double shrink-0 ${t(dark, 'border-white/20 bg-[#191919]', 'border-[#d0c9b8] bg-[#F2EBD9]')}`}>
+          <div className="flex items-center justify-between px-4 sm:px-5 py-2 gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="w-2 h-2 bg-current rotate-45 shrink-0 opacity-80" />
+              <span className={`font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-widest truncate ${t(dark, 'text-[#ff6b6b]', 'text-[#a11d1d]')}`}>
+                HanMade Chronicle
+              </span>
+              {wip && (
+                <span className={`text-[8.5px] sm:text-[9.5px] font-mono font-black uppercase px-2 py-0.5 border border-current ${t(dark, 'bg-amber-950/40 text-amber-400 border-amber-800/60', 'bg-amber-100 text-amber-800 border-amber-300')}`}>
+                  WIP
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {/* Voice Speech Toggle */}
+              {hasMoreInfo && (
+                <button
+                  onClick={toggleSpeech}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border transition-all cursor-pointer ${
+                    isPlaying
+                      ? t(dark, 'border-[#ff6b6b] text-[#ff6b6b] bg-[#ff6b6b]/10', 'border-[#a11d1d] text-[#a11d1d] bg-[#a11d1d]/10')
+                      : t(dark, 'border-white/20 text-zinc-300 hover:bg-white/10', 'border-[#d0c9b8] text-[#5c5643] hover:bg-[#eae2d0]')
+                  }`}
+                  title="Read story aloud"
+                >
+                  {isPlaying ? (
+                    <>
+                      <VolumeX size={12} />
+                      <span>STOP</span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 size={12} />
+                      <span>LISTEN</span>
+                    </>
+                  )}
+                </button>
+              )}
+
+              {/* Close Button */}
+              <button
+                onClick={onClose}
+                className={`px-2.5 py-1 text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border transition-all shrink-0 cursor-pointer ${
+                  t(dark, 'border-red-500/40 text-red-400 hover:bg-red-950/40', 'border-red-300 text-red-700 hover:bg-red-50')
+                }`}
+              >
+                [X] CLOSE
+              </button>
+            </div>
+          </div>
+
+          {/* Sub-Header Tabs for Switching between Article and Photos */}
+          {imgs.length > 0 && hasMoreInfo && (
+            <div className={`flex border-t border-dashed px-4 sm:px-6 py-1.5 gap-2 text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider ${t(dark, 'border-white/15', 'border-[#d0c9b8]')}`}>
+              <button
+                onClick={() => setIdx(imgs.length)}
+                className={`px-2.5 py-1 border transition-colors cursor-pointer ${
+                  isMoreInfoSlide
+                    ? t(dark, 'bg-[#ff6b6b] text-black border-[#ff6b6b]', 'bg-[#a11d1d] text-white border-[#a11d1d]')
+                    : t(dark, 'border-white/20 hover:bg-white/10', 'border-[#d0c9b8] hover:bg-[#eae2d0]')
+                }`}
+              >
+                &bull; ARTICLE DETAILS
+              </button>
+              <button
+                onClick={() => setIdx(0)}
+                className={`px-2.5 py-1 border transition-colors cursor-pointer ${
+                  !isMoreInfoSlide
+                    ? t(dark, 'bg-[#ff6b6b] text-black border-[#ff6b6b]', 'bg-[#a11d1d] text-white border-[#a11d1d]')
+                    : t(dark, 'border-white/20 hover:bg-white/10', 'border-[#d0c9b8] hover:bg-[#eae2d0]')
+                }`}
+              >
+                &bull; PHOTO GALLERY ({isMoreInfoSlide ? '1' : idx + 1}/{imgs.length})
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Scrollable Content Body */}
+        <div className="overflow-y-auto flex-1 flex flex-col">
+          {isMoreInfoSlide ? (
+            /* 📰 ARTICLE DETAILS VIEW */
+            <div className="p-4 sm:p-6 md:p-8 flex flex-col gap-4 font-serif animate-fade-in">
+              {/* Header Title & Live Link */}
+              <div>
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
+                  <h2 className={`text-2xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-tight leading-tight ${t(dark, 'text-zinc-100', 'text-[#1c1813]')}`}>
+                    {alt}
+                  </h2>
+
                   {link && (
-                    <a href={link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 rounded-xl text-xs lg:text-sm font-bold border transition-all shadow-sm shrink-0 self-start sm:self-auto cursor-pointer ${t(dark, 'border-cyan-700/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/50 hover:-translate-y-0.5', 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:-translate-y-0.5')}`}>
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-mono font-bold uppercase tracking-wider border-2 border-double transition-all shrink-0 cursor-pointer ${
+                        t(dark, 'border-[#ff6b6b] text-[#ff6b6b] hover:bg-[#ff6b6b] hover:text-black', 'border-[#a11d1d] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')
+                      }`}
+                    >
                       OPEN LIVE <ArrowUpRight size={14} className="stroke-[2.5]" />
                     </a>
                   )}
                 </div>
-                
-                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 rounded-xl border ${t(dark, 'bg-white/5 border-white/5', 'bg-gray-50 border-gray-100')}`}>
-                  {role && (
-                    <div className="flex flex-col">
-                      <span className={`text-[10px] font-mono font-bold uppercase tracking-widest mb-1.5 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Role</span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {role.split('|').map((r: string, idx: number) => (
-                          <span key={idx} className={`px-2.5 py-1 rounded-md text-xs font-mono font-bold border ${t(dark, 'bg-cyan-950/40 text-cyan-300 border-cyan-800/50', 'bg-indigo-50 text-indigo-700 border-indigo-200')}`}>
-                            {r.trim()}
-                          </span>
-                        ))}
-                      </div>
+
+                <div className="flex flex-wrap items-center gap-3 text-xs font-mono opacity-75 border-y border-dashed py-2 my-2 border-current/25">
+                  {renderRoleChips(role)}
+                  {period && <span>PERIOD: {period}</span>}
+                </div>
+              </div>
+
+              {/* Compact Photo Preview Frame inside Article View */}
+              {imgs.length > 0 && (
+                <div
+                  onClick={() => setIdx(0)}
+                  className={`relative w-full max-w-md mx-auto h-36 sm:h-44 border-2 border-dashed p-2 cursor-pointer group transition-all overflow-hidden flex items-center justify-center shrink-0 rounded-sm my-1 ${
+                    t(dark, 'border-white/20 bg-black/60 hover:border-[#ff6b6b]', 'border-[#d0c9b8] bg-[#F6EFE2] hover:border-[#a11d1d]')
+                  }`}
+                >
+                  <img src={imgs[0]} alt={alt} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500" loading="lazy" />
+                  <div className="absolute bottom-2 right-2 px-2 py-0.5 text-[8.5px] font-mono font-black uppercase tracking-widest bg-black/80 text-white backdrop-blur-xs flex items-center gap-1 pointer-events-none rounded-xs">
+                    <span>VIEW GALLERY ({imgs.length} PHOTOS)</span> &rsaquo;
+                  </div>
+                </div>
+              )}
+
+              {/* Article Overview & Bulleted Highlights */}
+              {desc && (
+                <div className="clear-both pt-1">
+                  <div className={`my-2 py-1 px-3 border-y border-double ${t(dark, 'border-white/20 text-[#ff6b6b]', 'border-[#d0c9b8] text-[#a11d1d]')} flex items-center gap-2 text-[9.5px] font-mono font-black uppercase tracking-[0.2em] mb-3`}>
+                    <span className="w-1.5 h-1.5 bg-current rotate-45 shrink-0" />
+                    <span>ARTICLE OVERVIEW & KEY HIGHLIGHTS</span>
+                    <span className="w-1.5 h-1.5 bg-current rotate-45 shrink-0" />
+                  </div>
+
+                  {Array.isArray(desc) ? (
+                    <div className="space-y-3 clear-both">
+                      {desc.map((d: string, i: number) => {
+                        const isBullet = d.trim().startsWith('•') || d.trim().startsWith('-') || d.trim().startsWith('*')
+                        if (isBullet) {
+                          const cleanText = d.replace(/^[•\-\*]\s*/, '')
+                          const parts = cleanText.split(':')
+                          const title = parts.length > 1 ? parts[0] : null
+                          const body = parts.length > 1 ? parts.slice(1).join(':') : cleanText
+
+                          return (
+                            <div
+                              key={i}
+                              className={`flex items-start gap-2.5 p-2.5 sm:p-3 rounded-sm border ${
+                                t(dark, 'bg-[#1c1c1c] border-white/10 text-zinc-200', 'bg-[#f4efe4] border-[#e2d8c3] text-[#2c261e]')
+                              }`}
+                            >
+                              <span className={`mt-1.5 w-2 h-2 rotate-45 shrink-0 ${t(dark, 'bg-[#ff6b6b]', 'bg-[#a11d1d]')}`} />
+                              <div className="text-sm sm:text-base leading-relaxed">
+                                {title ? (
+                                  <>
+                                    <strong className={`font-mono uppercase font-bold text-xs sm:text-sm mr-1.5 tracking-wide ${t(dark, 'text-[#ff6b6b]', 'text-[#a11d1d]')}`}>{title}:</strong>
+                                    <span>{body}</span>
+                                  </>
+                                ) : (
+                                  <span>{cleanText}</span>
+                                )}
+                              </div>
+                            </div>
+                          )
+                        }
+
+                        return (
+                          <p
+                            key={i}
+                            className={`text-base sm:text-lg leading-relaxed clear-both ${
+                              i === 0 ? 'first-letter:text-4xl sm:first-letter:text-5xl first-letter:font-black first-letter:font-serif first-letter:mr-2.5 first-letter:float-left first-letter:leading-none' : ''
+                            }`}
+                          >
+                            {d}
+                          </p>
+                        )
+                      })}
                     </div>
-                  )}
-                  {period && (
-                    <div className="flex flex-col">
-                      <span className={`text-[10px] font-mono font-bold uppercase tracking-widest mb-1 ${t(dark, 'text-gray-500', 'text-gray-400')}`}>Timeline</span>
-                      <span className={`text-sm font-mono ${t(dark, 'text-gray-300', 'text-gray-600')}`}>{period}</span>
-                    </div>
+                  ) : (
+                    <p className="text-base sm:text-lg leading-relaxed clear-both first-letter:text-4xl sm:first-letter:text-5xl first-letter:font-black first-letter:font-serif first-letter:mr-2.5 first-letter:float-left first-letter:leading-none">
+                      {desc}
+                    </p>
                   )}
                 </div>
-                
-                {desc && (
-                  <div className="mb-8">
-                    <h3 className={`text-xs font-mono font-bold uppercase tracking-widest mb-4 flex items-center gap-2 ${t(dark, 'text-gray-400', 'text-gray-500')}`}>
-                      <span className={t(dark, 'text-cyan-500', 'text-indigo-500')}>&#9632;</span> Project Overview
-                    </h3>
-                    {Array.isArray(desc) ? (
-                      <div className="space-y-3">
-                        {desc.map((d:string, i:number) => (
-                          <div key={i} className="flex items-start gap-2.5">
-                            <span className={`mt-1.5 w-1.5 h-1.5 rounded-sm shrink-0 ${t(dark, 'bg-cyan-500/50', 'bg-indigo-400')}`} />
-                            <p className={`text-sm leading-relaxed ${t(dark, 'text-gray-300', 'text-gray-600')}`}>{d}</p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className={`text-sm leading-relaxed ${t(dark, 'text-gray-300', 'text-gray-600')}`}>{desc}</p>
-                    )}
-                  </div>
-                )}
+              )}
 
-                {tags && tags.length > 0 && (
-                  <div className="mb-6 mt-auto">
-                    <h3 className={`text-xs font-mono font-bold uppercase tracking-widest mb-3 flex items-center gap-2 ${t(dark, 'text-gray-400', 'text-gray-500')}`}>
-                      <span className={t(dark, 'text-amber-500', 'text-amber-500')}>&#9632;</span> Tech Stack & Tools
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {tags.map((t_str: string) => <span key={t_str} className={`px-3 py-1.5 rounded-lg text-[11px] font-mono font-semibold border shadow-sm transition-all hover:-translate-y-0.5 ${t(dark, 'bg-[#0f0f1a] border-cyan-900/30 text-cyan-300 hover:border-cyan-500/50', 'bg-white border-indigo-100 text-indigo-700 hover:border-indigo-300')}`}>{t_str}</span>)}
-                    </div>
+              {/* Tech Stack Tags */}
+              {tags && tags.length > 0 && (
+                <div className="pt-1 clear-both">
+                  <div className="text-[9.5px] sm:text-[10px] font-mono font-black uppercase tracking-widest opacity-70 mb-2 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-current rotate-45 shrink-0" /> TECH STACK & TOOLS
                   </div>
-                )}
+                  <div className="flex flex-wrap gap-1.5">
+                    {tags.map((t_str: string) => (
+                      <span
+                        key={t_str}
+                        className={`px-2.5 py-1 text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border ${
+                          t(dark, 'text-[#c6bfb0] border-[#555047] bg-[#212124]', 'text-[#54442e] border-[#d2cab4] bg-[#faf6ec]')
+                        }`}
+                      >
+                        {t_str}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* 🖼️ PHOTO GALLERY VIEW */
+            <div className="p-3 sm:p-5 flex flex-col items-center justify-center flex-1 w-full h-full animate-fade-in">
+              <div className={`relative w-full flex-1 min-h-[380px] sm:min-h-[500px] flex items-center justify-center border-2 border-dashed p-3 sm:p-6 overflow-hidden rounded-sm ${
+                t(dark, 'border-white/20 bg-black/70', 'border-[#d0c9b8] bg-[#F6EFE2]')
+              }`}>
+                <img
+                  key={imgs[idx]}
+                  src={imgs[idx]}
+                  alt={alt}
+                  onClick={next}
+                  className="w-full h-full object-contain drop-shadow-xl cursor-pointer select-none transition-transform duration-300 hover:scale-[1.01]"
+                  loading="lazy"
+                  decoding="async"
+                />
+
+                <div className="absolute top-3 left-3 px-2.5 py-1 text-[8.5px] sm:text-[9.5px] font-mono font-black uppercase tracking-widest bg-black/80 text-white backdrop-blur-xs">
+                  FIG 1.{idx + 1} &bull; {alt}
+                </div>
               </div>
-            ) : (
-              <img
-                key={imgs[idx]}
-                src={imgs[idx]}
-                alt={alt}
-                onClick={next}
-                className="max-w-full max-h-full object-contain animate-fade-in drop-shadow-lg cursor-pointer"
-                loading="lazy"
-                decoding="async"
-              />
-            )}
-          </div>
+
+              {/* Photo Pagination Dots */}
+              {imgs.length > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-3 shrink-0">
+                  {imgs.map((_: any, i: number) => (
+                    <button
+                      key={i}
+                      onClick={() => setIdx(i)}
+                      className={`w-2.5 h-2.5 rotate-45 transition-all cursor-pointer ${
+                        i === idx
+                          ? (dark ? 'bg-[#ff6b6b] scale-125' : 'bg-[#a11d1d] scale-125')
+                          : 'bg-current opacity-30 hover:opacity-70'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
+        {/* Footer Controls & Newspaper Banner */}
+        <div className={`border-t-2 border-double p-3 sm:p-4 shrink-0 flex flex-col gap-2 ${
+          t(dark, 'border-white/20 bg-[#191919]', 'border-[#d0c9b8] bg-[#F2EBD9]')
+        }`}>
+          {totalSlides > 1 && (
+            <div className="w-full flex justify-between items-center font-mono text-xs">
+              <button
+                onClick={prev}
+                className={`px-3 py-1.5 border font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  t(dark, 'border-white/20 text-zinc-200 hover:bg-white/10', 'border-[#d0c9b8] text-[#1c1813] hover:bg-[#eae2d0]')
+                }`}
+              >
+                &lsaquo; PREV
+              </button>
 
-        {/* Navigation Controls */}
-        {totalSlides > 1 && (
-          <div className="w-full flex justify-between items-center mt-4 sm:mt-6">
-            <button
-              onClick={prev}
-              className={`font-semibold tracking-wide text-xs sm:text-xs px-4 py-3 border transition-all cursor-pointer ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
-            >
-              {'< PREV'}
-            </button>
+              <div className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-80">
+                {isMoreInfoSlide ? 'RECORD DETAILS' : `PHOTO ${idx + 1} OF ${imgs.length}`}
+              </div>
 
-            <div className={`font-mono text-sm sm:text-base px-4 py-2 border ${t(dark, 'border-white/10 text-white/50 bg-black/30', 'border-gray-200 text-gray-500 bg-white/50')}`}>
-              {isMoreInfoSlide ? 'DETAILS' : `FILE ${idx + 1}/${imgs.length}`}
+              <button
+                onClick={next}
+                className={`px-3 py-1.5 border font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                  t(dark, 'border-white/20 text-zinc-200 hover:bg-white/10', 'border-[#d0c9b8] text-[#1c1813] hover:bg-[#eae2d0]')
+                }`}
+              >
+                NEXT &rsaquo;
+              </button>
             </div>
+          )}
 
-            <button
-              onClick={next}
-              className={`font-semibold tracking-wide text-xs sm:text-xs px-4 py-3 border transition-all cursor-pointer ${t(dark, 'border-cyan-900 text-cyan-400 hover:bg-cyan-950/50 hover:border-cyan-500', 'border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-400')}`}
-            >
-              {'NEXT >'}
-            </button>
+          <div className="flex items-center justify-between font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-widest opacity-70 pt-1 border-t border-dashed border-current/20">
+            <span>HANMADE CHRONICLE &bull; ARCHIVE PRESS</span>
+            <span>VOL. 1 &bull; EST. 2024</span>
           </div>
-        )}
+        </div>
       </div>
     </div>
   )
 }
-

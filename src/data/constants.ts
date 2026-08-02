@@ -203,6 +203,7 @@ export const PERSONAL: { title: string, desc: string[], tags: string[], link?: s
     role: 'Full-Stack Developer',
     period: '2025',
     status: 'COMPLETE',
+    wip: true,
     desc: [
       'Tasklet is a study helper app designed for students who struggle to stay focused or keep putting off their work. It gives them the right tools and gentle nudges to actually get things done.',
       '• Focus Timer: A built-in timer helps students work in short, focused bursts — a proven method to beat distraction and study more effectively.',

@@ -35,6 +35,15 @@ const renderRoleChips = (roleStr?: string, dark: boolean = false) => {
   )
 }
 
+const renderStatusChip = (_status?: string, wip?: boolean, dark: boolean = false) => {
+  if (!wip) return null
+  return (
+    <span className={`inline-block px-1.5 py-0.5 rounded text-[8px] sm:text-[8.5px] font-mono font-black uppercase tracking-wider border ${t(dark, 'bg-amber-950/40 text-amber-400 border-amber-800/60', 'bg-amber-100 text-amber-800 border-amber-300')}`}>
+      WORK IN PROGRESS
+    </span>
+  )
+}
+
 
 
 export default function App() {
@@ -289,6 +298,8 @@ export default function App() {
                       {renderRoleChips(QUESTS[0].role, dark)}
                       <span className="opacity-40 font-mono text-[10px]">&bull;</span>
                       <span className="text-[10px] font-mono uppercase tracking-widest font-black opacity-80">{QUESTS[0].period}</span>
+                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                      {renderStatusChip(QUESTS[0].status, (QUESTS[0] as any).wip, dark)}
                     </div>
                   </div>
                   <h3 className="text-xl md:text-4xl lg:text-[44px] font-serif font-black uppercase tracking-wide mb-3 md:mb-5 group-hover:underline underline-offset-4 decoration-2 decoration-rose-455 leading-tight">{QUESTS[0].title}</h3>
@@ -397,6 +408,8 @@ export default function App() {
                       {renderRoleChips(QUESTS[1].role, dark)}
                       <span className="opacity-40 font-mono text-[9px]">•</span>
                       <span className="text-[8px] font-mono font-black uppercase tracking-widest opacity-60">{QUESTS[1].period}</span>
+                      <span className="opacity-40 font-mono text-[9px]">•</span>
+                      {renderStatusChip(QUESTS[1].status, (QUESTS[1] as any).wip, dark)}
                     </div>
                     <h3 className="text-xl font-serif font-black uppercase tracking-wide leading-tight mb-2 group-hover:underline underline-offset-4 decoration-2">{QUESTS[1].title}</h3>
                     <p className="font-serif text-sm leading-relaxed opacity-85">{QUESTS[1].desc[0]}</p>
@@ -462,6 +475,8 @@ export default function App() {
                       <div className="flex flex-wrap items-center gap-1 mb-1">
                         {renderRoleChips(q.role, dark)}
                         {q.period && <><span className="opacity-40 font-mono text-[8px]">&bull;</span><span className="text-[7px] font-mono font-black uppercase tracking-widest opacity-70">{q.period}</span></>}
+                        <span className="opacity-40 font-mono text-[8px]">&bull;</span>
+                        {renderStatusChip(q.status, (q as any).wip, dark)}
                       </div>
                       <h3 className="text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 group-hover:underline">{q.title}</h3>
                     </div>
@@ -517,6 +532,8 @@ export default function App() {
                       {renderRoleChips(q.role, dark)}
                       <span className="opacity-40 font-mono text-[10px]">&bull;</span>
                       <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
+                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                      {renderStatusChip(q.status, (q as any).wip, dark)}
                     </div>
                     <h3 className="text-2xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
                     <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
@@ -584,6 +601,8 @@ export default function App() {
                               {renderRoleChips(q.role, dark)}
                               <span className="opacity-40 font-mono text-[10px]">&bull;</span>
                               <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
+                              <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                              {renderStatusChip(q.status, (q as any).wip, dark)}
                             </div>
                             <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
                             <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
@@ -641,6 +660,8 @@ export default function App() {
                           {renderRoleChips(q.role, dark)}
                           <span className="opacity-40 font-mono text-[10px]">&bull;</span>
                           <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
+                          <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                          {renderStatusChip(q.status, (q as any).wip, dark)}
                         </div>
                         <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
                         <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
@@ -716,6 +737,8 @@ export default function App() {
                               <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
                                 {renderRoleChips(p.role, dark)}
                                 {p.period && <><span className="opacity-40 font-mono text-[9px]">&bull;</span><span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-70">{p.period}</span></>}
+                                <span className="opacity-40 font-mono text-[9px]">&bull;</span>
+                                {renderStatusChip(p.status, p.wip, dark)}
                               </div>
                               <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
                               <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted} line-clamp-2 md:line-clamp-none`}>{p.desc[0]}</p>
@@ -766,6 +789,8 @@ export default function App() {
                             <div className="flex flex-wrap items-center gap-2 mb-2">
                               {renderRoleChips(p.role, dark)}
                               {p.period && <><span className="opacity-40 font-mono text-[9px]">&bull;</span><span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-70">{p.period}</span></>}
+                              <span className="opacity-40 font-mono text-[9px]">&bull;</span>
+                              {renderStatusChip(p.status, p.wip, dark)}
                             </div>
 
                             <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1.5 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>

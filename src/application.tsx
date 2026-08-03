@@ -38,8 +38,8 @@ const renderRoleChips = (roleStr?: string, dark: boolean = false) => {
 const renderStatusChip = (_status?: string, wip?: boolean, dark: boolean = false) => {
   if (!wip) return null
   return (
-    <span className={`inline-block px-1.5 py-0.5 rounded text-[8px] sm:text-[8.5px] font-mono font-black uppercase tracking-wider border ${t(dark, 'bg-amber-950/40 text-amber-400 border-amber-800/60', 'bg-amber-100 text-amber-800 border-amber-300')}`}>
-      WORK IN PROGRESS
+    <span className={`inline-block ml-2 sm:ml-2.5 text-[0.45em] font-mono font-bold tracking-wider uppercase align-middle ${t(dark, 'text-amber-400', 'text-amber-700')}`}>
+      - WORK IN PROGRESS
     </span>
   )
 }
@@ -288,21 +288,17 @@ export default function App() {
               {/* Mobile: text on top, image stacked below */}
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 <div className={`p-4 md:p-10 lg:p-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r ${border}`}>
-                  <div className="flex flex-col gap-1.5 mb-4">
+                  <h3 className="text-xl md:text-4xl lg:text-[44px] font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 decoration-rose-455 leading-tight">
+                    {QUESTS[0].title}
+                    {renderStatusChip(QUESTS[0].status, (QUESTS[0] as any).wip, dark)}
+                  </h3>
+                  {QUESTS[0].period && <div className="text-[10px] font-mono uppercase tracking-widest font-black opacity-75 mb-3">{QUESTS[0].period}</div>}
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-4">
                     {QUESTS[0].badge && (
-                      <div>
-                        <span className={`inline-block px-2 py-0.5 text-[9px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[0].badge}</span>
-                      </div>
+                      <span className={`inline-block px-2 py-0.5 text-[9px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[0].badge}</span>
                     )}
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
-                      {renderRoleChips(QUESTS[0].role, dark)}
-                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
-                      <span className="text-[10px] font-mono uppercase tracking-widest font-black opacity-80">{QUESTS[0].period}</span>
-                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
-                      {renderStatusChip(QUESTS[0].status, (QUESTS[0] as any).wip, dark)}
-                    </div>
+                    {renderRoleChips(QUESTS[0].role, dark)}
                   </div>
-                  <h3 className="text-xl md:text-4xl lg:text-[44px] font-serif font-black uppercase tracking-wide mb-3 md:mb-5 group-hover:underline underline-offset-4 decoration-2 decoration-rose-455 leading-tight">{QUESTS[0].title}</h3>
                   <div className="font-serif text-sm md:text-base leading-relaxed opacity-95 space-y-3 text-inherit">
                     <p className="first-letter:text-5xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
                       {QUESTS[0].desc[0]}
@@ -343,21 +339,25 @@ export default function App() {
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
                   <div className="w-full flex justify-center">
-                    <img
-                      src={QUESTS[0].imgs[0]}
-                      onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
-                      className="max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
-                      loading="lazy"
-                    />
-                  </div>
-                  {QUESTS[0].imgs[1] && (
-                    <div className="w-full flex justify-center">
+                    <div className="relative">
                       <img
-                        src={QUESTS[0].imgs[1]}
+                        src={QUESTS[0].imgs[0]}
                         onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
                         className="max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
                         loading="lazy"
                       />
+                    </div>
+                  </div>
+                  {QUESTS[0].imgs[1] && (
+                    <div className="w-full flex justify-center">
+                      <div className="relative">
+                        <img
+                          src={QUESTS[0].imgs[1]}
+                          onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
+                          className="max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
                   )}
                 </div>
@@ -374,10 +374,8 @@ export default function App() {
                     <span className="w-2 h-2 bg-current rotate-45 opacity-80 shrink-0" />
                     <span className={`text-[11px] font-mono font-black uppercase tracking-[0.22em] ${accentBurgundy}`}>Capstone Project</span>
                   </div>
-
-                   {/* Two images side by side */}
                   <div className="grid grid-cols-2 gap-2 mb-4">
-                    <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center">
+                    <div className="aspect-[4/3] overflow-hidden rounded flex items-center justify-center relative">
                       <img
                         src={QUESTS[1].imgs[0]}
                         onClick={() => setLightbox({ imgs: QUESTS[1].imgs, alt: QUESTS[1].title, wip: (QUESTS[1] as any).wip, desc: QUESTS[1].desc, tags: QUESTS[1].tags, link: QUESTS[1].link, role: QUESTS[1].role, status: QUESTS[1].status, period: QUESTS[1].period })}
@@ -399,19 +397,17 @@ export default function App() {
 
                   {/* Text content */}
                   <div>
-                    {QUESTS[1].badge && (
-                      <div className="mb-1.5">
-                        <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[1].badge}</span>
-                      </div>
-                    )}
-                    <div className="flex flex-wrap items-center gap-1.5 mb-2">
-                      {renderRoleChips(QUESTS[1].role, dark)}
-                      <span className="opacity-40 font-mono text-[9px]">•</span>
-                      <span className="text-[8px] font-mono font-black uppercase tracking-widest opacity-60">{QUESTS[1].period}</span>
-                      <span className="opacity-40 font-mono text-[9px]">•</span>
+                    <h3 className="text-xl font-serif font-black uppercase tracking-wide leading-tight mb-1 group-hover:underline underline-offset-4 decoration-2">
+                      {QUESTS[1].title}
                       {renderStatusChip(QUESTS[1].status, (QUESTS[1] as any).wip, dark)}
+                    </h3>
+                    {QUESTS[1].period && <div className="text-[8px] font-mono uppercase tracking-widest font-black opacity-75 mb-2">{QUESTS[1].period}</div>}
+                    <div className="flex flex-wrap items-center gap-1.5 mb-2">
+                      {QUESTS[1].badge && (
+                        <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{QUESTS[1].badge}</span>
+                      )}
+                      {renderRoleChips(QUESTS[1].role, dark)}
                     </div>
-                    <h3 className="text-xl font-serif font-black uppercase tracking-wide leading-tight mb-2 group-hover:underline underline-offset-4 decoration-2">{QUESTS[1].title}</h3>
                     <p className="font-serif text-sm leading-relaxed opacity-85">{QUESTS[1].desc[0]}</p>
                   </div>
                 </div>
@@ -459,7 +455,7 @@ export default function App() {
                     className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
                   >
                     <div>
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2">
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2 relative">
                         <img
                           src={q.imgs[0]}
                           onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
@@ -467,18 +463,17 @@ export default function App() {
                           loading="lazy"
                         />
                       </div>
-                      {q.badge && (
-                        <div className="mb-1 mt-1.5">
-                          <span className={`inline-block px-1.5 py-0.5 text-[6.5px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
-                        </div>
-                      )}
-                      <div className="flex flex-wrap items-center gap-1 mb-1">
-                        {renderRoleChips(q.role, dark)}
-                        {q.period && <><span className="opacity-40 font-mono text-[8px]">&bull;</span><span className="text-[7px] font-mono font-black uppercase tracking-widest opacity-70">{q.period}</span></>}
-                        <span className="opacity-40 font-mono text-[8px]">&bull;</span>
+                      <h3 className="text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 mb-0.5 group-hover:underline">
+                        {q.title}
                         {renderStatusChip(q.status, (q as any).wip, dark)}
+                      </h3>
+                      {q.period && <div className="text-[7px] font-mono uppercase tracking-widest font-black opacity-75 mb-1">{q.period}</div>}
+                      <div className="flex flex-wrap items-center gap-1 mb-1">
+                        {q.badge && (
+                          <span className={`inline-block px-1.5 py-0.5 text-[6.5px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                        )}
+                        {renderRoleChips(q.role, dark)}
                       </div>
-                      <h3 className="text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 group-hover:underline">{q.title}</h3>
                     </div>
 
                     <div className="mt-3.5 pt-2.5 border-t border-dashed border-current/25 flex items-center justify-between gap-1 text-[8.5px] font-mono font-bold uppercase tracking-widest">
@@ -523,19 +518,17 @@ export default function App() {
                         loading="lazy"
                       />
                     </div>
-                    {q.badge && (
-                      <div className="mb-1.5">
-                        <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
-                      </div>
-                    )}
-                    <div className="flex flex-wrap items-center gap-2 mb-3">
-                      {renderRoleChips(q.role, dark)}
-                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
-                      <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
-                      <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                    <h3 className="text-2xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
+                      {q.title}
                       {renderStatusChip(q.status, (q as any).wip, dark)}
+                    </h3>
+                    {q.period && <div className="text-[9px] font-mono uppercase tracking-widest font-black opacity-75 mb-2.5">{q.period}</div>}
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      {q.badge && (
+                        <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                      )}
+                      {renderRoleChips(q.role, dark)}
                     </div>
-                    <h3 className="text-2xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
                     <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
                   </div>
                   <div className="mt-5">
@@ -579,7 +572,7 @@ export default function App() {
                 >
                   {i === 2 ? (
                     <div className="flex flex-col justify-between h-full">
-                      {/* Split layout on tablet: left image, right details */}
+                       {/* Split layout on tablet: left image, right details */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 items-center flex-1">
                         <div className="aspect-[16/10] w-full relative overflow-hidden p-1.5">
                           <img
@@ -589,22 +582,19 @@ export default function App() {
                             loading="lazy"
                           />
                         </div>
-
-                        <div className="flex flex-col h-full justify-between">
-                          <div>
-                            {q.badge && (
-                              <div className="mb-1.5">
-                                <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
-                              </div>
-                            )}
+                          <div className="flex flex-col h-full justify-between">
+                            <div>
+                              <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
+                                {q.title}
+                                {renderStatusChip(q.status, (q as any).wip, dark)}
+                              </h3>
+                            {q.period && <div className="text-[9px] font-mono uppercase tracking-widest font-black opacity-75 mb-2.5">{q.period}</div>}
                             <div className="flex flex-wrap items-center gap-2 mb-3">
+                              {q.badge && (
+                                <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                              )}
                               {renderRoleChips(q.role, dark)}
-                              <span className="opacity-40 font-mono text-[10px]">&bull;</span>
-                              <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
-                              <span className="opacity-40 font-mono text-[10px]">&bull;</span>
-                              {renderStatusChip(q.status, (q as any).wip, dark)}
                             </div>
-                            <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
                             <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
                           </div>
 
@@ -651,19 +641,17 @@ export default function App() {
                             loading="lazy"
                           />
                         </div>
-                        {q.badge && (
-                          <div className="mb-1.5">
-                            <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
-                          </div>
-                        )}
-                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                          {renderRoleChips(q.role, dark)}
-                          <span className="opacity-40 font-mono text-[10px]">&bull;</span>
-                          <span className="text-[9px] font-mono uppercase tracking-widest font-black opacity-80">{q.period}</span>
-                          <span className="opacity-40 font-mono text-[10px]">&bull;</span>
+                        <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
+                          {q.title}
                           {renderStatusChip(q.status, (q as any).wip, dark)}
+                        </h3>
+                        {q.period && <div className="text-[9px] font-mono uppercase tracking-widest font-black opacity-75 mb-2.5">{q.period}</div>}
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          {q.badge && (
+                            <span className={`inline-block px-2 py-0.5 text-[8px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                          )}
+                          {renderRoleChips(q.role, dark)}
                         </div>
-                        <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-3 group-hover:underline underline-offset-4 decoration-2 leading-tight">{q.title}</h3>
                         <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
                       </div>
                       <div className="mt-5">
@@ -734,13 +722,14 @@ export default function App() {
                               />
                             </div>
                             <div className="flex-1 flex flex-col justify-center md:block">
-                              <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
-                                {renderRoleChips(p.role, dark)}
-                                {p.period && <><span className="opacity-40 font-mono text-[9px]">&bull;</span><span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-70">{p.period}</span></>}
-                                <span className="opacity-40 font-mono text-[9px]">&bull;</span>
+                              <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-0.5 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">
+                                {p.title}
                                 {renderStatusChip(p.status, p.wip, dark)}
+                              </h3>
+                              {p.period && <div className="text-[7.5px] font-mono uppercase tracking-widest font-black opacity-75 mb-1.5 md:mb-2">{p.period}</div>}
+                              <div className="flex flex-wrap items-center gap-2 mb-1.5 md:mb-2.5">
+                                {renderRoleChips(p.role, dark)}
                               </div>
-                              <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
                               <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted} line-clamp-2 md:line-clamp-none`}>{p.desc[0]}</p>
                             </div>
                           </div>
@@ -786,14 +775,16 @@ export default function App() {
                               />
                             </div>
 
+                            <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-0.5 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">
+                              {p.title}
+                              {renderStatusChip(p.status, p.wip, dark)}
+                            </h3>
+
+                            {p.period && <div className="text-[7.5px] font-mono uppercase tracking-widest font-black opacity-75 mb-1.5 md:mb-2">{p.period}</div>}
+
                             <div className="flex flex-wrap items-center gap-2 mb-2">
                               {renderRoleChips(p.role, dark)}
-                              {p.period && <><span className="opacity-40 font-mono text-[9px]">&bull;</span><span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-70">{p.period}</span></>}
-                              <span className="opacity-40 font-mono text-[9px]">&bull;</span>
-                              {renderStatusChip(p.status, p.wip, dark)}
                             </div>
-
-                            <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-1.5 md:mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{p.title}</h3>
 
                             <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted}`}>{p.desc[0]}</p>
                           </div>
@@ -817,7 +808,7 @@ export default function App() {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   onClick={e => e.stopPropagation()}
-                                  className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                                  className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
                                 >
                                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                                   <span className="sm:hidden">VISIT ↗</span>

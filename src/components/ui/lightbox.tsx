@@ -26,6 +26,22 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
     }
   }, [])
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'Right') {
+        setIdx(i => (i + 1) % totalSlides)
+      } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+        setIdx(i => (i - 1 + totalSlides) % totalSlides)
+      } else if (e.key === 'Escape') {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [totalSlides, onClose])
+
   // Preload current and adjacent images
   useEffect(() => {
     const preloadImages = () => {

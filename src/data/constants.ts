@@ -201,7 +201,7 @@ export const PERSONAL: { title: string, desc: string[], tags: string[], link?: s
   {
     title: 'Tasklet',
     role: 'Full-Stack Developer',
-    period: '2025',
+    period: '2025 - Present',
     status: 'COMPLETE',
     wip: true,
     desc: [

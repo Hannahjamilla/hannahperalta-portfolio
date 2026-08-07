@@ -138,7 +138,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
           <div className="w-10 h-1 rounded-full bg-current opacity-25" />
         </div>
 
-        {/* Newspaper Masthead Header */}
+        {/* Modal Header */}
         <div className={`border-b-2 border-double shrink-0 ${t(dark, 'border-white/20 bg-[#191919]', 'border-[#d0c9b8] bg-[#F2EBD9]')}`}>
           <div className="flex items-center justify-between px-4 sm:px-5 py-2 gap-3">
             <div className="flex items-center gap-2 min-w-0">
@@ -191,7 +191,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
             </div>
           </div>
 
-          {/* Sub-Header Tabs for Switching between Article and Photos */}
+          {/* Sub-Header Tabs for Switching between Details and Photos */}
           {imgs.length > 0 && hasMoreInfo && (
             <div className={`flex border-t border-dashed px-4 sm:px-6 py-1.5 gap-2 text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider ${t(dark, 'border-white/15', 'border-[#d0c9b8]')}`}>
               <button
@@ -201,7 +201,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
                     : t(dark, 'border-white/20 hover:bg-white/10', 'border-[#d0c9b8] hover:bg-[#eae2d0]')
                   }`}
               >
-                &bull; ARTICLE DETAILS
+                &bull; PROJECT DETAILS
               </button>
               <button
                 onClick={() => setIdx(0)}
@@ -219,7 +219,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
         {/* Scrollable Content Body */}
         <div className="overflow-y-auto flex-1 flex flex-col">
           {isMoreInfoSlide ? (
-            /* 📰 ARTICLE DETAILS VIEW */
+            /* 📰 PROJECT DETAILS VIEW */
             <div className="p-4 sm:p-6 md:p-8 flex flex-col gap-4 font-serif animate-fade-in">
               {/* Header Title & Live Link */}
               <div>
@@ -247,7 +247,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
                 </div>
               </div>
 
-              {/* Compact Photo Preview Frame inside Article View */}
+              {/* Compact Photo Preview Frame inside Details View */}
               {imgs.length > 0 && (
                 <div
                   onClick={() => setIdx(0)}
@@ -261,12 +261,12 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
                 </div>
               )}
 
-              {/* Article Overview & Bulleted Highlights */}
+              {/* Project Overview & Bulleted Highlights */}
               {desc && (
                 <div className="clear-both pt-1">
                   <div className={`my-2 py-1 px-3 border-y border-double ${t(dark, 'border-white/20 text-[#ff6b6b]', 'border-[#d0c9b8] text-[#a11d1d]')} flex items-center gap-2 text-[9.5px] font-mono font-black uppercase tracking-[0.2em] mb-3`}>
                     <span className="w-1.5 h-1.5 bg-current rotate-45 shrink-0" />
-                    <span>ARTICLE OVERVIEW & KEY HIGHLIGHTS</span>
+                    <span>PROJECT OVERVIEW & KEY HIGHLIGHTS</span>
                     <span className="w-1.5 h-1.5 bg-current rotate-45 shrink-0" />
                   </div>
 
@@ -379,7 +379,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
           )}
         </div>
 
-        {/* Footer Controls & Newspaper Banner */}
+        {/* Footer Controls & Banner */}
         <div className={`border-t-2 border-double p-3 sm:p-4 shrink-0 flex flex-col gap-2 ${t(dark, 'border-white/20 bg-[#191919]', 'border-[#d0c9b8] bg-[#F2EBD9]')
           }`}>
           {totalSlides > 1 && (
@@ -393,7 +393,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
               </button>
 
               <div className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-80">
-                {isMoreInfoSlide ? 'RECORD DETAILS' : `PHOTO ${idx + 1} OF ${imgs.length}`}
+                {isMoreInfoSlide ? 'MORE INFO' : `PHOTO ${idx + 1} OF ${imgs.length}`}
               </div>
 
               <button
@@ -407,8 +407,8 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
           )}
 
           <div className="flex items-center justify-between font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-widest opacity-70 pt-1 border-t border-dashed border-current/20">
-            <span>HANMADE PORTFOLIO &bull; ARCHIVE PRESS</span>
-            <span>VOL. 1 &bull; EST. 2024</span>
+            <span>HANMADE PORTFOLIO &bull; DETAILED VIEW</span>
+            <span>VERSION 1.0 &bull; EST. 2024</span>
           </div>
         </div>
       </div>

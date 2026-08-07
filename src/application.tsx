@@ -4,16 +4,19 @@ import type { DetailData } from './types'
 import { ThemeCtx, t } from './context/theme-context'
 import { DetailModal, Lightbox } from './components/lazy-components'
 import { QUESTS, ACHIEVEMENTS, XP_LOG, PERSONAL, EDUCATION } from './data/constants'
-import { TechnicalSkills } from './components/layout-helpers'
+import { TechnicalSkills, ThemeToggle } from './components/layout-helpers'
 
 // Custom hook to get current time for newspaper header
 const useDateString = () => {
-  const [date, setDate] = useState('')
+  const [dates, setDates] = useState({ full: '', short: '' })
   useEffect(() => {
     const d = new Date();
-    setDate(d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))
+    setDates({
+      full: d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+      short: d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
+    })
   }, [])
-  return date
+  return dates
 }
 
 const renderRoleChips = (roleStr?: string, dark: boolean = false) => {
@@ -24,9 +27,8 @@ const renderRoleChips = (roleStr?: string, dark: boolean = false) => {
       {roles.map((r, idx) => (
         <span
           key={idx}
-          className={`inline-block px-1.5 py-0.5 rounded text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border ${
-            t(dark, 'bg-[#2a241e] text-[#f5d089] border-[#665435]', 'bg-[#f4efe4] text-[#7a591e] border-[#d4c5a9]')
-          }`}
+          className={`inline-block px-1.5 py-0.5 rounded text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border ${t(dark, 'bg-[#2a241e] text-[#f5d089] border-[#665435]', 'bg-[#f4efe4] text-[#7a591e] border-[#d4c5a9]')
+            }`}
         >
           {r}
         </span>
@@ -51,7 +53,7 @@ export default function App() {
   const [lightbox, setLightbox] = useState<any>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
   const [colorProfile, setColorProfile] = useState(false)
-  const dateString = useDateString()
+  const dates = useDateString()
 
   const toggle = () => setDark(p => !p)
 
@@ -115,20 +117,39 @@ export default function App() {
 
         <main role="main" className={`portfolio-content w-full max-w-[1120px] border-t-0 border-x border-b ${borderDarker} flex flex-col shadow-2xl ${t(dark, 'shadow-black/50 bg-[#161616]', 'shadow-black/5 bg-[#faf9f6]')}`}>
 
-          {/* Header Strip - Fixed/Sticky Top Navigation across all screens */}
-          <div className={`sticky top-0 z-50 flex items-center justify-between gap-3 sm:gap-4 md:gap-6 py-2 md:py-2.5 px-3 sm:px-6 md:px-10 border-b ${border} text-[9px] sm:text-[11px] md:text-xs font-mono uppercase tracking-wider md:tracking-widest font-black ${t(dark, 'bg-[#161616] text-slate-300', 'bg-[#F2EBD9] text-[#5c5643]')} shadow-sm`}>
-            <span className="whitespace-nowrap shrink-0">HanMade | Ideas & Creations</span>
-            <span className="hidden lg:block whitespace-nowrap text-center truncate">Ideas, Code & Creations</span>
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-              <span className="hidden sm:inline whitespace-nowrap">{dateString}</span>
-              <button
-                onClick={toggle}
-                className="pointer-events-auto border border-current px-2 py-0.5 text-[8px] sm:text-[10px] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors shrink-0 whitespace-nowrap font-bold cursor-pointer"
-                title="Toggle Theme"
-              >
-                {dark ? 'Day' : 'Night'} Edition
-              </button>
+          {/* Enhanced Sticky Header - Premium Editorial Design */}
+          <div className={`sticky top-0 z-50 flex items-center justify-between py-2.5 md:py-3.5 px-4 sm:px-6 md:px-10 border-b-4 border-double ${borderDarker} ${t(dark, 'bg-[#121212]/95', 'bg-[#F2EBD9]/95')} backdrop-blur-md shadow-sm transition-all duration-500`}>
+            
+            {/* Left Brand */}
+            <div className="flex items-center gap-3 md:gap-4 shrink-0">
+              <span className={`font-serif font-black italic tracking-tight text-[18px] md:text-2xl leading-none ${t(dark, 'text-zinc-100', 'text-[#1c1813]')}`}>
+                Han<span className={t(dark, 'text-[#ff6b6b]', 'text-[#a11d1d]')}>Made.</span>
+              </span>
+              <div className={`hidden sm:block w-px h-4 md:h-6 ${dark ? 'bg-white/15' : 'bg-[#1c1813]/15'}`}></div>
+              <span className={`hidden sm:block text-[9.5px] md:text-[10.5px] font-mono font-bold uppercase tracking-[0.2em] mt-0.5 ${t(dark, 'text-zinc-400', 'text-[#7a725b]')}`}>
+                Ideas &amp; Creations
+              </span>
             </div>
+
+            {/* Middle (Desktop Only) - Elegant Line */}
+            <div className="hidden lg:flex flex-1 items-center justify-center px-10 opacity-30 mt-1">
+               <div className={`w-full h-px ${dark ? 'bg-white/60' : 'bg-[#1c1813]/60'}`}></div>
+               <span className="w-1.5 h-1.5 border border-current rotate-45 shrink-0 mx-4"></span>
+               <div className={`w-full h-px ${dark ? 'bg-white/60' : 'bg-[#1c1813]/60'}`}></div>
+            </div>
+
+            {/* Right Tools & Date */}
+            <div className="flex items-center gap-2.5 sm:gap-4 md:gap-5 shrink-0">
+              <div className={`text-[8.5px] sm:text-[10px] md:text-[11px] font-mono font-bold uppercase tracking-widest mt-0.5 ${t(dark, 'text-zinc-400', 'text-[#7a725b]')}`}>
+                <span className="hidden sm:inline whitespace-nowrap">{dates.full}</span>
+                <span className="sm:hidden whitespace-nowrap tracking-wider">{dates.short}</span>
+              </div>
+              <div className={`w-px h-4 sm:h-5 md:h-6 ${dark ? 'bg-white/15' : 'bg-[#1c1813]/15'}`}></div>
+              <div className="pointer-events-auto">
+                 <ThemeToggle dark={dark} toggle={toggle} />
+              </div>
+            </div>
+
           </div>
 
           {/* ── THE MASTHEAD ── */}
@@ -147,7 +168,19 @@ export default function App() {
               </h1>
               {/* Thick rule under name — classic newspaper */}
               <div className={`w-full max-w-sm h-[3px] mb-3 ${dark ? 'bg-white/20' : 'bg-[#1c1813]/25'}`} />
-              <h2 className="text-sm md:text-xl font-mono font-bold uppercase tracking-widest mb-3 opacity-90">Web Developer | Systems Analysis | AI & Process Improvement</h2>
+              <ul className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4 gap-y-2 mb-4 text-[9.5px] md:text-[13px] font-mono font-bold uppercase tracking-widest opacity-90 px-2">
+                <li className="flex items-center gap-3 md:gap-4">
+                  <span className="whitespace-nowrap">Web Developer</span>
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-current rotate-45 opacity-40"></span>
+                </li>
+                <li className="flex items-center gap-3 md:gap-4">
+                  <span className="whitespace-nowrap">Systems Analysis</span>
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-current rotate-45 opacity-40"></span>
+                </li>
+                <li className="flex items-center">
+                  <span className="whitespace-nowrap">AI & Process Improvement</span>
+                </li>
+              </ul>
               {/* Vintage Newspaper Banner Strip for Editor's Note */}
               <div className={`my-2 py-1 px-6 border-y-2 border-double ${t(dark, 'border-zinc-700 text-[#ff6b6b]', 'border-[#d0c9b8] text-[#a11d1d]')} flex items-center justify-center gap-3 text-[10.5px] font-mono font-black uppercase tracking-[0.3em]`}>
                 <span className="w-1.5 h-1.5 bg-current rotate-45" />
@@ -168,30 +201,33 @@ export default function App() {
               {/* Photo component (floated on tablet/desktop) */}
               <div className="md:float-left md:w-[26%] md:max-w-[250px] md:mr-8 md:mb-2">
                 {/* Mobile: newspaper side-by-side photo + caption */}
-                <div className="flex gap-4 md:block">
-                  <div className={`w-[40%] md:w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-2 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-md rounded md:rounded-lg overflow-hidden flex-shrink-0`}>
-                    <div onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10">
-                      <picture>
-                        <source media="(max-width: 768px)" srcSet="/images/Hannah-casual4-small.webp" />
+                <div className="flex gap-4 items-start md:block">
+                  <div className="w-[40%] flex-shrink-0 md:w-full flex flex-col mt-1.5 md:mt-0">
+                    <div className={`w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-2 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-md rounded md:rounded-lg overflow-hidden`}>
+                      <div onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10 w-full h-full">
                         <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[2s] cursor-pointer ${colorProfile ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
-                      </picture>
+                      </div>
+                    </div>
+                    <div className="mt-2.5 flex items-center justify-center gap-1.5 opacity-40 md:opacity-30">
+                      <div className="w-5 h-[1px] bg-current"></div>
+                      <div className="w-1 h-1 rotate-45 border border-current"></div>
+                      <div className="w-5 h-[1px] bg-current"></div>
                     </div>
                   </div>
                   {/* Mobile-only bio blurb next to photo */}
                   <div className="flex-1 md:hidden flex flex-col justify-center">
-                    <p className={`text-[10px] font-mono font-black uppercase tracking-widest mb-1.5 ${accentBurgundy}`}>Author</p>
+                    <p className={`text-[10px] font-mono font-black uppercase tracking-widest mb-1.5 ${accentBurgundy}`}>About Me</p>
                     <h2 className="text-2xl font-serif font-black uppercase tracking-tight leading-none mb-2 group-hover:underline underline-offset-4 decoration-2">Hello World!</h2>
                     <p className="text-sm font-serif leading-relaxed opacity-95">
                       That's my approach — I build for humans, not just screens. The kind of apps that just make sense the moment you open them.
                     </p>
                   </div>
                 </div>
-                <p className="text-[9px] font-serif italic mt-1.5 text-center opacity-60 hidden md:block">The face behind the code.</p>
               </div>
 
               {/* Biography content wrapping around photo */}
               <div className="hidden md:block">
-                <h2 className={`text-2xl md:text-3xl font-serif font-black uppercase tracking-tight mb-1.5 ${accentBurgundy} group-hover:underline underline-offset-4 decoration-2`}>Author</h2>
+                <h2 className={`text-2xl md:text-3xl font-serif font-black uppercase tracking-tight mb-1.5 ${accentBurgundy} group-hover:underline underline-offset-4 decoration-2`}>About Me</h2>
                 <div className="flex items-center gap-3 mb-3.5">
                   <div className={`flex-1 h-px ${t(dark, 'bg-white/20', 'bg-[#1c1813]/20')}`} />
                   <span className={`text-[9px] font-mono font-black uppercase tracking-[0.3em] px-2.5 py-1 border border-current ${accentBurgundy}`}>✦ Hello World ✦</span>
@@ -237,7 +273,7 @@ export default function App() {
 
           </section>
 
-          {/* ── PROFESSIONAL CHRONICLE (EXPERIENCE) ── */}
+          {/* ── WORK EXPERIENCE ── */}
           <section id="experience" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
             <div className={`px-5 py-4 border-b ${border} ${bgTeal}`}>
               <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
@@ -274,7 +310,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* ── FEATURED STORIES (PROJECTS) ── */}
+          {/* ── FEATURED PROJECTS ── */}
           <section id="projects" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
             <div className={`px-5 py-4 border-b ${border} ${bgBurgundy}`}>
               <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
@@ -301,11 +337,8 @@ export default function App() {
                   </div>
                   <div className="font-serif text-sm md:text-base leading-relaxed opacity-95 space-y-3 text-inherit">
                     <p className="first-letter:text-5xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
-                      {QUESTS[0].desc[0]}
+                      {QUESTS[0].summary}
                     </p>
-                    {QUESTS[0].desc.slice(1).map((d, j) => (
-                      <p key={j}>{d}</p>
-                    ))}
                   </div>
 
                   <div className="mt-5">
@@ -315,7 +348,7 @@ export default function App() {
                       ))}
                     </div>
                     <div className="pt-3 border-t border-dashed border-current/25 flex items-center gap-2">
-                       <button
+                      <button
                         onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
                         className={`cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-[9.5px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
                       >
@@ -330,43 +363,31 @@ export default function App() {
                           className={`cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-[9.5px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                                  <span className="sm:hidden">VISIT ↗</span>
-                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                          <span className="sm:hidden">VISIT ↗</span>
+                          <span className="hidden sm:inline">TAKE A LOOK ↗</span>
                         </a>
                       )}
                     </div>
                   </div>
                 </div>
                 <div className="p-3 md:p-8 flex flex-col justify-center gap-6">
-                  <div className="w-full flex justify-center">
+                  <div className="w-full flex justify-center h-full items-center">
                     <div className="relative">
                       <img
                         src={QUESTS[0].imgs[0]}
                         onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
-                        className="max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                        className="max-w-full h-auto max-h-[450px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
                         loading="lazy"
                       />
                     </div>
                   </div>
-                  {QUESTS[0].imgs[1] && (
-                    <div className="w-full flex justify-center">
-                      <div className="relative">
-                        <img
-                          src={QUESTS[0].imgs[1]}
-                          onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
-                          className="max-w-full h-auto max-h-[320px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
 
             {/* ── MOBILE: Mixed Newspaper Hierarchy (hidden on md+) ── */}
             <div className="md:hidden">
-              {/* Sub-headline: 2nd project gets prominent treatment */}
+              {/* Sub-heading: 2nd project gets prominent treatment */}
               <div className={`p-4 border-b ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between`}>
                 <div>
                   {/* Capstone Project title before image */}
@@ -408,7 +429,7 @@ export default function App() {
                       )}
                       {renderRoleChips(QUESTS[1].role, dark)}
                     </div>
-                    <p className="font-serif text-sm leading-relaxed opacity-85">{QUESTS[1].desc[0]}</p>
+                    <p className="font-serif text-sm leading-relaxed opacity-85">{QUESTS[1].summary}</p>
                   </div>
                 </div>
 
@@ -434,8 +455,8 @@ export default function App() {
                         className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                                  <span className="sm:hidden">VISIT ↗</span>
-                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                        <span className="sm:hidden">VISIT ↗</span>
+                        <span className="hidden sm:inline">TAKE A LOOK ↗</span>
                       </a>
                     )}
                   </div>
@@ -502,7 +523,7 @@ export default function App() {
               </div>
             </div>
 
-                {/* Secondary: 2-col */}
+            {/* Secondary: 2-col */}
             <div className="hidden md:grid grid-cols-2 border-b border-inherit">
               {QUESTS.slice(1, 3).map((q, i) => (
                 <div
@@ -529,7 +550,7 @@ export default function App() {
                       )}
                       {renderRoleChips(q.role, dark)}
                     </div>
-                    <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
+                    <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.summary}</p>
                   </div>
                   <div className="mt-5">
                     <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -553,8 +574,8 @@ export default function App() {
                           className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                                  <span className="sm:hidden">VISIT ↗</span>
-                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                          <span className="sm:hidden">VISIT ↗</span>
+                          <span className="hidden sm:inline">TAKE A LOOK ↗</span>
                         </a>
                       )}
                     </div>
@@ -572,7 +593,7 @@ export default function App() {
                 >
                   {i === 2 ? (
                     <div className="flex flex-col justify-between h-full">
-                       {/* Split layout on tablet: left image, right details */}
+                      {/* Split layout on tablet: left image, right details */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 items-center flex-1">
                         <div className="aspect-[16/10] w-full relative overflow-hidden p-1.5">
                           <img
@@ -582,12 +603,12 @@ export default function App() {
                             loading="lazy"
                           />
                         </div>
-                          <div className="flex flex-col h-full justify-between">
-                            <div>
-                              <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
-                                {q.title}
-                                {renderStatusChip(q.status, (q as any).wip, dark)}
-                              </h3>
+                        <div className="flex flex-col h-full justify-between">
+                          <div>
+                            <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
+                              {q.title}
+                              {renderStatusChip(q.status, (q as any).wip, dark)}
+                            </h3>
                             {q.period && <div className="text-[9px] font-mono uppercase tracking-widest font-black opacity-75 mb-2.5">{q.period}</div>}
                             <div className="flex flex-wrap items-center gap-2 mb-3">
                               {q.badge && (
@@ -595,7 +616,7 @@ export default function App() {
                               )}
                               {renderRoleChips(q.role, dark)}
                             </div>
-                            <p className="font-serif text-sm leading-relaxed opacity-95">{q.desc[0]}</p>
+                            <p className="font-serif text-sm leading-relaxed opacity-95">{q.summary}</p>
                           </div>
 
                           <div className="mt-4">
@@ -652,7 +673,7 @@ export default function App() {
                           )}
                           {renderRoleChips(q.role, dark)}
                         </div>
-                        <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.desc[0]}</p>
+                        <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{q.summary}</p>
                       </div>
                       <div className="mt-5">
                         <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -676,8 +697,8 @@ export default function App() {
                               className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
                             >
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                                  <span className="sm:hidden">VISIT ↗</span>
-                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                              <span className="sm:hidden">VISIT ↗</span>
+                              <span className="hidden sm:inline">TAKE A LOOK ↗</span>
                             </a>
                           )}
                         </div>
@@ -689,10 +710,10 @@ export default function App() {
             </div>
           </section>
 
-          {/* ── CLASSIFIEDS & RECOGNITIONS — Stacked Full Width ── */}
+          {/* ── OTHER PROJECTS & RECOGNITIONS — Stacked Full Width ── */}
           <section className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
 
-            {/* Personal Projects / Classifieds */}
+            {/* Personal Projects */}
             <div>
               <div className={`px-5 py-4 border-b ${border} ${bgIndigo}`}>
                 <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
@@ -730,7 +751,7 @@ export default function App() {
                               <div className="flex flex-wrap items-center gap-2 mb-1.5 md:mb-2.5">
                                 {renderRoleChips(p.role, dark)}
                               </div>
-                              <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted} line-clamp-2 md:line-clamp-none`}>{p.desc[0]}</p>
+                              <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted} line-clamp-2 md:line-clamp-none`}>{p.summary}</p>
                             </div>
                           </div>
                           <div className="mt-4">
@@ -786,7 +807,7 @@ export default function App() {
                               {renderRoleChips(p.role, dark)}
                             </div>
 
-                            <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted}`}>{p.desc[0]}</p>
+                            <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted}`}>{p.summary}</p>
                           </div>
 
                           <div className="mt-4">
@@ -950,7 +971,7 @@ export default function App() {
             </p>
 
             <div className="flex items-center gap-3">
-              <p className="font-bold opacity-60">Built by Hannah Peralta</p>
+              <p className="font-bold opacity-60">Built by Jaja Peralta</p>
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="p-1.5 border border-current hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all cursor-pointer group opacity-80 hover:opacity-100 flex items-center justify-center"

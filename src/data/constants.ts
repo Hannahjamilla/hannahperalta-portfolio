@@ -35,6 +35,7 @@ export const QUESTS = [
     badge: 'Smart Community App',
     role: 'Project Manager | Frontend Developer | Paper Presenter | Lead Researcher',
     period: 'Feb. 2025 – May 2025',
+    summary: 'A mobile community app for barangay residents to report local issues, receive instant emergency alerts, and seamlessly track community concerns.',
     desc: [
       'BaryoConnect is a mobile app that helps residents stay connected with their barangay. Think of it as a community bulletin board on your phone — residents can report problems, receive urgent alerts, and check if their requests have been acted on.',
       'I led the team from planning all the way to launch, and we even presented the project at a national academic conference, where it was recognized for helping communities become more organized and digitally empowered.',
@@ -52,6 +53,7 @@ export const QUESTS = [
     badge: 'CAPD Management System',
     role: 'Full-Stack Web Developer | Software Tester | Co-Researcher',
     period: 'Nov. 2024 – Jan. 2026',
+    summary: 'A web system and smart weighing scale designed to help medical staff monitor CAPD kidney patients at home, eliminating manual data entry.',
     desc: [
       'DialiEase is a web system built to help doctors and nurses monitor kidney patients who do daily treatment at home. Instead of patients manually writing their readings in a notebook, everything is recorded digitally and the medical team can check it anytime.',
       'I built the website, tested it to make sure it worked properly, and also helped write the research paper behind it. The project also includes a smart weighing scale that automatically records patient data.',
@@ -69,6 +71,7 @@ export const QUESTS = [
     badge: 'Creative Portfolio',
     role: 'Full-Stack Developer',
     period: '2025',
+    summary: 'An immersive 3D world built into a web-browser that acts as an interactive portfolio experience.',
     desc: [
       'This is a creative online portfolio that looks and feels like a 3D world you can explore right inside your browser — no downloads or apps needed. It was built to show off web skills in a visually striking way.',
       'Everything you see moves and reacts in real time, from the lighting to the camera angles, creating an experience that feels more like a game than a typical website.',
@@ -86,6 +89,7 @@ export const QUESTS = [
     badge: 'Business System',
     role: 'Full-Stack Web Developer',
     period: '2024',
+    summary: 'A responsive sales and inventory management POS system designed specifically to streamline drugstore operations.',
     desc: [
       'This is a sales and inventory system built for pharmacies. It replaces manual receipts and handwritten stock lists with a clean digital system that makes running a drugstore much easier and more organized.',
       'Cashiers can ring up purchases quickly, owners can check their stock anytime, and the system even reminds staff when medicines are about to expire.',
@@ -103,6 +107,7 @@ export const QUESTS = [
     badge: 'Learning Platform',
     role: 'Full-Stack Web Developer',
     period: '2024',
+    summary: 'An online educational hub for tutorial centers to smoothly transition to managing students, classes, and schedules digitally.',
     desc: [
       'This is an online platform built for tutorial centers to manage their students, classes, and tutors all in one place. No more paperwork, printed schedules, or lost enrollment forms.',
       'Both tutors and students get their own personal dashboard — tutors can track how their students are doing, and students can access their lessons and schedules anytime.',
@@ -119,6 +124,7 @@ export const QUESTS = [
     badge: 'Rental Ecosystem',
     role: 'Co-Developer | Co-Researcher',
     period: 'Aug. 2024 – Oct. 2024',
+    summary: 'An online rental booking platform for event venues and function halls with automated booking checks and receipts.',
     desc: [
       'Espasyo is an online platform that makes it easy to book event venues and rental spaces. Think of it like an Airbnb for function halls and event spaces — renters can check availability, make a reservation, and pay all in one place.',
       'I helped build the system and also co-wrote a research paper about it, which was accepted and published in an international academic journal.',
@@ -142,9 +148,9 @@ export const ACHIEVEMENTS = [
 ]
 
 export const XP_LOG = [
-  { place: 'Creciendo Philippines', role: 'Backend Developer Intern', period: 'Nov 2025 – Feb 2026 | 400 Hours', desc: ['Developed backend features using Express.js and MongoDB to support system functionality and business requirements.', 'Built, tested, and maintained RESTful APIs, ensuring reliable backend integration and accurate data processing.', 'Assisted in debugging, validating API endpoints, and improving performance with Postman.'] },
-  { place: 'Lightweight Solutions', role: 'Full-Stack Web Developer Intern', period: 'Mar 2026 – May 2026 | 400 Hours', desc: ['Developed scalable full-stack features using React.js and Python for SaaS applications.', 'Built responsive user interfaces and collaborated with cross-functional teams to enhance usability.', 'Tested, debugged, and validated application features to improve functionality and reliability.'] },
-  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: ['Organized and facilitated cloud learning sessions to help students develop core IT and cloud capabilities.', 'Coordinated hands-on workshops covering AWS fundamentals and cloud computing concepts.', 'Collaborated with club officers to design educational resources and host learning events.'] },
+  { place: 'Creciendo Philippines', role: 'Backend Developer Intern', period: 'Nov 2025 – Feb 2026', desc: ['Developed robust backend features using Express.js and MongoDB.', 'Maintained resilient RESTful APIs for seamless integrations.'] },
+  { place: 'Lightweight Solutions', role: 'Full-Stack Web Developer Intern', period: 'Mar 2026 – May 2026', desc: ['Built scalable full-stack features via React.js and Python.', 'Designed responsive UIs and optimized overall technical usability.'] },
+  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: ['Organized and taught interactive student cloud learning sessions.', 'Coordinated hands-on foundational AWS workshops.'] },
 ]
 
 export const EDUCATION = [
@@ -166,12 +172,13 @@ export const EDUCATION = [
 ]
 
 
-export const PERSONAL: { title: string, desc: string[], tags: string[], link?: string, imgs: string[], wip?: boolean, role?: string, period?: string, status?: string }[] = [
+export const PERSONAL: { title: string, summary: string, desc: string[], tags: string[], link?: string, imgs: string[], wip?: boolean, role?: string, period?: string, status?: string }[] = [
   {
     title: 'PingMe',
     role: 'Full-Stack Developer',
     period: '2024',
     status: 'COMPLETE',
+    summary: 'A minimalist contact page for professionals offering a seamless message-sending experience without friction.',
     desc: [
       'PingMe is a simple and stylish contact page built for professionals who want people to reach them easily. Instead of a boring email address, it gives visitors a clean and engaging way to send a message or start a conversation.',
       '• Easy to Use: Visitors just fill out a short form and hit send — no sign-ups, no complications.',
@@ -187,6 +194,7 @@ export const PERSONAL: { title: string, desc: string[], tags: string[], link?: s
     role: 'Full-Stack Developer',
     period: '2025 - Present',
     status: 'BETA',
+    summary: 'A booking platform making it easy to seamlessly rent out and reserve sports courts and event venues.',
     desc: [
       'GroundSpot is an online booking platform for sports courts, gyms, and event spaces — currently being built and improved. It\'s designed to make reserving a venue as easy as ordering food online.',
       '• See What\'s Available: Users can check open time slots in real time and reserve a space with just a few clicks.',
@@ -204,6 +212,7 @@ export const PERSONAL: { title: string, desc: string[], tags: string[], link?: s
     period: '2025 - Present',
     status: 'COMPLETE',
     wip: true,
+    summary: 'A study assistant application featuring focus timers and planners to help students stay productive and on-track.',
     desc: [
       'Tasklet is a study helper app designed for students who struggle to stay focused or keep putting off their work. It gives them the right tools and gentle nudges to actually get things done.',
       '• Focus Timer: A built-in timer helps students work in short, focused bursts — a proven method to beat distraction and study more effectively.',

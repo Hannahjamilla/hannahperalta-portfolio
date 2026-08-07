@@ -123,7 +123,7 @@ export default function App() {
             {/* Left Brand */}
             <div className="flex items-center gap-3 md:gap-4 shrink-0">
               <span className={`font-serif font-black italic tracking-tight text-[18px] md:text-2xl leading-none ${t(dark, 'text-zinc-100', 'text-[#1c1813]')}`}>
-                Han<span className={t(dark, 'text-[#ff6b6b]', 'text-[#a11d1d]')}>Made.</span>
+                Han<span className={t(dark, 'text-[#ff6b6b]', 'text-[#a11d1d]')}>Made♡</span>
               </span>
               <div className={`hidden sm:block w-px h-4 md:h-6 ${dark ? 'bg-white/15' : 'bg-[#1c1813]/15'}`}></div>
               <span className={`hidden sm:block text-[9.5px] md:text-[10.5px] font-mono font-bold uppercase tracking-[0.2em] mt-0.5 ${t(dark, 'text-zinc-400', 'text-[#7a725b]')}`}>

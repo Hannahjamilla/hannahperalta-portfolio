@@ -87,22 +87,7 @@ export default function App() {
     setTimeout(() => { preloadImages(['/images/Hannah-casual4.webp']); }, 1000);
   }, [])
 
-  // Scroll reveal observer
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('reveal-visible')
-          entry.target.classList.remove('reveal-hidden')
-        }
-      })
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
 
-    const targets = document.querySelectorAll('.reveal-on-scroll')
-    targets.forEach(el => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <ThemeCtx.Provider value={{ dark, toggle }}>
@@ -282,11 +267,37 @@ export default function App() {
               <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Professional Roles & Internships</p>
             </div>
 
-            {/* 1-col on mobile, 3-col on desktop */}
+            {/* 1-col on mobile (timeline style), 3-col on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-3">
               {XP_LOG.map((exp, i) => (
-                <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 md:border-r last:border-b-0 last:md:border-r-0 ${border} flex flex-col justify-between h-full ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
-                  <div className="flex flex-col h-full justify-between">
+                <div key={i} className={`border-b md:border-b-0 md:border-r last:border-b-0 last:md:border-r-0 ${border} ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
+
+                  {/* Mobile layout: horizontal timeline strip */}
+                  <div className="flex md:hidden">
+                    {/* Left accent bar with number */}
+                    <div className={`flex flex-col items-center py-5 px-3 gap-2 border-r ${border} ${t(dark, 'bg-[#1a1a1a]', 'bg-[#f0ead8]')} shrink-0`}>
+                      <span className={`text-[9px] font-mono font-black ${accentTeal} opacity-60`}>0{i + 1}</span>
+                      <div className={`w-px flex-1 ${t(dark, 'bg-white/10', 'bg-[#1c1813]/15')}`}></div>
+                      <span className={`w-1.5 h-1.5 bg-current ${accentTeal} rotate-45 shrink-0`}></span>
+                    </div>
+                    {/* Right content */}
+                    <div className="p-4 flex flex-col flex-1 min-w-0">
+                      <span className={`text-[9px] font-mono font-black uppercase tracking-widest mb-2 ${accentTeal}`}>{exp.period}</span>
+                      <h3 className="text-base font-serif font-black uppercase tracking-wide leading-tight mb-1 group-hover:underline underline-offset-4 decoration-2">{exp.place}</h3>
+                      <h4 className={`text-[11px] italic font-serif mb-3 pb-2.5 border-b border-dashed ${border} ${muted}`}>{exp.role}</h4>
+                      <div className="space-y-2 font-serif text-[12px] leading-relaxed opacity-90">
+                        {exp.desc.map((d, di) => (
+                          <p key={di} className="flex gap-2 items-start">
+                            <span className="text-[8px] opacity-50 mt-1 shrink-0">◆</span>
+                            <span>{d}</span>
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Desktop layout: original stacked */}
+                  <div className="hidden md:flex flex-col p-8 h-full justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-4">
                         <span className={`w-2 h-2 ${accentTeal} bg-current rotate-45 transition-transform group-hover:scale-125 group-hover:rotate-90 duration-300`} />
@@ -294,17 +305,17 @@ export default function App() {
                       </div>
                       <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{exp.place}</h3>
                       <h4 className={`text-sm italic font-serif mb-5 pb-3 border-b ${border} ${muted}`}>{exp.role}</h4>
-
                       <div className="space-y-3 font-serif text-sm leading-relaxed opacity-95 text-inherit">
                         {exp.desc.map((d, di) => (
                           <p key={di} className="flex gap-2 items-start">
-                            <span className={`text-[10px] opacity-60 mt-1`}>■</span>
+                            <span className="text-[10px] opacity-60 mt-1">■</span>
                             <span>{d}</span>
                           </p>
                         ))}
                       </div>
                     </div>
                   </div>
+
                 </div>
               ))}
             </div>

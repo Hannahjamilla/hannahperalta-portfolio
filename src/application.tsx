@@ -1,5 +1,5 @@
 import { useEffect, useState, Suspense } from 'react'
-import { ArrowUpRight, ArrowUp } from 'lucide-react'
+import { ArrowUpRight, ArrowUp, Calendar, MapPin, GraduationCap, Briefcase } from 'lucide-react'
 import type { DetailData } from './types'
 import { ThemeCtx, t } from './context/theme-context'
 import { DetailModal, Lightbox } from './components/lazy-components'
@@ -262,60 +262,61 @@ export default function App() {
           <section id="experience" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
             <div className={`px-5 py-4 border-b ${border} ${bgTeal}`}>
               <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
-                <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Work Experience
+                <Briefcase className="w-6 h-6 sm:w-8 sm:h-8 shrink-0" strokeWidth={2.25} /> Work Experience
               </h2>
-              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Professional Roles & Internships</p>
+              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Professional Roles • Developer Internships</p>
             </div>
 
-            {/* 1-col on mobile (timeline style), 3-col on desktop */}
-            <div className="grid grid-cols-1 md:grid-cols-3">
-              {XP_LOG.map((exp, i) => (
-                <div key={i} className={`border-b md:border-b-0 md:border-r last:border-b-0 last:md:border-r-0 ${border} ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
-
-                  {/* Mobile layout: horizontal timeline strip */}
-                  <div className="flex md:hidden">
-                    {/* Left accent bar with number */}
-                    <div className={`flex flex-col items-center py-5 px-3 gap-2 border-r ${border} ${t(dark, 'bg-[#1a1a1a]', 'bg-[#f0ead8]')} shrink-0`}>
-                      <span className={`text-[9px] font-mono font-black ${accentTeal} opacity-60`}>0{i + 1}</span>
-                      <div className={`w-px flex-1 ${t(dark, 'bg-white/10', 'bg-[#1c1813]/15')}`}></div>
-                      <span className={`w-1.5 h-1.5 bg-current ${accentTeal} rotate-45 shrink-0`}></span>
+            <div className="grid grid-cols-1 sm:grid-cols-2">
+              {XP_LOG.map((exp: any, i: number) => (
+                <div key={i} className={`p-4 sm:p-6 md:p-8 border-b sm:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
+                  <div>
+                    {/* Top Header Bar */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5 pb-2.5 border-b border-dashed border-current/25">
+                      <div className="flex items-center gap-2">
+                        <span className={`text-[10px] font-mono font-black ${accentTeal}`}>[ 0{i + 1} ]</span>
+                        {exp.badge && (
+                          <span className={`px-2 py-0.5 text-[8.5px] font-mono font-bold uppercase tracking-wider border border-current ${t(dark, 'bg-zinc-800/80 text-zinc-200', 'bg-[#f0ead8] text-[#1c1813]')}`}>
+                            {exp.badge}
+                          </span>
+                        )}
+                      </div>
+                      <span className={`text-[9.5px] font-mono font-black uppercase tracking-widest ${accentTeal} flex items-center gap-1`}>
+                        <Calendar size={11} className="opacity-75 shrink-0" />
+                        {exp.period}
+                      </span>
                     </div>
-                    {/* Right content */}
-                    <div className="p-4 flex flex-col flex-1 min-w-0">
-                      <span className={`text-[9px] font-mono font-black uppercase tracking-widest mb-2 ${accentTeal}`}>{exp.period}</span>
-                      <h3 className="text-base font-serif font-black uppercase tracking-wide leading-tight mb-1 group-hover:underline underline-offset-4 decoration-2">{exp.place}</h3>
-                      <h4 className={`text-[11px] italic font-serif mb-3 pb-2.5 border-b border-dashed ${border} ${muted}`}>{exp.role}</h4>
-                      <div className="space-y-2 font-serif text-[12px] leading-relaxed opacity-90">
-                        {exp.desc.map((d, di) => (
-                          <p key={di} className="flex gap-2 items-start">
-                            <span className="text-[8px] opacity-50 mt-1 shrink-0">◆</span>
-                            <span>{d}</span>
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Desktop layout: original stacked */}
-                  <div className="hidden md:flex flex-col p-8 h-full justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 mb-4">
-                        <span className={`w-2 h-2 ${accentTeal} bg-current rotate-45 transition-transform group-hover:scale-125 group-hover:rotate-90 duration-300`} />
-                        <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${accentTeal}`}>{exp.period}</span>
-                      </div>
-                      <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-2 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{exp.place}</h3>
-                      <h4 className={`text-sm italic font-serif mb-5 pb-3 border-b ${border} ${muted}`}>{exp.role}</h4>
-                      <div className="space-y-3 font-serif text-sm leading-relaxed opacity-95 text-inherit">
-                        {exp.desc.map((d, di) => (
-                          <p key={di} className="flex gap-2 items-start">
-                            <span className="text-[10px] opacity-60 mt-1">■</span>
-                            <span>{d}</span>
-                          </p>
-                        ))}
-                      </div>
+                    {/* Place & Role */}
+                    <h3 className="text-lg md:text-xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">
+                      {exp.place}
+                    </h3>
+
+                    <h4 className={`text-xs sm:text-sm font-serif italic mb-3.5 pb-2.5 border-b border-dashed ${border} ${muted}`}>
+                      {exp.role}
+                    </h4>
+
+                    {/* Bullet Highlights */}
+                    <div className="space-y-2 font-serif text-xs sm:text-sm leading-relaxed opacity-90 mb-4">
+                      {exp.desc.map((d: string, di: number) => (
+                        <p key={di} className="flex gap-2 items-start">
+                          <span className="text-[8px] opacity-60 mt-1 shrink-0">◆</span>
+                          <span>{d}</span>
+                        </p>
+                      ))}
                     </div>
                   </div>
 
+                  {/* Tech Stack Chips */}
+                  {exp.tags && exp.tags.length > 0 && (
+                    <div className={`pt-3 mt-2 border-t border-dashed border-current/25 flex flex-wrap gap-1.5`}>
+                      {exp.tags.map((tg: string, tgi: number) => (
+                        <span key={tgi} className={`px-2 py-0.5 text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border ${t(dark, 'bg-[#252525] text-zinc-300 border-zinc-700', 'bg-[#f4efe4] text-[#54442e] border-[#d4c5a9]')}`}>
+                          {tg}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -890,32 +891,83 @@ export default function App() {
             <div id="education" className={`border-t ${border}`}>
               <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
                 <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
-                  <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Education
+                  <GraduationCap className="w-6 h-6 sm:w-8 sm:h-8 shrink-0" strokeWidth={2.25} /> Education
                 </h2>
-                <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Academic Background</p>
+                <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Academic Background • Credentials</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                {EDUCATION.map((edu, i) => (
-                  <div key={i} className={`p-5 md:p-8 border-b md:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
+              <div className="grid grid-cols-2">
+                {EDUCATION.map((edu: any, i: number) => (
+                  <div key={i} className={`p-3.5 sm:p-5 md:p-8 border-r last:border-r-0 ${border} flex flex-col justify-start ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
                     <div>
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${accentGold}`}>{edu.period}</span>
-                        <span className={`px-2 py-0.5 text-[9px] font-mono font-bold border border-current opacity-70`}>{edu.badge}</span>
+                      {/* Top Header Bar */}
+                      <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-dashed border-current/25">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <span className={`text-[8.5px] sm:text-[10px] font-mono font-black ${accentGold}`}>[ 0{i + 1} ]</span>
+                          <span className={`px-1.5 sm:px-2 py-0.5 text-[7px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border border-current ${t(dark, 'bg-zinc-800/80 text-zinc-200', 'bg-[#f0ead8] text-[#1c1813]')}`}>
+                            {edu.badge}
+                          </span>
+                        </div>
+                        <span className={`text-[8px] sm:text-[10px] font-mono font-black uppercase tracking-widest ${accentGold} flex items-center gap-1`}>
+                          <Calendar size={10} className="opacity-75 shrink-0 hidden sm:inline" />
+                          {edu.period}
+                        </span>
                       </div>
 
-                      <h3 className="text-xl md:text-2xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">{edu.school}</h3>
+                      {/* School & Location */}
+                      <h3 className="text-sm sm:text-lg md:text-2xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">
+                        {edu.school}
+                      </h3>
 
-                      <p className={`text-xs font-serif italic mb-3 ${muted}`}>{edu.location}</p>
-
-                      <h4 className={`text-sm md:text-base font-serif font-bold ${edu.specialization ? 'pb-3 border-b ' + border : ''}`}>{edu.degree}</h4>
-                    </div>
-
-                    {edu.specialization && (
-                      <p className="text-xs md:text-sm font-serif leading-relaxed mt-3 opacity-90">
-                        <span className="font-bold">Specialization:</span> {edu.specialization}
+                      <p className={`text-[10px] sm:text-xs font-serif italic mb-2.5 sm:mb-3.5 flex items-center gap-1 ${muted}`}>
+                        <MapPin size={11} className="opacity-70 shrink-0" />
+                        <span>{edu.location}</span>
                       </p>
-                    )}
+
+                      {/* Degree Title */}
+                      <h4 className="text-xs sm:text-sm md:text-base font-serif font-bold mb-2.5 sm:mb-3 leading-snug">
+                        {edu.degree}
+                      </h4>
+
+                      {/* Status Chip */}
+                      {edu.status && (
+                        <div className="mb-3 sm:mb-4">
+                          <span className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-[9.5px] font-mono font-bold uppercase tracking-wider border ${t(dark, 'bg-amber-950/40 text-amber-300 border-amber-800/50', 'bg-amber-50 text-amber-900 border-amber-300/80')}`}>
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0" />
+                            {edu.status}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Specialization Box */}
+                      {edu.specialization && (
+                        <div className={`p-2.5 sm:p-3.5 mb-3 sm:mb-4 border-l-2 border-current ${t(dark, 'bg-white/[0.025]', 'bg-black/[0.025]')}`}>
+                          <span className={`text-[7.5px] sm:text-[8.5px] font-mono font-bold uppercase tracking-widest block mb-0.5 sm:mb-1 opacity-75 ${accentGold}`}>
+                            ✦ {i === 0 ? 'Specialization & Focus' : 'Academic Track & Focus'}
+                          </span>
+                          <p className="font-serif text-[10.5px] sm:text-xs md:text-sm leading-snug sm:leading-relaxed font-medium">
+                            {edu.specialization}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Highlights */}
+                      {edu.highlights && edu.highlights.length > 0 && (
+                        <div>
+                          <div className="text-[8px] sm:text-[9px] font-mono font-black uppercase tracking-widest opacity-75 mb-1.5 sm:mb-2 flex items-center gap-1">
+                            <span className="w-1 h-1 bg-current rotate-45" /> Key Highlights & Focus
+                          </div>
+                          <ul className="space-y-1.5 sm:space-y-2 font-serif text-[10.5px] sm:text-xs md:text-[13px] leading-snug sm:leading-relaxed opacity-90">
+                            {edu.highlights.map((h: string, hi: number) => (
+                              <li key={hi} className="flex items-start gap-1.5 sm:gap-2">
+                                <span className="text-[7px] sm:text-[8px] opacity-60 mt-0.5 sm:mt-1 shrink-0">◆</span>
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

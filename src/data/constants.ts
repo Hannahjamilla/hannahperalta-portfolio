@@ -148,9 +148,28 @@ export const ACHIEVEMENTS = [
 ]
 
 export const XP_LOG = [
-  { place: 'Creciendo Philippines', role: 'Backend Developer Intern', period: 'Nov 2025 – Feb 2026', desc: ['Developed robust backend features using Express.js and MongoDB.', 'Maintained resilient RESTful APIs for seamless integrations.'] },
-  { place: 'Lightweight Solutions', role: 'Full-Stack Web Developer Intern', period: 'Mar 2026 – May 2026', desc: ['Built scalable full-stack features via React.js and Python.', 'Designed responsive UIs and optimized overall technical usability.'] },
-  { place: 'AWS Cloud Clubs | NU Baliwag', role: 'Skill Development Office', period: 'Mar 2025 – June 2026', desc: ['Organized and taught interactive student cloud learning sessions.', 'Coordinated hands-on foundational AWS workshops.'] },
+  {
+    place: 'Creciendo Philippines',
+    role: 'Backend Developer Intern',
+    period: 'Nov 2025 – Feb 2026',
+    badge: 'Internship',
+    desc: [
+      'Developed robust backend features using Express.js and MongoDB.',
+      'Maintained resilient RESTful APIs for seamless integrations.'
+    ],
+    tags: ['Express.js', 'MongoDB', 'REST APIs']
+  },
+  {
+    place: 'Lightweight Solutions',
+    role: 'Full-Stack Web Developer Intern',
+    period: 'Mar 2026 – May 2026',
+    badge: 'Internship',
+    desc: [
+      'Built scalable full-stack features via React.js and Python.',
+      'Designed responsive UIs and optimized overall technical usability.'
+    ],
+    tags: ['React.js', 'Python']
+  }
 ]
 
 export const EDUCATION = [
@@ -159,15 +178,26 @@ export const EDUCATION = [
     location: 'Baliwag, Bulacan',
     degree: 'Bachelor of Science in Information Technology',
     specialization: 'Specialization in Web and Mobile Application Development',
-    period: 'July 2026',
-    badge: 'Higher Education'
+    period: '2022 – July 2026',
+    status: "Dean's Lister",
+    badge: 'Higher Education',
+    highlights: [
+      'Lead Researcher & Presenter at PSITE IRCITE 2025 conference.',
+      'Capstone Web Developer for DialiEase.'
+    ]
   },
   {
     school: 'St. Dominic Academy',
     location: 'Pulilan, Bulacan',
     degree: 'Accountancy, Business, and Management (ABM)',
-    period: 'May 2022',
-    badge: 'Senior High School'
+    specialization: 'Academic Track in Accountancy, Business, and Management',
+    period: '2020 – May 2022',
+    status: 'Graduated With Honors',
+    badge: 'Senior High School',
+    highlights: [
+      'Graduated With Honors & recipient of Loyalty Award.',
+      'Strong foundations in marketing and business.'
+    ]
   }
 ]
 

@@ -102,21 +102,23 @@ export const QUESTS = [
     imgs: ['/images/2.webp', '/images/POS2.webp', '/images/5.webp', '/images/3.webp']
   },
   {
-    status: 'COMPLETE',
-    title: 'Tutorial Center',
-    badge: 'Learning Platform',
+    status: 'BETA',
+    wip: true,
+    title: 'Edora',
+    badge: 'AI-Powered LMS',
     role: 'Full-Stack Web Developer',
     period: '2024',
-    summary: 'An online educational hub for tutorial centers to smoothly transition to managing students, classes, and schedules digitally.',
+    summary: 'A modern, comprehensive Learning Management System heavily augmented by artificial intelligence for streamlined classroom management.',
     desc: [
-      'This is an online platform built for tutorial centers to manage their students, classes, and tutors all in one place. No more paperwork, printed schedules, or lost enrollment forms.',
-      'Both tutors and students get their own personal dashboard — tutors can track how their students are doing, and students can access their lessons and schedules anytime.',
-      '• Student Dashboard: Students log in to see their class schedule, review lesson materials, and check their progress all in one place.',
-      '• Tutor Tools: Tutors can record attendance, update grades, and monitor each student\'s performance with ease.',
-      '• Easy Enrollment: Students can register and enroll in classes online, and the system keeps track of fees and payment status automatically.'
+      'Edora is a modern, comprehensive Learning Management System (LMS) designed to bridge the gap between intuitive design and powerful educational tools, heavily augmented by artificial intelligence. It empowers educators with a data-driven "Command Center" to seamlessly plan lessons, build quizzes, and track student performance in real-time.',
+      'For students, Edora provides an engaging environment to manage coursework while offering personalized, AI-driven assistance—like the "Ask Adora" feature—to help explain complex concepts and guide their learning journey.',
+      '• Modular Architecture: Built as a highly modular, full-stack web application utilizing the MERN stack (MongoDB, Express.js, React, Node.js).',
+      '• Fluid UI/UX: The frontend is powered by React and Vite, utilizing Tailwind CSS for a custom-styled utility-first design, alongside Framer Motion for professional micro-animations.',
+      '• Secure & Flexible Backend: A robust Node.js/Express.js REST API handles business logic with JWT-based authentication and a flexible MongoDB database.',
+      '• Smart Automation: Decoupled architecture allows specialized modules (quizzes, lessons, scheduling) to operate efficiently while seamlessly integrating external AI APIs.'
     ],
-    tags: ['PHP', 'MySQL', 'EdTech', 'HTML/CSS'],
-    imgs: ['/images/7.webp', '/images/tutorial.webp', '/images/8.webp']
+    tags: ['MERN', 'React', 'Tailwind', 'Node.js', 'AI API'],
+    imgs: ['/images/edora-1.webp', '/images/adora-2.webp', '/images/adora-3.webp', '/images/adora-4.webp']
   },
   {
     status: 'COMPLETE',

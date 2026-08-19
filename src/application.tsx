@@ -5,6 +5,7 @@ import { ThemeCtx, t } from './context/theme-context'
 import { DetailModal, Lightbox } from './components/lazy-components'
 import { QUESTS, ACHIEVEMENTS, XP_LOG, PERSONAL, EDUCATION } from './data/constants'
 import { TechnicalSkills, ThemeToggle } from './components/layout-helpers'
+import BeyondTheScreen from './BeyondTheScreen'
 
 // Custom hook to get current time for newspaper header
 const useDateString = () => {
@@ -53,6 +54,9 @@ export default function App() {
   const [lightbox, setLightbox] = useState<any>(null)
   const [detailModal, setDetailModal] = useState<DetailData | null>(null)
   const [colorProfile, setColorProfile] = useState(false)
+  
+  const [currentPage, setCurrentPage] = useState<'portfolio' | 'beyond'>('portfolio');
+
   const dates = useDateString()
 
   const toggle = () => setDark(p => !p)
@@ -88,6 +92,14 @@ export default function App() {
   }, [])
 
 
+
+  if (currentPage === 'beyond') {
+    return (
+      <ThemeCtx.Provider value={{ dark, toggle }}>
+        <BeyondTheScreen dark={dark} setDark={setDark} onBack={() => { window.scrollTo(0, 0); setCurrentPage('portfolio'); }} />
+      </ThemeCtx.Provider>
+    );
+  }
 
   return (
     <ThemeCtx.Provider value={{ dark, toggle }}>
@@ -246,14 +258,37 @@ export default function App() {
 
             {/* Links row */}
             <div className={`grid grid-cols-2 border-t ${border}`}>
-              <a href="https://ping-me-seven-vert.vercel.app/" target="_blank" rel="noopener noreferrer" className={`p-4 md:p-6 border-r ${border} ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center`}>
-                <h3 className="font-serif font-black uppercase text-sm md:text-lg tracking-wide flex items-center gap-1">Say Hello & Collaborate <span className="transition-transform group-hover:translate-x-1">↗</span></h3>
-                <p className="font-serif italic text-[10px] md:text-xs mt-1 opacity-80 group-hover:opacity-100">Got a project idea? Let's talk.</p>
+              <a href="https://ping-me-seven-vert.vercel.app/" target="_blank" rel="noopener noreferrer" className={`p-2 sm:p-3 border-r ${border} ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center text-center`}>
+                <h3 className="font-serif font-black uppercase text-[10px] sm:text-xs tracking-wide flex items-center justify-center gap-1">Collaborate <span className="transition-transform group-hover:translate-x-1">↗</span></h3>
+                <p className="font-serif italic text-[8px] sm:text-[9px] mt-0.5 opacity-80 group-hover:opacity-100">Got a project idea?</p>
               </a>
-              <a href="mailto:hannahjamillap@gmail.com" className={`p-4 md:p-6 ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center`}>
-                <h3 className="font-serif font-black uppercase text-sm md:text-lg tracking-wide flex items-center gap-1">Email Me <span className="transition-transform group-hover:translate-x-1">↗</span></h3>
-                <p className="font-serif italic text-[10px] md:text-xs mt-1 opacity-80 group-hover:opacity-100">Get in touch for work or just to say hi.</p>
+              <a href="mailto:hannahjamillap@gmail.com" className={`p-2 sm:p-3 ${t(dark, 'hover:bg-white/5 text-zinc-100', 'hover:bg-black/5 text-[#1c1813]')} transition-all group flex flex-col justify-center text-center`}>
+                <h3 className="font-serif font-black uppercase text-[10px] sm:text-xs tracking-wide flex items-center justify-center gap-1">Email Me <span className="transition-transform group-hover:translate-x-1">↗</span></h3>
+                <p className="font-serif italic text-[8px] sm:text-[9px] mt-0.5 opacity-80 group-hover:opacity-100">Get in touch for work.</p>
               </a>
+            </div>
+
+            {/* ── NON-TECH SECTION TEASER ── */}
+            <div className={`p-3 md:p-4 border-t ${border} flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left overflow-hidden relative group ${t(dark, 'bg-[#181614]', 'bg-[#f4efe3]')}`}>
+              {/* Background accent */}
+              <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-500 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at center, currentColor 1px, transparent 1px)', backgroundSize: '8px 8px' }} />
+              
+              <div className="relative z-10">
+                <h3 className="font-serif font-black uppercase text-xs sm:text-sm md:text-base tracking-widest flex items-center justify-center sm:justify-start gap-1.5">
+                  <span className={accentTeal}>✦</span> BEYOND THE SCREEN
+                </h3>
+                <p className={`font-serif italic text-[9px] sm:text-[10px] md:text-xs mt-0.5 ${muted}`}>Creative pursuits, hobbies, and life outside of tech.</p>
+              </div>
+              
+              <button 
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  setCurrentPage('beyond');
+                }}
+                className={`relative z-10 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border shrink-0 transition-all duration-300 shadow-sm ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-zinc-200 hover:text-[#1c1813]', 'border-[#54442e] text-[#54442e] hover:bg-[#54442e] hover:text-white')}`}
+              >
+                GET TO KNOW ME ↗
+              </button>
             </div>
 
           </section>
@@ -485,10 +520,10 @@ export default function App() {
                 {QUESTS.slice(2).map((q, i) => (
                   <div
                     key={i}
-                    className={`p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
+                    className={`p-2.5 sm:p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
                   >
                     <div>
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded mb-2 relative">
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded mb-1.5 relative">
                         <img
                           src={q.imgs[0]}
                           onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
@@ -496,23 +531,23 @@ export default function App() {
                           loading="lazy"
                         />
                       </div>
-                      <h3 className="text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 mb-0.5 group-hover:underline">
+                      <h3 className="text-[10.5px] sm:text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 mb-0.5 group-hover:underline">
                         {q.title}
                         {renderStatusChip(q.status, (q as any).wip, dark)}
                       </h3>
-                      {q.period && <div className="text-[7px] font-mono uppercase tracking-widest font-black opacity-75 mb-1">{q.period}</div>}
+                      {q.period && <div className="text-[6.5px] sm:text-[7px] font-mono uppercase tracking-widest font-black opacity-75 mb-1">{q.period}</div>}
                       <div className="flex flex-wrap items-center gap-1 mb-1">
                         {q.badge && (
-                          <span className={`inline-block px-1.5 py-0.5 text-[6.5px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
+                          <span className={`inline-block px-1 py-0.5 text-[5.5px] sm:text-[6.5px] font-mono font-black uppercase tracking-widest border border-current ${t(dark, 'bg-zinc-100 text-zinc-900', 'bg-[#1c1813] text-[#F4F1EA]')} leading-none`}>{q.badge}</span>
                         )}
                         {renderRoleChips(q.role, dark)}
                       </div>
                     </div>
 
-                    <div className="mt-3.5 pt-2.5 border-t border-dashed border-current/25 flex items-center justify-between gap-1 text-[8.5px] font-mono font-bold uppercase tracking-widest">
+                    <div className="mt-2.5 pt-2 border-t border-dashed border-current/25 flex items-center justify-between gap-1 text-[8.5px] font-mono font-bold uppercase tracking-widest">
                       <button
                         onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
-                        className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7.5px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-[#c6bfb0] hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                        className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-[#c6bfb0] hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
                       >
                         <ArrowUpRight size={10} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
                       </button>
@@ -522,7 +557,7 @@ export default function App() {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={e => e.stopPropagation()}
-                          className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7.5px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                          className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
                         >
                           <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                           <span className="sm:hidden">VISIT ↗</span>
@@ -733,125 +768,70 @@ export default function App() {
                 </h2>
                 <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Fun Side Projects & Sandbox Experiments</p>
               </div>
-              {/* 2-col on mobile, 6-col sub-grid on desktop → 3 per row, last 2 centered */}
-              <div className="grid grid-cols-2 lg:grid-cols-6">
+              {/* Mobile: 2-col Grid (Last odd item spans full width), Tablet: 2-col grid, Desktop: 6-col sub-grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-6 px-1.5 pb-1.5 sm:px-0 sm:pb-0">
                 {PERSONAL.map((p, i) => {
                   const isTasklet = p.title === 'Tasklet';
+                  const isLastOdd = PERSONAL.length % 2 !== 0 && i === PERSONAL.length - 1;
                   return (
                     <div
                       key={i}
-                      className={`p-3 md:p-6 border-b border-r ${isTasklet ? 'col-span-2 border-r-0' : '[&:nth-child(2n)]:border-r-0'} lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 last:border-r-0 ${!isTasklet ? '[&:last-child:nth-child(odd)]:col-span-2' : ''} ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
+                      className={`p-2 sm:p-4 md:p-6 border sm:border-t-0 sm:border-l-0 sm:border-b sm:border-r ${isLastOdd ? 'col-span-2' : 'col-span-1'} ${isTasklet ? 'sm:col-span-2 sm:border-r-0' : 'sm:[&:nth-child(2n)]:border-r-0'} lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 sm:last:border-r-0 ${!isTasklet ? 'sm:[&:last-child:nth-child(odd)]:col-span-2' : ''} ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
                     >
-                      {/* Tasklet: side-by-side on tablet (md), stacked on mobile & desktop (lg) */}
-                      {isTasklet ? (
-                        <>
-                          <div className="flex gap-3 md:grid md:grid-cols-2 lg:block items-center">
-                            <div className="w-[38%] shrink-0 md:w-full h-auto aspect-[4/3] md:aspect-[16/10] p-1 md:p-1.5 mb-0 md:mb-4 overflow-hidden relative flex items-center justify-center">
-                              <img
-                                src={p.imgs[0]}
-                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
-                                className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
-                                loading="lazy"
-                              />
-                            </div>
-                            <div className="flex-1 flex flex-col justify-center md:block">
-                              <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-0.5 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">
-                                {p.title}
-                                {renderStatusChip(p.status, p.wip, dark)}
-                              </h3>
-                              {p.period && <div className="text-[7.5px] font-mono uppercase tracking-widest font-black opacity-75 mb-1.5 md:mb-2">{p.period}</div>}
-                              <div className="flex flex-wrap items-center gap-2 mb-1.5 md:mb-2.5">
-                                {renderRoleChips(p.role, dark)}
-                              </div>
-                              <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted} line-clamp-2 md:line-clamp-none`}>{p.summary}</p>
-                            </div>
-                          </div>
-                          <div className="mt-4">
-                            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-                              {p.tags.slice(0, 3).map(tg => (
-                                <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[7.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
-                              ))}
-                            </div>
-                            <div className="pt-2.5 border-t border-dashed border-current/25 flex items-center gap-1.5">
-                              <button
-                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
-                                className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
-                              >
-                                <ArrowUpRight size={11} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
-                              </button>
-                              {p.link && (
-                                <a
-                                  href={p.link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={e => e.stopPropagation()}
-                                  className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
-                                >
-                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                                  <span className="sm:hidden">VISIT ↗</span>
-                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
-                                </a>
-                              )}
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        /* All other projects: original stacked layout */
-                        <>
-                          <div>
-                            <div className={`w-full h-[110px] lg:h-auto lg:aspect-[16/10] p-1.5 mb-4 overflow-hidden relative flex items-center justify-center`}>
-                              <img
-                                src={p.imgs[0]}
-                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
-                                className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
-                                loading="lazy"
-                              />
-                            </div>
+                      <div className={`flex-1 flex ${isLastOdd ? 'flex-row gap-3 sm:flex-col sm:gap-0' : 'flex-col'}`}>
+                        <div className={`${isLastOdd ? 'w-[40%] sm:w-full shrink-0 aspect-[4/3]' : 'w-full aspect-[16/10]'} sm:h-auto sm:aspect-[16/10] p-1 mb-0 sm:mb-4 overflow-hidden relative flex items-center justify-center`}>
+                          <img
+                            src={p.imgs[0]}
+                            onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                            className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                            loading="lazy"
+                          />
+                        </div>
 
-                            <h3 className="text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-0.5 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">
-                              {p.title}
-                              {renderStatusChip(p.status, p.wip, dark)}
-                            </h3>
+                        <div className={`flex flex-col justify-center ${isLastOdd ? 'flex-1 py-1' : ''}`}>
+                          <h3 className={`${isLastOdd ? 'text-sm' : 'text-[11px]'} sm:text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-0.5 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors`}>
+                            {p.title}
+                            {renderStatusChip(p.status, p.wip, dark)}
+                          </h3>
 
-                            {p.period && <div className="text-[7.5px] font-mono uppercase tracking-widest font-black opacity-75 mb-1.5 md:mb-2">{p.period}</div>}
+                          {p.period && <div className={`${isLastOdd ? 'text-[8px]' : 'text-[6.5px]'} sm:text-[7.5px] font-mono uppercase tracking-widest font-black opacity-75 mb-1.5 md:mb-2`}>{p.period}</div>}
 
-                            <div className="flex flex-wrap items-center gap-2 mb-2">
-                              {renderRoleChips(p.role, dark)}
-                            </div>
-
-                            <p className={`text-xs md:text-sm font-serif leading-relaxed ${muted}`}>{p.summary}</p>
+                          <div className={`flex flex-wrap items-center gap-1 sm:gap-2 mb-1.5`}>
+                            {renderRoleChips(p.role, dark)}
                           </div>
 
-                          <div className="mt-4">
-                            <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-                              {p.tags.slice(0, 3).map(tg => (
-                                <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[7.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
-                              ))}
-                            </div>
-                            <div className="pt-2.5 border-t border-dashed border-current/25 flex items-center gap-1.5">
-                              <button
-                                onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
-                                className={`cursor-pointer inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
-                              >
-                                <ArrowUpRight size={11} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
-                              </button>
-                              {p.link && (
-                                <a
-                                  href={p.link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={e => e.stopPropagation()}
-                                  className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-2.5 sm:py-1 rounded-none text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
-                                >
-                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                                  <span className="sm:hidden">VISIT ↗</span>
-                                  <span className="hidden sm:inline">TAKE A LOOK ↗</span>
-                                </a>
-                              )}
-                            </div>
-                          </div>
-                        </>
-                      )}
+                          <p className={`${isLastOdd ? 'text-[10px]' : 'text-[9px]'} sm:text-xs md:text-sm font-serif leading-relaxed ${muted} ${isLastOdd ? 'line-clamp-2 sm:line-clamp-none' : ''}`}>{p.summary}</p>
+                        </div>
+                      </div>
+
+                      <div className="mt-2.5 sm:mt-4">
+                        <div className="flex flex-wrap items-center gap-1 mb-2 sm:mb-2.5">
+                          {p.tags.slice(0, 3).map(tg => (
+                            <span key={tg} className={`px-1 py-0.5 sm:px-1.5 sm:py-0.5 rounded-none text-[6.5px] sm:text-[7.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
+                          ))}
+                        </div>
+                        <div className="pt-2 sm:pt-2.5 border-t border-dashed border-current/25 flex flex-wrap items-center gap-1 sm:gap-1.5">
+                          <button
+                            onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
+                            className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-none text-[7.5px] sm:text-[8.5px] md:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                          >
+                            <ArrowUpRight size={10} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                          </button>
+                          {p.link && (
+                            <a
+                              href={p.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={e => e.stopPropagation()}
+                              className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-none text-[7.5px] sm:text-[8.5px] md:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                              <span className="sm:hidden">VISIT ↗</span>
+                              <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   );
                 })}

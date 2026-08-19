@@ -34,7 +34,7 @@ function DriftingDots({ dark, count = 300 }: { dark: boolean; count?: number }) 
   return (
     <points ref={ref}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial size={0.025} color={dark ? '#ffffff' : '#1a1a1a'} transparent opacity={0.25} sizeAttenuation depthWrite={false} />
     </points>

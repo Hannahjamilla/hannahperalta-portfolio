@@ -206,20 +206,39 @@ export const EDUCATION = [
 
 export const PERSONAL: { title: string, summary: string, desc: string[], tags: string[], link?: string, imgs: string[], wip?: boolean, role?: string, period?: string, status?: string }[] = [
   {
-    title: 'PingMe',
-    role: 'Full-Stack Developer',
-    period: '2024',
+    title: 'Pera Wise',
+    role: 'Full-Stack Developer | UI/UX Designer',
+    period: '2025',
     status: 'COMPLETE',
-    summary: 'A minimalist contact page for professionals offering a seamless message-sending experience without friction.',
+    summary: 'A beginner-friendly financial literacy platform and calculator suite empowering Filipinos to make smarter, stress-free money decisions.',
     desc: [
-      'PingMe is a simple and stylish contact page built for professionals who want people to reach them easily. Instead of a boring email address, it gives visitors a clean and engaging way to send a message or start a conversation.',
-      '• Easy to Use: Visitors just fill out a short form and hit send — no sign-ups, no complications.',
-      '• Looks Great on Any Device: The design adjusts perfectly whether you open it on a phone, tablet, or computer.',
-      '• Fast & Reliable: Messages are delivered instantly with no delays or errors.'
+      'Pera Wise is a practical, beginner-friendly financial literacy web platform designed specifically for Filipinos. Its core mission is to empower people to make smarter, stress-free financial choices—whether budgeting daily expenses, avoiding predatory loan traps, building emergency funds, or learning how to invest without intimidating jargon.',
+      '• Step-by-Step Educational Modules: Comprehensive guides covering Financial Basics (cash flow, emergency funds, needs vs. wants), Loans & Borrowing (calculating true debt costs & avoiding 5-6 predatory lenders), Credit Cards & Interest Rates, Saving & Budgeting (50/30/20 & envelope methods), Financial Safety (phishing & e-wallet security), Investing & Insurance (mutual funds, Pag-IBIG MP2, stocks, HMOs), and a Financial Glossary translating complex terms.',
+      '• Interactive Financial Calculators: Features real-time client-side calculation tools including a Loan Planner (monthly amortizations & true interest costs), Budget Calculator, Savings & Goal Planner, and Compound vs. Simple Interest Calculator.',
+      '• Clean PHP Multi-Page Architecture: Zero-bloat Multi-Page Application (MPA) using modular PHP partials (site-header, site-footer, breadcrumbs, educational callouts, financial cards) for DRY, reusable layouts and zero framework overhead.',
+      '• Serverless Vercel Deployment: Front-controller pattern in router.php with vercel-php serverless runtime for near-instant First Contentful Paint (FCP) and high SEO performance.',
+      '• Client-Side Interactive Math Engine: Financial tools perform instant real-time calculations using Vanilla JavaScript event listeners, sliders, and amortization tables without server round trips.'
     ],
-    tags: ['React', 'Tailwind', 'Framer Motion'],
-    link: 'https://ping-me-seven-vert.vercel.app/',
-    imgs: ['/images/PingMe.webp']
+    tags: ['PHP 8.x', 'Vanilla JS', 'Vanilla CSS', 'Vercel Serverless', 'Finance'],
+    link: 'https://pera-wise-iota.vercel.app/',
+    imgs: ['/images/pera-wise-4.webp', '/images/pera-wise-1.webp', '/images/pera-wise-2.webp', '/images/pera-wise-3.webp']
+  },
+  {
+    title: 'Tasklet',
+    role: 'Full-Stack Developer',
+    period: '2025 - Present',
+    status: 'COMPLETE',
+    wip: true,
+    summary: 'A study assistant application featuring focus timers and planners to help students stay productive and on-track.',
+    desc: [
+      'Tasklet is a study helper app designed for students who struggle to stay focused or keep putting off their work. It gives them the right tools and gentle nudges to actually get things done.',
+      '• Focus Timer: A built-in timer helps students work in short, focused bursts — a proven method to beat distraction and study more effectively.',
+      '• Planning Templates: Students can download ready-made daily and weekly study planners to stay organized.',
+      '• Daily Motivation: The app shows a fresh motivational quote every day to keep students encouraged and on track.'
+    ],
+    tags: ['React 19 + TS', 'Vite', 'Tailwind CSS v4'],
+    link: 'https://tasklet-for-you.vercel.app/',
+    imgs: ['/images/4-tasklet.webp', '/images/1-tasklet.webp', '/images/2-tasklet.webp', '/images/3-tasklet.webp', '/images/5-tasklet.webp', '/images/6-tasklet.webp']
   },
   {
     title: 'GroundSpot',
@@ -239,20 +258,25 @@ export const PERSONAL: { title: string, summary: string, desc: string[], tags: s
     wip: true
   },
   {
-    title: 'Tasklet',
+    title: 'PingMe',
     role: 'Full-Stack Developer',
-    period: '2025 - Present',
+    period: '2024',
     status: 'COMPLETE',
-    wip: true,
-    summary: 'A study assistant application featuring focus timers and planners to help students stay productive and on-track.',
+    summary: 'A minimalist contact page for professionals offering a seamless message-sending experience without friction.',
     desc: [
-      'Tasklet is a study helper app designed for students who struggle to stay focused or keep putting off their work. It gives them the right tools and gentle nudges to actually get things done.',
-      '• Focus Timer: A built-in timer helps students work in short, focused bursts — a proven method to beat distraction and study more effectively.',
-      '• Planning Templates: Students can download ready-made daily and weekly study planners to stay organized.',
-      '• Daily Motivation: The app shows a fresh motivational quote every day to keep students encouraged and on track.'
+      'PingMe is a simple and stylish contact page built for professionals who want people to reach them easily. Instead of a boring email address, it gives visitors a clean and engaging way to send a message or start a conversation.',
+      '• Easy to Use: Visitors just fill out a short form and hit send — no sign-ups, no complications.',
+      '• Looks Great on Any Device: The design adjusts perfectly whether you open it on a phone, tablet, or computer.',
+      '• Fast & Reliable: Messages are delivered instantly with no delays or errors.'
     ],
-    tags: ['React 19 + TS', 'Vite', 'Tailwind CSS v4'],
-    link: 'https://tasklet-for-you.vercel.app/',
-    imgs: ['/images/4-tasklet.webp', '/images/1-tasklet.webp', '/images/2-tasklet.webp', '/images/3-tasklet.webp', '/images/5-tasklet.webp', '/images/6-tasklet.webp']
-  },
+    tags: ['React', 'Tailwind', 'Framer Motion'],
+    link: 'https://ping-me-seven-vert.vercel.app/',
+    imgs: [
+      '/images/pingme-1.webp',
+      '/images/pingme-2.webp',
+      '/images/pingme-3.webp',
+      '/images/pingme-4.webp',
+      '/images/pingme-5.webp'
+    ]
+  }
 ]

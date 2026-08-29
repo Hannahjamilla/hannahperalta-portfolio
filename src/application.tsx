@@ -768,62 +768,105 @@ export default function App() {
                 </h2>
                 <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Fun Side Projects & Sandbox Experiments</p>
               </div>
-              {/* Mobile: 2-col Grid (Last odd item spans full width), Tablet: 2-col grid, Desktop: 6-col sub-grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-6 px-1.5 pb-1.5 sm:px-0 sm:pb-0">
-                {PERSONAL.map((p, i) => {
-                  const isTasklet = p.title === 'Tasklet';
-                  const isLastOdd = PERSONAL.length % 2 !== 0 && i === PERSONAL.length - 1;
-                  return (
-                    <div
-                      key={i}
-                      className={`p-2 sm:p-4 md:p-6 border sm:border-t-0 sm:border-l-0 sm:border-b sm:border-r ${isLastOdd ? 'col-span-2' : 'col-span-1'} ${isTasklet ? 'sm:col-span-2 sm:border-r-0' : 'sm:[&:nth-child(2n)]:border-r-0'} lg:col-span-2 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 sm:last:border-r-0 ${!isTasklet ? 'sm:[&:last-child:nth-child(odd)]:col-span-2' : ''} ${i === 3 ? 'lg:col-start-2' : ''} ${border} flex flex-col justify-between group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
-                    >
-                      <div className={`flex-1 flex ${isLastOdd ? 'flex-row gap-3 sm:flex-col sm:gap-0' : 'flex-col'}`}>
-                        <div className={`${isLastOdd ? 'w-[40%] sm:w-full shrink-0 aspect-[4/3]' : 'w-full aspect-[16/10]'} sm:h-auto sm:aspect-[16/10] p-1 mb-0 sm:mb-4 overflow-hidden relative flex items-center justify-center`}>
-                          <img
-                            src={p.imgs[0]}
-                            onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
-                            className="max-w-full max-h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
-                            loading="lazy"
-                          />
-                        </div>
 
-                        <div className={`flex flex-col justify-center ${isLastOdd ? 'flex-1 py-1' : ''}`}>
-                          <h3 className={`${isLastOdd ? 'text-sm' : 'text-[11px]'} sm:text-sm md:text-lg font-serif font-black uppercase tracking-wide mb-0.5 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors`}>
-                            {p.title}
-                            {renderStatusChip(p.status, p.wip, dark)}
-                          </h3>
+              {/* ── MOBILE: 2-Column Grid (hidden on md+) ── */}
+              <div className="md:hidden grid grid-cols-2">
+                {PERSONAL.map((p, i) => (
+                  <div
+                    key={i}
+                    className={`p-2.5 sm:p-3 border-b border-r [&:nth-child(2n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
+                  >
+                    <div>
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded mb-1.5 relative flex items-center justify-center">
+                        <img
+                          src={p.imgs[0]}
+                          onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, status: p.status, period: p.period })}
+                          className="w-full h-full object-contain cursor-pointer transition-all duration-500 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h3 className="text-[10.5px] sm:text-xs font-serif font-black uppercase tracking-wide leading-tight mt-0.5 mb-0.5 group-hover:underline">
+                        {p.title}
+                        {renderStatusChip(p.status, p.wip, dark)}
+                      </h3>
+                      {p.period && <div className="text-[6.5px] sm:text-[7px] font-mono uppercase tracking-widest font-black opacity-75 mb-1">{p.period}</div>}
+                      <div className="flex flex-wrap items-center gap-1 mb-1">
+                        {renderRoleChips(p.role, dark)}
+                      </div>
+                      <p className="text-[9px] font-serif leading-relaxed opacity-85 line-clamp-3 mb-2">{p.summary}</p>
+                    </div>
 
-                          {p.period && <div className={`${isLastOdd ? 'text-[8px]' : 'text-[6.5px]'} sm:text-[7.5px] font-mono uppercase tracking-widest font-black opacity-75 mb-1.5 md:mb-2`}>{p.period}</div>}
+                    <div className="mt-auto">
+                      <div className="flex flex-wrap items-center gap-1 mb-2">
+                        {p.tags.slice(0, 2).map(tg => (
+                          <span key={tg} className={`px-1 py-0.5 text-[6.5px] font-mono font-bold uppercase tracking-wider border ${t(dark, 'text-[#c6bfb0] border-[#555047]', 'text-[#54442e] border-[#d2cab4]')}`}>{tg}</span>
+                        ))}
+                      </div>
+                      <div className="pt-2 border-t border-dashed border-current/25 flex items-center justify-between gap-1 text-[8.5px] font-mono font-bold uppercase tracking-widest">
+                        <button
+                          onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, status: p.status, period: p.period })}
+                          className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-[#c6bfb0] hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                        >
+                          <ArrowUpRight size={10} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                        </button>
+                        {p.link && (
+                          <a
+                            href={p.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 rounded-none text-[7px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                            <span>VISIT ↗</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-                          <div className={`flex flex-wrap items-center gap-1 sm:gap-2 mb-1.5`}>
-                            {renderRoleChips(p.role, dark)}
-                          </div>
-
-                          <p className={`${isLastOdd ? 'text-[10px]' : 'text-[9px]'} sm:text-xs md:text-sm font-serif leading-relaxed ${muted} ${isLastOdd ? 'line-clamp-2 sm:line-clamp-none' : ''}`}>{p.summary}</p>
-                        </div>
+              {/* ── DESKTOP: Featured Editorial Hierarchy (hidden on mobile, visible on md+) ── */}
+              <div className="hidden md:block">
+                {/* Lead Project — Full-width Hero Treatment (like Featured Projects) */}
+                <div className={`border-b ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-all`}>
+                  <div className="grid grid-cols-1 lg:grid-cols-2">
+                    <div className={`p-4 md:p-8 lg:p-10 flex flex-col justify-center border-b lg:border-b-0 lg:border-r ${border}`}>
+                      <h3 className="text-xl md:text-3xl lg:text-4xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
+                        {PERSONAL[0].title}
+                        {renderStatusChip(PERSONAL[0].status, PERSONAL[0].wip, dark)}
+                      </h3>
+                      {PERSONAL[0].period && <div className="text-[9px] font-mono uppercase tracking-widest font-black opacity-75 mb-2.5">{PERSONAL[0].period}</div>}
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
+                        {renderRoleChips(PERSONAL[0].role, dark)}
+                      </div>
+                      <div className="font-serif text-sm md:text-base leading-relaxed opacity-95 space-y-3 text-inherit">
+                        <p className="first-letter:text-5xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
+                          {PERSONAL[0].summary}
+                        </p>
                       </div>
 
-                      <div className="mt-2.5 sm:mt-4">
-                        <div className="flex flex-wrap items-center gap-1 mb-2 sm:mb-2.5">
-                          {p.tags.slice(0, 3).map(tg => (
-                            <span key={tg} className={`px-1 py-0.5 sm:px-1.5 sm:py-0.5 rounded-none text-[6.5px] sm:text-[7.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
+                      <div className="mt-5">
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          {PERSONAL[0].tags.map(tg => (
+                            <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[8.5px] sm:text-[9px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
                           ))}
                         </div>
-                        <div className="pt-2 sm:pt-2.5 border-t border-dashed border-current/25 flex flex-wrap items-center gap-1 sm:gap-1.5">
+                        <div className="pt-3 border-t border-dashed border-current/25 flex items-center gap-2">
                           <button
-                            onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, period: p.period, status: p.status })}
-                            className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-none text-[7.5px] sm:text-[8.5px] md:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                            onClick={() => setLightbox({ imgs: PERSONAL[0].imgs, alt: PERSONAL[0].title, wip: PERSONAL[0].wip, desc: PERSONAL[0].desc, tags: PERSONAL[0].tags, link: PERSONAL[0].link, role: PERSONAL[0].role, status: PERSONAL[0].status, period: PERSONAL[0].period })}
+                            className={`cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-[9.5px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
                           >
-                            <ArrowUpRight size={10} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                            <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> SEE DETAILS
                           </button>
-                          {p.link && (
+                          {PERSONAL[0].link && (
                             <a
-                              href={p.link}
+                              href={PERSONAL[0].link}
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={e => e.stopPropagation()}
-                              className={`cursor-pointer inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-2.5 md:py-1 rounded-none text-[7.5px] sm:text-[8.5px] md:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                              className={`cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-[9.5px] sm:text-[10.5px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
                             >
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                               <span className="sm:hidden">VISIT ↗</span>
@@ -833,8 +876,78 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-                  );
-                })}
+
+                    <div className="p-4 md:p-8 flex flex-col justify-center items-center">
+                      <div className="w-full flex justify-center items-center">
+                        <img
+                          src={PERSONAL[0].imgs[0]}
+                          onClick={() => setLightbox({ imgs: PERSONAL[0].imgs, alt: PERSONAL[0].title, wip: PERSONAL[0].wip, desc: PERSONAL[0].desc, tags: PERSONAL[0].tags, link: PERSONAL[0].link, role: PERSONAL[0].role, status: PERSONAL[0].status, period: PERSONAL[0].period })}
+                          className="max-w-full h-auto max-h-[380px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3-Column Grid for Remaining Projects */}
+                <div className="grid grid-cols-1 md:grid-cols-3">
+                  {PERSONAL.slice(1).map((p, i) => (
+                    <div
+                      key={i}
+                      className={`p-6 lg:p-8 border-b md:border-b-0 border-r last:border-r-0 md:last:border-r-0 md:[&:nth-child(3n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
+                    >
+                      <div className="flex-1 flex flex-col">
+                        <div className="aspect-[16/10] w-full relative overflow-hidden mb-5 p-1">
+                          <img
+                            src={p.imgs[0]}
+                            onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, status: p.status, period: p.period })}
+                            className="w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                            loading="lazy"
+                          />
+                        </div>
+                        <h3 className="text-xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
+                          {p.title}
+                          {renderStatusChip(p.status, p.wip, dark)}
+                        </h3>
+                        {p.period && <div className="text-[9px] font-mono uppercase tracking-widest font-black opacity-75 mb-2">{p.period}</div>}
+                        <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+                          {renderRoleChips(p.role, dark)}
+                        </div>
+                        <p className="font-serif text-sm leading-relaxed opacity-95 flex-1">{p.summary}</p>
+                      </div>
+
+                      <div className="mt-5">
+                        <div className="flex flex-wrap items-center gap-1.5 mb-3">
+                          {p.tags.slice(0, 3).map(tg => (
+                            <span key={tg} className={`px-1.5 py-0.5 rounded-none text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border transition-colors duration-150 ${t(dark, 'text-[#c6bfb0] border-[#555047] hover:border-[#8e8574]', 'text-[#54442e] border-[#d2cab4] hover:border-[#b1a78e]')}`}>{tg}</span>
+                          ))}
+                        </div>
+                        <div className="pt-3 border-t border-dashed border-current/25 flex items-center gap-1.5">
+                          <button
+                            onClick={() => setLightbox({ imgs: p.imgs, alt: p.title, wip: p.wip, desc: p.desc, tags: p.tags, link: p.link, role: p.role, status: p.status, period: p.period })}
+                            className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 group/btn ${t(dark, 'border-[#555047] text-zinc-300 hover:bg-[#c6bfb0] hover:text-[#1c1813]', 'border-[#d4c5a9] text-[#7a591e] hover:bg-[#7a591e] hover:text-white')}`}
+                          >
+                            <ArrowUpRight size={11} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" /> DETAILS
+                          </button>
+                          {p.link && (
+                            <a
+                              href={p.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={e => e.stopPropagation()}
+                              className={`cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-none text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border whitespace-nowrap shrink-0 transition-all duration-150 ${t(dark, 'border-[#7d373f] text-[#ff9999] hover:bg-[#7d373f] hover:text-[#1c1813]', 'border-[#e8b5b5] text-[#a11d1d] hover:bg-[#a11d1d] hover:text-white')}`}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                              <span className="sm:hidden">VISIT ↗</span>
+                              <span className="hidden sm:inline">TAKE A LOOK ↗</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

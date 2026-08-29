@@ -119,16 +119,16 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
   }
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-end sm:items-stretch justify-end p-0 cursor-pointer" onClick={onClose}>
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center p-0 sm:p-6 md:p-8 cursor-pointer" onClick={onClose}>
       {/* Backdrop */}
       <div className="absolute inset-0 backdrop-blur-md bg-black/40 sm:bg-black/55 transition-opacity" />
 
-      {/* Side Modal (Desktop) / Bottom Sheet (Mobile) Container */}
+      {/* Centered Modal (Desktop) / Bottom Sheet (Mobile) Container */}
       <div
-        className={`relative z-10 w-full sm:w-[85vw] md:w-[65vw] max-w-[850px] rounded-t-3xl sm:rounded-none sm:rounded-l-2xl overflow-hidden h-[65vh] sm:h-full flex flex-col justify-between transition-transform animate-slide-bottom sm:animate-slide-right cursor-default ${t(
+        className={`relative z-10 w-full sm:w-[92vw] md:w-[85vw] max-w-[1100px] rounded-t-3xl sm:rounded-2xl overflow-hidden h-[70vh] sm:h-[82vh] max-h-[820px] flex flex-col justify-between transition-transform animate-slide-bottom sm:animate-fade-in cursor-default ${t(
           dark,
-          'bg-[#141414] text-[#e0e0e0] border-t sm:border-t-0 sm:border-l border-white/15 shadow-2xl shadow-black/80',
-          'bg-[#faf9f6] text-[#1c1813] border-t sm:border-t-0 sm:border-l border-[#d0c9b8] shadow-2xl'
+          'bg-[#141414] text-[#e0e0e0] border-t sm:border border-white/15 shadow-2xl shadow-black/80',
+          'bg-[#faf9f6] text-[#1c1813] border-t sm:border border-[#d0c9b8] shadow-2xl'
         )
           }`}
         onClick={e => e.stopPropagation()}
@@ -217,7 +217,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
         </div>
 
         {/* Scrollable Content Body */}
-        <div className="overflow-y-auto flex-1 flex flex-col">
+        <div className="overflow-y-auto flex-1 flex flex-col min-h-0">
           {isMoreInfoSlide ? (
             /* 📰 PROJECT DETAILS VIEW */
             <div className="p-4 sm:p-6 md:p-8 flex flex-col gap-4 font-serif animate-fade-in">
@@ -342,27 +342,27 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
             </div>
           ) : (
             /* 🖼️ PHOTO GALLERY VIEW */
-            <div className="p-2 sm:p-5 flex flex-col items-center justify-center flex-1 w-full h-full animate-fade-in min-h-0">
-              <div className={`relative w-full flex-1 min-h-[180px] sm:min-h-[450px] flex items-center justify-center border-2 border-dashed p-2 sm:p-6 overflow-hidden rounded-sm ${t(dark, 'border-white/20 bg-black/70', 'border-[#d0c9b8] bg-[#F6EFE2]')
+            <div className="p-2 sm:p-3 md:p-3.5 flex flex-col items-center justify-between flex-1 w-full h-full animate-fade-in min-h-0 overflow-hidden">
+              <div className={`relative w-full flex-1 min-h-0 flex items-center justify-center border border-dashed sm:border-2 p-1 sm:p-2 rounded-sm overflow-hidden ${t(dark, 'border-white/20 bg-black/70', 'border-[#d0c9b8] bg-[#F6EFE2]')
                 }`}>
                 <img
                   key={imgs[idx]}
                   src={imgs[idx]}
                   alt={alt}
                   onClick={next}
-                  className="w-full h-full object-contain drop-shadow-xl cursor-pointer select-none transition-transform duration-300 hover:scale-[1.01]"
+                  className="w-full h-full max-w-full max-h-full object-contain drop-shadow-xl cursor-pointer select-none transition-transform duration-300 hover:scale-[1.01]"
                   loading="lazy"
                   decoding="async"
                 />
 
-                <div className="absolute top-3 left-3 px-2.5 py-1 text-[8.5px] sm:text-[9.5px] font-mono font-black uppercase tracking-widest bg-black/80 text-white backdrop-blur-xs">
+                <div className="absolute top-2 left-2 px-2 py-0.5 text-[8px] sm:text-[9.5px] font-mono font-black uppercase tracking-widest bg-black/80 text-white backdrop-blur-xs z-10 shadow-sm">
                   FIG 1.{idx + 1} &bull; {alt}
                 </div>
               </div>
 
               {/* Photo Pagination Dots */}
               {imgs.length > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-3 shrink-0">
+                <div className="flex items-center justify-center gap-2 mt-1.5 sm:mt-2 shrink-0">
                   {imgs.map((_: any, i: number) => (
                     <button
                       key={i}

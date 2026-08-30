@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { ArrowUpRight, Volume2, VolumeX, X } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { ArrowUpRight, Volume2, VolumeX, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTheme, t } from '../../context/theme-context'
 
 // Preload adjacent images for smooth navigation
@@ -14,9 +14,18 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
   const [isPlaying, setIsPlaying] = useState(false)
 
+  // Touch / Swipe Tracking
+  const touchStartXRef = useRef<number | null>(null)
+  const touchStartYRef = useRef<number | null>(null)
+  const touchEndXRef = useRef<number | null>(null)
+  const touchEndYRef = useRef<number | null>(null)
+
   const hasMoreInfo = !!(desc || tags || link || role)
   const totalSlides = imgs.length + (hasMoreInfo ? 1 : 0)
   const isMoreInfoSlide = idx === imgs.length
+
+  const handleNext = () => setIdx(i => (i + 1) % totalSlides)
+  const handlePrev = () => setIdx(i => (i - 1 + totalSlides) % totalSlides)
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -26,14 +35,29 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
     }
   }, [])
 
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+        return
+      }
+
       if (e.key === 'ArrowRight' || e.key === 'Right') {
+        e.preventDefault()
         setIdx(i => (i + 1) % totalSlides)
       } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+        e.preventDefault()
         setIdx(i => (i - 1 + totalSlides) % totalSlides)
       } else if (e.key === 'Escape') {
+        e.preventDefault()
         onClose()
+      } else if (e.key === 'Home') {
+        e.preventDefault()
+        setIdx(0)
+      } else if (e.key === 'End') {
+        e.preventDefault()
+        setIdx(totalSlides - 1)
       }
     }
     window.addEventListener('keydown', handleKeyDown)
@@ -41,6 +65,42 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [totalSlides, onClose])
+
+  // Touch / Swipe gestures for touchscreens
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndXRef.current = null
+    touchEndYRef.current = null
+    touchStartXRef.current = e.targetTouches[0].clientX
+    touchStartYRef.current = e.targetTouches[0].clientY
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndXRef.current = e.targetTouches[0].clientX
+    touchEndYRef.current = e.targetTouches[0].clientY
+  }
+
+  const onTouchEnd = () => {
+    if (touchStartXRef.current === null || touchEndXRef.current === null) return
+    const deltaX = touchStartXRef.current - touchEndXRef.current
+    const deltaY = (touchStartYRef.current ?? 0) - (touchEndYRef.current ?? 0)
+    const minSwipeDistance = 40
+
+    // Only trigger if horizontal swipe is greater than vertical movement
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // Swiped Left -> Go to next photo
+        handleNext()
+      } else {
+        // Swiped Right -> Go to prev photo
+        handlePrev()
+      }
+    }
+
+    touchStartXRef.current = null
+    touchStartYRef.current = null
+    touchEndXRef.current = null
+    touchEndYRef.current = null
+  }
 
   // Preload current and adjacent images
   useEffect(() => {
@@ -97,8 +157,8 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
     }
   }
 
-  const next = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i + 1) % totalSlides) }
-  const prev = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i - 1 + totalSlides) % totalSlides) }
+  const next = (e: React.MouseEvent) => { e.stopPropagation(); handleNext() }
+  const prev = (e: React.MouseEvent) => { e.stopPropagation(); handlePrev() }
 
   const renderRoleChips = (roleStr?: string) => {
     if (!roleStr) return null
@@ -183,7 +243,8 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
                 onClick={onClose}
                 className={`flex items-center gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1 text-[8.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider border transition-all shrink-0 cursor-pointer ${t(dark, 'border-red-500/40 text-red-400 hover:bg-red-950/40', 'border-red-300 text-red-700 hover:bg-red-50')
                   }`}
-                title="Close modal"
+                title="Close modal (Esc)"
+                aria-label="Close modal"
               >
                 <X size={14} />
                 <span className="hidden sm:inline">CLOSE</span>
@@ -216,8 +277,13 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
           )}
         </div>
 
-        {/* Scrollable Content Body */}
-        <div className="overflow-y-auto flex-1 flex flex-col min-h-0">
+        {/* Scrollable Content Body with Touch Gestures */}
+        <div
+          className="overflow-y-auto flex-1 flex flex-col min-h-0 touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           {isMoreInfoSlide ? (
             /* 📰 PROJECT DETAILS VIEW */
             <div className="p-4 sm:p-6 md:p-8 flex flex-col gap-4 font-serif animate-fade-in">
@@ -342,22 +408,46 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
             </div>
           ) : (
             /* 🖼️ PHOTO GALLERY VIEW */
-            <div className="p-2 sm:p-3 md:p-3.5 flex flex-col items-center justify-between flex-1 w-full h-full animate-fade-in min-h-0 overflow-hidden">
-              <div className={`relative w-full flex-1 min-h-0 flex items-center justify-center border border-dashed sm:border-2 p-1 sm:p-2 rounded-sm overflow-hidden ${t(dark, 'border-white/20 bg-black/70', 'border-[#d0c9b8] bg-[#F6EFE2]')
+            <div className="p-2 sm:p-3 md:p-3.5 flex flex-col items-center justify-between flex-1 w-full h-full animate-fade-in min-h-0 overflow-hidden select-none">
+              <div className={`relative w-full flex-1 min-h-0 flex items-center justify-center border border-dashed sm:border-2 p-1 sm:p-2 rounded-sm overflow-hidden group ${t(dark, 'border-white/20 bg-black/70', 'border-[#d0c9b8] bg-[#F6EFE2]')
                 }`}>
                 <img
                   key={imgs[idx]}
                   src={imgs[idx]}
                   alt={alt}
                   onClick={next}
+                  draggable={false}
+                  onDragStart={e => e.preventDefault()}
                   className="w-full h-full max-w-full max-h-full object-contain drop-shadow-xl cursor-pointer select-none transition-transform duration-300 hover:scale-[1.01]"
                   loading="lazy"
                   decoding="async"
                 />
 
-                <div className="absolute top-2 left-2 px-2 py-0.5 text-[8px] sm:text-[9.5px] font-mono font-black uppercase tracking-widest bg-black/80 text-white backdrop-blur-xs z-10 shadow-sm">
+                <div className="absolute top-2 left-2 px-2 py-0.5 text-[8px] sm:text-[9.5px] font-mono font-black uppercase tracking-widest bg-black/80 text-white backdrop-blur-xs z-10 shadow-sm pointer-events-none">
                   FIG 1.{idx + 1} &bull; {alt}
                 </div>
+
+                {/* Floating Previous & Next Arrows inside image on larger screens */}
+                {totalSlides > 1 && (
+                  <>
+                    <button
+                      onClick={prev}
+                      className="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 items-center justify-center rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-xs transition-all opacity-0 group-hover:opacity-90 hover:scale-105 cursor-pointer shadow-lg z-20"
+                      title="Previous photo (← or Swipe Right)"
+                      aria-label="Previous photo"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      onClick={next}
+                      className="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 items-center justify-center rounded-full bg-black/60 hover:bg-black/90 text-white border border-white/20 backdrop-blur-xs transition-all opacity-0 group-hover:opacity-90 hover:scale-105 cursor-pointer shadow-lg z-20"
+                      title="Next photo (→ or Swipe Left)"
+                      aria-label="Next photo"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </>
+                )}
               </div>
 
               {/* Photo Pagination Dots */}
@@ -367,6 +457,7 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
                     <button
                       key={i}
                       onClick={() => setIdx(i)}
+                      aria-label={`Go to photo ${i + 1}`}
                       className={`w-2.5 h-2.5 rotate-45 transition-all cursor-pointer ${i === idx
                           ? (dark ? 'bg-[#ff6b6b] scale-125' : 'bg-[#a11d1d] scale-125')
                           : 'bg-current opacity-30 hover:opacity-70'
@@ -388,18 +479,29 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
                 onClick={prev}
                 className={`px-3 py-1.5 border font-bold uppercase tracking-wider transition-all cursor-pointer ${t(dark, 'border-white/20 text-zinc-200 hover:bg-white/10', 'border-[#d0c9b8] text-[#1c1813] hover:bg-[#eae2d0]')
                   }`}
+                title="Previous photo (← or swipe right)"
+                aria-label="Previous photo"
               >
                 &lsaquo; PREV
               </button>
 
-              <div className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-80">
-                {isMoreInfoSlide ? 'MORE INFO' : `PHOTO ${idx + 1} OF ${imgs.length}`}
+              <div className="flex flex-col items-center">
+                <div className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-90">
+                  {isMoreInfoSlide ? 'MORE INFO' : `PHOTO ${idx + 1} OF ${imgs.length}`}
+                </div>
+                <div className="hidden sm:flex items-center gap-1.5 font-mono text-[8px] opacity-50 uppercase tracking-wider mt-0.5">
+                  <span>← / → keys</span>
+                  <span>&bull;</span>
+                  <span>Swipe enabled</span>
+                </div>
               </div>
 
               <button
                 onClick={next}
                 className={`px-3 py-1.5 border font-bold uppercase tracking-wider transition-all cursor-pointer ${t(dark, 'border-white/20 text-zinc-200 hover:bg-white/10', 'border-[#d0c9b8] text-[#1c1813] hover:bg-[#eae2d0]')
                   }`}
+                title="Next photo (→ or swipe left)"
+                aria-label="Next photo"
               >
                 NEXT &rsaquo;
               </button>
@@ -415,3 +517,4 @@ export function Lightbox({ imgs = [], alt, wip, desc, tags, link, role, period, 
     </div>
   )
 }
+

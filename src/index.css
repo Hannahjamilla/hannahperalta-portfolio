@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
   --font-serif: 'Playfair Display', 'Georgia', serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
@@ -8,7 +10,7 @@
 @layer base {
   body {
     @apply antialiased m-0 p-0 overflow-x-hidden;
-    font-family: 'Playfair Display', 'Georgia', serif;
+    font-family: 'Poppins', system-ui, sans-serif;
   }
 
   html {

@@ -707,8 +707,8 @@ export default function BeyondTheScreen({ dark, setDark, onBack }: BeyondTheScre
         <section className={`w-full border-b ${cardBorder} py-2.5 sm:py-3.5 px-3 sm:px-8 lg:px-12 ${t(dark, 'bg-[#0f0d19]/95', 'bg-[#f4efe3]/95')} backdrop-blur-md sticky top-[45px] sm:top-[49px] z-40`}>
           <div className="max-w-[1360px] mx-auto">
 
-            {/* 📱 MOBILE NAVIGATION BAR (4-TAB SEGMENTED BAR - PERFECT FIT, ZERO SCROLLBAR) */}
-            <div className="sm:hidden grid grid-cols-4 gap-1 w-full bg-black/5 dark:bg-white/5 p-1 rounded-2xl border border-current/10">
+            {/* 📱 MOBILE NAVIGATION BAR (3-TAB SEGMENTED BAR - PHOTO ALBUM PRESERVED BUT HIDDEN) */}
+            <div className="sm:hidden grid grid-cols-3 gap-1 w-full bg-black/5 dark:bg-white/5 p-1 rounded-2xl border border-current/10">
               <button
                 onClick={() => {
                   setActiveDeck('stories');
@@ -737,6 +737,7 @@ export default function BeyondTheScreen({ dark, setDark, onBack }: BeyondTheScre
                 <span>Fun</span>
               </button>
 
+              {/* PHOTO ALBUM TAB (HIDDEN - PRESERVED IN CODE)
               <button
                 onClick={() => {
                   setActiveDeck('gallery');
@@ -750,6 +751,7 @@ export default function BeyondTheScreen({ dark, setDark, onBack }: BeyondTheScre
                 <Camera size={14} className="mb-0.5 text-current" />
                 <span>Photos</span>
               </button>
+              */}
 
               <button
                 onClick={() => {
@@ -796,6 +798,7 @@ export default function BeyondTheScreen({ dark, setDark, onBack }: BeyondTheScre
                   <span>02. Fun Corner</span>
                 </button>
 
+                {/* PHOTO ALBUM TAB (HIDDEN - PRESERVED IN CODE)
                 <button
                   onClick={() => setActiveDeck('gallery')}
                   className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-mono text-[10px] uppercase tracking-wider font-bold transition-all cursor-pointer ${activeDeck === 'gallery'
@@ -806,6 +809,7 @@ export default function BeyondTheScreen({ dark, setDark, onBack }: BeyondTheScre
                   <Camera size={12} />
                   <span>03. Photo Album</span>
                 </button>
+                */}
 
                 <button
                   onClick={() => setActiveDeck('radar')}
@@ -815,7 +819,7 @@ export default function BeyondTheScreen({ dark, setDark, onBack }: BeyondTheScre
                     }`}
                 >
                   <Activity size={12} />
-                  <span>04. Daily Vibes</span>
+                  <span>03. Daily Vibes</span>
                 </button>
               </div>
 
@@ -1522,8 +1526,8 @@ export default function BeyondTheScreen({ dark, setDark, onBack }: BeyondTheScre
             </div>
           )}
 
-          {/* ─── DECK 03: VISUAL ARCHIVES (OPEN SCRAPBOOK ALBUM & FILMSTRIP LOOKBOOK) ─── */}
-          {activeDeck === 'gallery' && (
+          {/* ─── DECK 03: VISUAL ARCHIVES (OPEN SCRAPBOOK ALBUM & FILMSTRIP LOOKBOOK - HIDDEN BUT PRESERVED) ─── */}
+          {false && activeDeck === 'gallery' && (
             <div className="space-y-8 animate-fade-in">
               
               {/* Top Editorial Album Header (Single-Row Capsule Layout) */}

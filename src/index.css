@@ -9,12 +9,12 @@
 
 @layer base {
   body {
-    @apply antialiased m-0 p-0 overflow-x-hidden;
+    @apply antialiased m-0 p-0;
     font-family: 'Poppins', system-ui, sans-serif;
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 
   a,
@@ -100,24 +100,382 @@
     animation: fadeIn 0.4s ease-out forwards;
   }
 
+  /* ── Animated Background Keyframes — Kawaii Game World ── */
+  @keyframes bgFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    20% { transform: translateY(-12px) rotate(1.5deg); }
+    40% { transform: translateY(-20px) rotate(-1deg); }
+    60% { transform: translateY(-8px) rotate(1deg); }
+    80% { transform: translateY(-16px) rotate(-0.5deg); }
+  }
+
+  @keyframes bgFloatRotate {
+    0% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(90deg); }
+    50% { transform: translateY(-3px) rotate(180deg); }
+    75% { transform: translateY(-14px) rotate(270deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+  }
+
+  @keyframes bgBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    15% { transform: translateY(-16px) scale(1.04); }
+    30% { transform: translateY(-4px) scale(0.98); }
+    45% { transform: translateY(-12px) scale(1.02); }
+    60% { transform: translateY(-2px) scale(0.99); }
+    75% { transform: translateY(-8px) scale(1.01); }
+    90% { transform: translateY(-1px) scale(1); }
+  }
+
+  @keyframes bgWobble {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    20% { transform: translateX(-5px) rotate(-2deg); }
+    40% { transform: translateX(4px) rotate(1.5deg); }
+    60% { transform: translateX(-3px) rotate(-1deg); }
+    80% { transform: translateX(2px) rotate(0.5deg); }
+  }
+
+  @keyframes bgDriftLeft {
+    0% { transform: translateX(3vw) translateY(0); }
+    50% { transform: translateX(-3vw) translateY(-8px); }
+    100% { transform: translateX(3vw) translateY(0); }
+  }
+
+  @keyframes bgDriftRight {
+    0% { transform: translateX(-3vw) translateY(0); }
+    50% { transform: translateX(3vw) translateY(-8px); }
+    100% { transform: translateX(-3vw) translateY(0); }
+  }
+
+  @keyframes coinSpin {
+    0% { transform: scaleX(1) translateY(0); }
+    25% { transform: scaleX(0.2) translateY(-4px); }
+    50% { transform: scaleX(-1) translateY(-8px); }
+    75% { transform: scaleX(-0.2) translateY(-4px); }
+    100% { transform: scaleX(1) translateY(0); }
+  }
+
+  @keyframes steamRise {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    30% { opacity: 0.8; }
+    70% { transform: translateY(-14px) scale(1.1) translateX(4px); opacity: 0.5; }
+    100% { transform: translateY(-24px) scale(1.3) translateX(-3px); opacity: 0; }
+  }
+
+  @keyframes tailSway {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(18deg); }
+    70% { transform: rotate(-12deg); }
+  }
+
+  @keyframes noteFloat {
+    0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.8; transform: translateY(-8px) scale(1) rotate(-6deg); }
+    80% { opacity: 0.6; transform: translateY(-26px) scale(1.1) rotate(10deg); }
+    100% { transform: translateY(-38px) scale(1.2) rotate(-8deg); opacity: 0; }
+  }
+
+  @keyframes heartFloat {
+    0% { transform: translateY(0) scale(0.7); opacity: 0; }
+    25% { opacity: 0.85; transform: translateY(-10px) scale(1); }
+    75% { opacity: 0.6; transform: translateY(-28px) scale(1.1) translateX(5px); }
+    100% { transform: translateY(-44px) scale(1.2) translateX(-4px); opacity: 0; }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.4)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1.05); }
+  }
+
+  @keyframes islandBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes bgGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(4vw, -2vh) scale(1.04); }
+    66% { transform: translate(-3vw, 3vh) scale(0.96); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @keyframes bgGlow2 {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-3vw, 2vh) scale(1.05); }
+    66% { transform: translate(2vw, -2vh) scale(0.95); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  .animated-bg-float {
+    animation: bgFloat 16s ease-in-out infinite;
+  }
+
+  .animated-bg-float-rotate {
+    animation: bgFloatRotate 24s linear infinite;
+  }
+
+  .animated-bg-bounce {
+    animation: bgBounce 4.5s ease-in-out infinite;
+  }
+
+  .animated-bg-wobble {
+    animation: bgWobble 6s ease-in-out infinite;
+  }
+
+  .animated-bg-drift-left {
+    animation: bgDriftLeft 24s ease-in-out infinite;
+  }
+
+  .animated-bg-drift-right {
+    animation: bgDriftRight 22s ease-in-out infinite;
+  }
+
+  .animated-bg-coin-spin {
+    animation: coinSpin 2s linear infinite;
+  }
+
+  .animated-bg-steam-1 {
+    animation: steamRise 3s ease-out infinite;
+  }
+
+  .animated-bg-steam-2 {
+    animation: steamRise 3.5s ease-out infinite 0.7s;
+  }
+
+  .animated-bg-steam-3 {
+    animation: steamRise 3.2s ease-out infinite 1.4s;
+  }
+
+  .animated-bg-tail {
+    transform-origin: 0% 100%;
+    animation: tailSway 3s ease-in-out infinite;
+  }
+
+  .animated-bg-note-1 {
+    animation: noteFloat 4s ease-out infinite;
+  }
+
+  .animated-bg-note-2 {
+    animation: noteFloat 4.5s ease-out infinite 1.8s;
+  }
+
+  .animated-bg-heart-1 {
+    animation: heartFloat 3.8s ease-out infinite;
+  }
+
+  .animated-bg-heart-2 {
+    animation: heartFloat 4.2s ease-out infinite 1.5s;
+  }
+
+  .animated-bg-pulse {
+    animation: pulseGlow 2.5s ease-in-out infinite;
+  }
+
+  .animated-bg-island-left {
+    animation: islandBob 8s ease-in-out infinite;
+  }
+
+  .animated-bg-island-right {
+    animation: islandBob 9s ease-in-out infinite 1.2s;
+  }
+
+  @keyframes fireFlicker {
+    0%, 100% { transform: scale(1) rotate(-1deg); }
+    25% { transform: scale(1.1, 0.92) rotate(2deg); }
+    50% { transform: scale(0.95, 1.08) rotate(-2deg); }
+    75% { transform: scale(1.05, 0.97) rotate(1deg); }
+  }
+
+  @keyframes treeSway {
+    0%, 100% { transform: rotate(0deg); }
+    35% { transform: rotate(2.2deg); }
+    70% { transform: rotate(-1.8deg); }
+  }
+
+  @keyframes chestHop {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-8px) rotate(-3deg); }
+    60% { transform: translateY(-3px) rotate(3deg); }
+  }
+
+  @keyframes bunnyHop {
+    0%, 100% { transform: translateY(0); }
+    20% { transform: translateY(-12px) scale(0.94, 1.06); }
+    35% { transform: translateY(0) scale(1.06, 0.94); }
+    50% { transform: translateY(-4px); }
+    65% { transform: translateY(0); }
+  }
+
+  .animated-bg-fire {
+    transform-origin: 50% 100%;
+    animation: fireFlicker 1.8s ease-in-out infinite;
+  }
+
+  .animated-bg-tree {
+    transform-origin: 50% 100%;
+    animation: treeSway 7s ease-in-out infinite;
+  }
+
+  .animated-bg-tree-alt {
+    transform-origin: 50% 100%;
+    animation: treeSway 8.5s ease-in-out infinite 2s;
+  }
+
+  @keyframes windmillSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes chimneySmoke {
+    0% { transform: translateY(0) scale(0.6); opacity: 0; }
+    25% { opacity: 0.75; transform: translateY(-8px) scale(0.9); }
+    70% { opacity: 0.4; transform: translateY(-26px) scale(1.4) translateX(8px); }
+    100% { opacity: 0; transform: translateY(-44px) scale(2) translateX(16px); }
+  }
+
+  @keyframes lanternGlow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.4)); opacity: 0.85; }
+    50% { filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.85)); opacity: 1; }
+  }
+
+  @keyframes dandelionDrift {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.6; }
+    100% { transform: translate(80px, -60px) rotate(120deg); opacity: 0; }
+  }
+
+  .animated-bg-windmill {
+    transform-origin: 50% 50%;
+    animation: windmillSpin 14s linear infinite;
+  }
+
+  .animated-bg-smoke-1 {
+    animation: chimneySmoke 4s ease-out infinite;
+  }
+
+  .animated-bg-smoke-2 {
+    animation: chimneySmoke 4.2s ease-out infinite 1.4s;
+  }
+
+  .animated-bg-smoke-3 {
+    animation: chimneySmoke 4.5s ease-out infinite 2.8s;
+  }
+
+  .animated-bg-lantern {
+    animation: lanternGlow 3s ease-in-out infinite;
+  }
+
+  .animated-bg-dandelion-1 {
+    animation: dandelionDrift 12s ease-in-out infinite;
+  }
+
+  .animated-bg-dandelion-2 {
+    animation: dandelionDrift 15s ease-in-out infinite 5s;
+  }
+
+  .animated-bg-dandelion-3 {
+    animation: dandelionDrift 14s ease-in-out infinite 2.5s;
+  }
+
+  @keyframes fireflyPulse {
+    0%, 100% { opacity: 0.2; transform: scale(0.8) translate(0, 0); filter: drop-shadow(0 0 2px #a3e635); }
+    50% { opacity: 1; transform: scale(1.3) translate(6px, -8px); filter: drop-shadow(0 0 8px #bef264); }
+  }
+
+  @keyframes butterflyFly {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(10px, -12px) rotate(6deg); }
+    50% { transform: translate(20px, -4px) rotate(-5deg); }
+    75% { transform: translate(10px, 6px) rotate(3deg); }
+  }
+
+  @keyframes wingFlap {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(0.25); }
+  }
+
+  .animated-bg-firefly-1 {
+    animation: fireflyPulse 3.5s ease-in-out infinite;
+  }
+
+  .animated-bg-firefly-2 {
+    animation: fireflyPulse 4.2s ease-in-out infinite 1.2s;
+  }
+
+  .animated-bg-firefly-3 {
+    animation: fireflyPulse 3.8s ease-in-out infinite 2.4s;
+  }
+
+  .animated-bg-butterfly {
+    animation: butterflyFly 8s ease-in-out infinite;
+  }
+
+  .animated-bg-wing {
+    transform-origin: center;
+    animation: wingFlap 0.4s ease-in-out infinite;
+  }
+
+  @keyframes beaconBlink {
+    0%, 100% { opacity: 0.2; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.3); filter: drop-shadow(0 0 5px #ef4444); }
+  }
+
+  @keyframes neonSignFlicker {
+    0%, 100% { opacity: 1; filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.75)); }
+    40% { opacity: 0.9; filter: drop-shadow(0 0 4px rgba(244, 63, 94, 0.5)); }
+    42% { opacity: 0.4; }
+    44% { opacity: 1; filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.85)); }
+    88% { opacity: 0.95; }
+    90% { opacity: 0.5; }
+    92% { opacity: 1; }
+  }
+
+  @keyframes fairyLightPulse {
+    0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 2px rgba(253, 224, 71, 0.4)); }
+    50% { opacity: 1; filter: drop-shadow(0 0 7px rgba(253, 224, 71, 0.9)); }
+  }
+
+  .animated-bg-beacon {
+    animation: beaconBlink 1.6s ease-in-out infinite;
+  }
+
+  .animated-bg-neon {
+    animation: neonSignFlicker 4s ease-in-out infinite;
+  }
+
+  .animated-bg-fairy {
+    animation: fairyLightPulse 2.8s ease-in-out infinite;
+  }
+
+  .animated-bg-glow {
+    animation: bgGlow 25s ease-in-out infinite;
+  }
+
+  .animated-bg-glow-2 {
+    animation: bgGlow2 30s ease-in-out infinite;
+  }
+
   /* Scrapbook Background Utilities */
   .bg-scrapbook-light {
-    background-color: #D8DFE8;
-    background-image:
-      linear-gradient(rgba(80, 100, 140, 0.15) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(80, 100, 140, 0.15) 1px, transparent 1px);
-    background-size: 24px 24px;
-    background-position: 0 0;
+    background-color: transparent;
   }
 
   .bg-scrapbook-dark {
-    background-color: #0E0F14;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-    background-size: 24px 24px, 24px 24px, 12px 12px;
-    background-position: 0 0, 0 0, 6px 6px;
+    background-color: transparent;
+  }
+
+  /* ── Highlighted Portfolio Card Elevation & Deep Shadow ── */
+  .portfolio-paper-shadow-light {
+    box-shadow:
+      0 0 0 1px rgba(180, 165, 135, 0.45),
+      0 6px 18px rgba(28, 24, 19, 0.12);
+  }
+
+  .portfolio-paper-shadow-dark {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.14),
+      0 6px 20px rgba(0, 0, 0, 0.7);
   }
 
   /* Washi Tape Accent */
@@ -137,13 +495,6 @@
     border-right: 2px dashed rgba(255, 255, 255, 0.15);
   }
 
-  /* Scroll Reveal (disabled) */
-  .reveal-on-scroll,
-  .reveal-on-scroll.reveal-hidden,
-  .reveal-on-scroll.reveal-visible {
-    opacity: 1;
-    transform: none;
-  }
 
   /* ── Loading Screen ── */
   @keyframes loaderLineExpand {
@@ -220,8 +571,7 @@
   }
 
   .portfolio-content {
-    opacity: 0;
-    animation: loaderContentFadeIn 0.6s ease-out 1.5s forwards;
+    opacity: 1;
   }
 }
 
@@ -235,4 +585,205 @@ img.cursor-pointer,
 picture.cursor-pointer,
 [onclick] {
   cursor: pointer !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ANIMATED BACKGROUND — Container & Animations
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Fixed fullscreen layer behind all content — hardware accelerated & isolated so scrolling never repaints it */
+.animated-bg-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  contain: strict;
+  isolation: isolate;
+}
+
+/* ── Cloud Drift ── */
+.animated-bg-drift-right {
+  animation: bg-drift-right 55s linear infinite;
+}
+.animated-bg-drift-left {
+  animation: bg-drift-left 70s linear infinite;
+}
+
+@keyframes bg-drift-right {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(40px); }
+  100% { transform: translateX(0); }
+}
+@keyframes bg-drift-left {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-35px); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Gentle Float (birds) ── */
+.animated-bg-float {
+  animation: bg-float 8s ease-in-out infinite;
+}
+@keyframes bg-float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25%      { transform: translateY(-6px) translateX(4px); }
+  50%      { transform: translateY(-2px) translateX(8px); }
+  75%      { transform: translateY(-8px) translateX(3px); }
+}
+
+/* ── Windmill Spin ── */
+.animated-bg-windmill {
+  animation: bg-windmill-spin 12s linear infinite;
+}
+@keyframes bg-windmill-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Chimney Smoke Puffs ── */
+.animated-bg-smoke-1 {
+  animation: bg-smoke-rise 4s ease-out infinite;
+}
+.animated-bg-smoke-2 {
+  animation: bg-smoke-rise 4.5s ease-out infinite 0.6s;
+}
+.animated-bg-smoke-3 {
+  animation: bg-smoke-rise 5s ease-out infinite 1.2s;
+}
+@keyframes bg-smoke-rise {
+  0%   { opacity: 0.5; transform: translateY(0) scale(1); }
+  50%  { opacity: 0.35; transform: translateY(-8px) scale(1.15); }
+  100% { opacity: 0; transform: translateY(-20px) scale(1.4); }
+}
+
+/* ── Tree Sway ── */
+.animated-bg-tree {
+  animation: bg-tree-sway 7s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes bg-tree-sway {
+  0%, 100% { transform: rotate(0deg); }
+  30%      { transform: rotate(0.6deg); }
+  70%      { transform: rotate(-0.5deg); }
+}
+
+/* ── Cat Tail Swish ── */
+.animated-bg-tail {
+  animation: bg-tail-swish 3s ease-in-out infinite;
+}
+@keyframes bg-tail-swish {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(8deg); }
+  75%      { transform: rotate(-6deg); }
+}
+
+/* ── Lantern Glow ── */
+.animated-bg-lantern {
+  animation: bg-lantern-glow 3s ease-in-out infinite;
+}
+@keyframes bg-lantern-glow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+
+/* ── Star / Pulse Twinkle ── */
+.animated-bg-pulse {
+  animation: bg-pulse 3s ease-in-out infinite;
+}
+@keyframes bg-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.2); }
+}
+
+/* ── Butterfly Float Path ── */
+.animated-bg-butterfly {
+  animation: bg-butterfly-path 10s ease-in-out infinite;
+}
+@keyframes bg-butterfly-path {
+  0%   { transform: translate(110px, 170px); }
+  25%  { transform: translate(100px, 155px); }
+  50%  { transform: translate(120px, 160px); }
+  75%  { transform: translate(105px, 175px); }
+  100% { transform: translate(110px, 170px); }
+}
+
+/* ── Butterfly Wing Flap ── */
+.animated-bg-wing {
+  animation: bg-wing-flap 0.35s ease-in-out infinite alternate;
+}
+@keyframes bg-wing-flap {
+  0%   { transform: scaleX(1); }
+  100% { transform: scaleX(0.55); }
+}
+
+/* ── Fireflies ── */
+.animated-bg-firefly-1 {
+  animation: bg-firefly-1 4s ease-in-out infinite;
+}
+.animated-bg-firefly-2 {
+  animation: bg-firefly-2 5s ease-in-out infinite 0.5s;
+}
+.animated-bg-firefly-3 {
+  animation: bg-firefly-3 4.5s ease-in-out infinite 1s;
+}
+@keyframes bg-firefly-1 {
+  0%, 100% { opacity: 0.3; transform: translate(0, 0); }
+  25%      { opacity: 1;   transform: translate(5px, -8px); }
+  50%      { opacity: 0.5; transform: translate(-3px, -4px); }
+  75%      { opacity: 0.9; transform: translate(4px, 2px); }
+}
+@keyframes bg-firefly-2 {
+  0%, 100% { opacity: 0.4; transform: translate(0, 0); }
+  30%      { opacity: 1;   transform: translate(-6px, -5px); }
+  60%      { opacity: 0.3; transform: translate(3px, -10px); }
+  85%      { opacity: 0.8; transform: translate(-2px, 3px); }
+}
+@keyframes bg-firefly-3 {
+  0%, 100% { opacity: 0.2; transform: translate(0, 0); }
+  40%      { opacity: 1;   transform: translate(7px, -6px); }
+  70%      { opacity: 0.4; transform: translate(-4px, -12px); }
+}
+
+/* ── Floating Dandelion Seeds ── */
+.animated-bg-dandelion-1 {
+  animation: bg-dandelion-1 14s ease-in-out infinite;
+}
+.animated-bg-dandelion-2 {
+  animation: bg-dandelion-2 18s ease-in-out infinite 2s;
+}
+.animated-bg-dandelion-3 {
+  animation: bg-dandelion-3 16s ease-in-out infinite 4s;
+}
+@keyframes bg-dandelion-1 {
+  0%   { transform: translate(180px, 280px); opacity: 0.85; }
+  25%  { transform: translate(200px, 250px); opacity: 0.7; }
+  50%  { transform: translate(175px, 220px); opacity: 0.5; }
+  75%  { transform: translate(195px, 260px); opacity: 0.65; }
+  100% { transform: translate(180px, 280px); opacity: 0.85; }
+}
+@keyframes bg-dandelion-2 {
+  0%   { transform: translate(680px, 220px); opacity: 0.8; }
+  30%  { transform: translate(660px, 190px); opacity: 0.6; }
+  60%  { transform: translate(700px, 200px); opacity: 0.5; }
+  100% { transform: translate(680px, 220px); opacity: 0.8; }
+}
+@keyframes bg-dandelion-3 {
+  0%   { transform: translate(1120px, 260px); opacity: 0.8; }
+  35%  { transform: translate(1100px, 230px); opacity: 0.55; }
+  65%  { transform: translate(1140px, 240px); opacity: 0.6; }
+  100% { transform: translate(1120px, 260px); opacity: 0.8; }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animated-bg-layer,
+  .animated-bg-layer * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

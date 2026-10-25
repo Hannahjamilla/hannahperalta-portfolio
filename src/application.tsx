@@ -6,6 +6,7 @@ import { DetailModal, Lightbox } from './components/lazy-components'
 import { QUESTS, ACHIEVEMENTS, XP_LOG, PERSONAL, EDUCATION } from './data/constants'
 import { TechnicalSkills, ThemeToggle } from './components/layout-helpers'
 import BeyondTheScreen from './BeyondTheScreen'
+import AnimatedBackground from './components/AnimatedBackground'
 
 // Custom hook to get current time for newspaper header
 const useDateString = () => {
@@ -56,6 +57,12 @@ export default function App() {
   const [colorProfile, setColorProfile] = useState(false)
   
   const [currentPage, setCurrentPage] = useState<'portfolio' | 'beyond'>('portfolio');
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowLoader(false), 1800);
+    return () => clearTimeout(t);
+  }, []);
 
   const dates = useDateString()
 
@@ -103,19 +110,24 @@ export default function App() {
 
   return (
     <ThemeCtx.Provider value={{ dark, toggle }}>
-      <div className={`min-h-screen w-full ${bg} transition-colors duration-700 flex flex-col items-center selection:bg-red-600/30 selection:text-current font-serif px-3 sm:px-6 md:px-8 lg:px-10 pb-3 sm:pb-6 md:pb-8 lg:pb-10 pt-0`}>
+      {/* ── Immersive Animated Background (outside scroll container) ── */}
+      <AnimatedBackground dark={dark} />
 
-        {/* ── Super Subtle Loading Screen ── */}
-        <div className={`loader-screen ${t(dark, 'bg-[#0E0F14]', 'bg-[#faf9f6]')}`}>
-          <span className={`loader-text ${t(dark, 'text-zinc-200', 'text-[#1c1813]')}`}>HanMade</span>
-          <div className={`loader-line ${t(dark, 'bg-[#ff6b6b]', 'bg-[#a11d1d]')}`} />
-          <span className={`loader-sub ${t(dark, 'text-zinc-500', 'text-[#5d5a55]')}`}>Ideas & Creations</span>
-        </div>
+      <div className={`min-h-screen w-full ${bg} flex flex-col items-center selection:bg-red-600/30 selection:text-current font-serif px-3 sm:px-6 md:px-8 lg:px-10 pb-3 sm:pb-6 md:pb-8 lg:pb-10 pt-0 relative`}>
 
-        <main role="main" className={`portfolio-content w-full max-w-[1120px] border-t-0 border-x border-b ${borderDarker} flex flex-col shadow-2xl ${t(dark, 'shadow-black/50 bg-[#161616]', 'shadow-black/5 bg-[#faf9f6]')}`}>
+        {/* ── Super Subtle Loading Screen (Unmounts after load) ── */}
+        {showLoader && (
+          <div className={`loader-screen ${t(dark, 'bg-[#0E0F14]', 'bg-[#faf9f6]')}`}>
+            <span className={`loader-text ${t(dark, 'text-zinc-200', 'text-[#1c1813]')}`}>HanMade</span>
+            <div className={`loader-line ${t(dark, 'bg-[#ff6b6b]', 'bg-[#a11d1d]')}`} />
+            <span className={`loader-sub ${t(dark, 'text-zinc-500', 'text-[#5d5a55]')}`}>Ideas & Creations</span>
+          </div>
+        )}
+
+        <main role="main" className={`portfolio-content w-full max-w-[1120px] border-t-0 border-x border-b ${borderDarker} flex flex-col ${t(dark, 'portfolio-paper-shadow-dark bg-[#161616]', 'portfolio-paper-shadow-light bg-[#faf9f6]')} relative z-10`}>
 
           {/* Enhanced Sticky Header - Premium Editorial Design */}
-          <div className={`sticky top-0 z-50 flex items-center justify-between py-2.5 md:py-3.5 px-4 sm:px-6 md:px-10 border-b-4 border-double ${borderDarker} ${t(dark, 'bg-[#121212]/95', 'bg-[#F2EBD9]/95')} backdrop-blur-md shadow-sm transition-all duration-500`}>
+          <div className={`sticky top-0 z-50 flex items-center justify-between py-2.5 md:py-3.5 px-4 sm:px-6 md:px-10 border-b-4 border-double ${borderDarker} ${t(dark, 'bg-[#121212]/98', 'bg-[#F2EBD9]/98')} shadow-sm transition-colors duration-200`}>
             
             {/* Left Brand */}
             <div className="flex items-center gap-3 md:gap-4 shrink-0">
@@ -167,6 +179,14 @@ export default function App() {
               <div className={`w-full max-w-sm h-[3px] mb-3 ${dark ? 'bg-white/20' : 'bg-[#1c1813]/25'}`} />
               <ul className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4 gap-y-2 mb-4 text-[9.5px] md:text-[13px] font-mono font-bold uppercase tracking-widest opacity-90 px-2">
                 <li className="flex items-center gap-3 md:gap-4">
+                  <span className="whitespace-nowrap">Software Engineer</span>
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-current rotate-45 opacity-40"></span>
+                </li>
+                <li className="flex items-center gap-3 md:gap-4">
+                  <span className="whitespace-nowrap">Main Programmer</span>
+                  <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-current rotate-45 opacity-40"></span>
+                </li>
+                <li className="flex items-center gap-3 md:gap-4">
                   <span className="whitespace-nowrap">Web Developer</span>
                   <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-current rotate-45 opacity-40"></span>
                 </li>
@@ -202,7 +222,7 @@ export default function App() {
                   <div className="w-[40%] flex-shrink-0 md:w-full flex flex-col mt-1.5 md:mt-0">
                     <div className={`w-full aspect-[3/4] md:aspect-[4/5] relative border p-1 md:p-2 ${t(dark, 'bg-[#151722]/80 border-white/10', 'bg-[#F6EFE2] border-[#E2D8BF]')} shadow-sm md:shadow-md rounded md:rounded-lg overflow-hidden`}>
                       <div onClick={() => setColorProfile(p => !p)} className="cursor-pointer block relative z-10 w-full h-full">
-                        <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-all duration-[2s] cursor-pointer ${colorProfile ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" loading="lazy" />
+                        <img src="/images/Hannah-casual4.webp" className={`w-full h-full object-cover transition-transform duration-200 cursor-pointer ${colorProfile ? 'grayscale-0 scale-[1.03]' : 'grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0'}`} alt="Hannah Jamilla Del Rosario Peralta" decoding="async" />
                       </div>
                     </div>
                     <div className="mt-2.5 flex items-center justify-center gap-1.5 opacity-40 md:opacity-30">
@@ -216,7 +236,7 @@ export default function App() {
                     <p className={`text-[10px] font-mono font-black uppercase tracking-widest mb-1.5 ${accentBurgundy}`}>About Me</p>
                     <h2 className="text-2xl font-serif font-black uppercase tracking-tight leading-none mb-2 group-hover:underline underline-offset-4 decoration-2">Hello World!</h2>
                     <p className="text-sm font-serif leading-relaxed opacity-95">
-                      That's my approach — I build for humans, not just screens. The kind of apps that just make sense the moment you open them.
+                      Software Engineer &amp; Main Programmer at PCCI Finance in Ayala, Makati City. I build for humans, not just screens.
                     </p>
                   </div>
                 </div>
@@ -232,13 +252,13 @@ export default function App() {
                 </div>
                 <div className={`font-serif text-sm md:text-[15px] leading-relaxed space-y-3 ${t(dark, 'text-zinc-300', 'text-[#2b271d]')}`}>
                   <p className="first-letter:text-4xl first-letter:font-black first-letter:mr-2 first-letter:float-left first-letter:text-inherit">
-                    I'm a Web Developer with experience building modern, responsive applications through internships and academic projects. I specialize in creating user-focused interfaces and developing practical features using React.js, Node.js, Laravel, and database systems.
+                    I'm a Software Engineer and Main Programmer at PCCI Finance in Ayala, Makati City, Philippines, with a strong background in full-stack web development and systems analysis. I specialize in engineering reliable, user-focused applications and scalable backend systems using modern web technologies and robust database architectures.
                   </p>
                   <p>
-                    My approach centers on building technology that serves real-world needs. I focus on designing intuitive user experiences and developing reliable backend systems that address practical business requirements.
+                    My approach centers on building technology that serves real-world needs. I focus on designing intuitive user experiences, architecting resilient backend systems, and solving practical business and financial challenges.
                   </p>
                   <p>
-                    I value clean, user-centered solutions and aim to continuously expand my technical skills while contributing effectively to development teams.
+                    I value clean, user-centered solutions and lead development initiatives with a commitment to engineering excellence, thoughtful design, and continuous technical growth.
                   </p>
                 </div>
 
@@ -294,24 +314,31 @@ export default function App() {
           </section>
 
           {/* ── WORK EXPERIENCE ── */}
-          <section id="experience" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
+          <section id="experience" className={`border-b ${border}`}>
             <div className={`px-5 py-4 border-b ${border} ${bgTeal}`}>
               <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
                 <Briefcase className="w-6 h-6 sm:w-8 sm:h-8 shrink-0" strokeWidth={2.25} /> Work Experience
               </h2>
-              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Professional Roles • Developer Internships</p>
+              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Software Engineering • Professional Roles • Developer Internships</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-3">
               {XP_LOG.map((exp: any, i: number) => (
-                <div key={i} className={`p-4 sm:p-6 md:p-8 border-b sm:border-b-0 border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
-                  <div>
+                <div key={i} className={`p-4 sm:p-6 md:p-7 border-b md:border-b-0 border-r-0 md:border-r last:border-r-0 last:border-b-0 ${border} flex flex-col justify-between h-full ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group`}>
+                  <div className="flex flex-col flex-1">
                     {/* Top Header Bar */}
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5 pb-2.5 border-b border-dashed border-current/25">
                       <div className="flex items-center gap-2">
                         <span className={`text-[10px] font-mono font-black ${accentTeal}`}>[ 0{i + 1} ]</span>
                         {exp.badge && (
-                          <span className={`px-2 py-0.5 text-[8.5px] font-mono font-bold uppercase tracking-wider border border-current ${t(dark, 'bg-zinc-800/80 text-zinc-200', 'bg-[#f0ead8] text-[#1c1813]')}`}>
+                          <span className={`inline-flex items-center px-2 py-0.5 text-[8.5px] font-mono font-bold uppercase tracking-wider border border-current ${
+                            exp.badge === 'Current Role'
+                              ? t(dark, 'bg-emerald-950/40 text-emerald-300 border-emerald-500/50', 'bg-emerald-50 text-emerald-900 border-emerald-300')
+                              : t(dark, 'bg-zinc-800/80 text-zinc-200', 'bg-[#f0ead8] text-[#1c1813]')
+                          }`}>
+                            {exp.badge === 'Current Role' && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1.5 shrink-0" />
+                            )}
                             {exp.badge}
                           </span>
                         )}
@@ -322,17 +349,40 @@ export default function App() {
                       </span>
                     </div>
 
-                    {/* Place & Role */}
-                    <h3 className="text-lg md:text-xl font-serif font-black uppercase tracking-wide mb-1 leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors">
-                      {exp.place}
-                    </h3>
+                    {/* Place, Logo, Location & Role Header with uniform height */}
+                    <div className="flex flex-col justify-start md:min-h-[130px] mb-3 pb-3 border-b border-dashed border-current/25">
+                      {/* Small logo beside company name */}
+                      <div className="flex items-start gap-2.5 mb-1">
+                        {exp.logo && (
+                          <div className={`w-8 h-8 shrink-0 rounded bg-white border ${t(dark, 'border-white/20', 'border-[#d0c9b8]')} flex items-center justify-center overflow-hidden mt-0.5`}>
+                            <img
+                              src={exp.logo}
+                              alt={`${exp.place} logo`}
+                              className="w-5 h-5 object-contain"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
 
-                    <h4 className={`text-xs sm:text-sm font-serif italic mb-3.5 pb-2.5 border-b border-dashed ${border} ${muted}`}>
-                      {exp.role}
-                    </h4>
+                        <h3 className="text-base sm:text-lg md:text-xl font-serif font-black uppercase tracking-wide leading-tight group-hover:underline underline-offset-4 decoration-2 transition-colors flex-1 min-w-0">
+                          {exp.place}
+                        </h3>
+                      </div>
 
-                    {/* Bullet Highlights */}
-                    <div className="space-y-2 font-serif text-xs sm:text-sm leading-relaxed opacity-90 mb-4">
+                      {exp.location && (
+                        <p className={`text-[10px] sm:text-xs font-serif italic mt-0.5 flex items-center gap-1 ${muted}`}>
+                          <MapPin size={11} className="opacity-70 shrink-0" />
+                          <span>{exp.location}</span>
+                        </p>
+                      )}
+
+                      <h4 className={`text-xs sm:text-sm font-serif italic mt-1.5 ${muted}`}>
+                        {exp.role}
+                      </h4>
+                    </div>
+
+                    {/* Bullet Highlights - flex-1 with uniform spacing */}
+                    <div className="space-y-2.5 font-serif text-xs sm:text-sm leading-relaxed opacity-90 flex-1 flex flex-col justify-center my-2 md:min-h-[110px]">
                       {exp.desc.map((d: string, di: number) => (
                         <p key={di} className="flex gap-2 items-start">
                           <span className="text-[8px] opacity-60 mt-1 shrink-0">◆</span>
@@ -342,9 +392,9 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Tech Stack Chips */}
+                  {/* Tech Stack Chips - aligned at bottom with uniform height */}
                   {exp.tags && exp.tags.length > 0 && (
-                    <div className={`pt-3 mt-2 border-t border-dashed border-current/25 flex flex-wrap gap-1.5`}>
+                    <div className={`pt-3 mt-auto border-t border-dashed border-current/25 flex flex-wrap items-center gap-1.5 md:h-[48px]`}>
                       {exp.tags.map((tg: string, tgi: number) => (
                         <span key={tgi} className={`px-2 py-0.5 text-[8px] sm:text-[8.5px] font-mono font-bold uppercase tracking-wider border ${t(dark, 'bg-[#252525] text-zinc-300 border-zinc-700', 'bg-[#f4efe4] text-[#54442e] border-[#d4c5a9]')}`}>
                           {tg}
@@ -358,7 +408,7 @@ export default function App() {
           </section>
 
           {/* ── FEATURED PROJECTS ── */}
-          <section id="projects" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
+          <section id="projects" className={`border-b ${border}`}>
             <div className={`px-5 py-4 border-b ${border} ${bgBurgundy}`}>
               <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
                 <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Featured Projects
@@ -423,8 +473,8 @@ export default function App() {
                       <img
                         src={QUESTS[0].imgs[0]}
                         onClick={() => setLightbox({ imgs: QUESTS[0].imgs, alt: QUESTS[0].title, wip: (QUESTS[0] as any).wip, desc: QUESTS[0].desc, tags: QUESTS[0].tags, link: QUESTS[0].link, role: QUESTS[0].role, status: QUESTS[0].status, period: QUESTS[0].period })}
-                        className="max-w-full h-auto max-h-[450px] object-contain cursor-pointer transition-all duration-[2s] rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
-                        loading="lazy"
+                        className="max-w-full h-auto max-h-[450px] object-contain cursor-pointer transition-transform duration-200 rounded-md grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                        decoding="async"
                       />
                     </div>
                   </div>
@@ -575,15 +625,15 @@ export default function App() {
               {QUESTS.slice(1, 3).map((q, i) => (
                 <div
                   key={i}
-                  className={`p-8 border-r last:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
+                  className={`p-8 border-r last:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
                 >
                   <div className="flex-1 flex flex-col">
                     <div className={`aspect-[16/10] w-full relative overflow-hidden mb-6 p-2`}>
                       <img
                         src={q.imgs[0]}
                         onClick={() => setLightbox({ imgs: q.imgs, alt: q.title, wip: (q as any).wip, desc: q.desc, tags: q.tags, link: q.link, role: q.role, status: q.status, period: q.period })}
-                        className="w-full h-full object-contain cursor-pointer transition-all duration-[2s] rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
-                        loading="lazy"
+                        className="w-full h-full object-contain cursor-pointer transition-transform duration-200 rounded grayscale group-hover:scale-[1.03] group-hover:grayscale-0 group-active:grayscale-0 active:grayscale-0"
+                        decoding="async"
                       />
                     </div>
                     <h3 className="text-2xl font-serif font-black uppercase tracking-wide mb-1 group-hover:underline underline-offset-4 decoration-2 leading-tight">
@@ -636,7 +686,7 @@ export default function App() {
               {QUESTS.slice(3).map((q, i) => (
                 <div
                   key={i}
-                  className={`p-6 lg:p-8 border-b lg:border-b-0 border-r md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:border-r last:lg:border-r-0 ${i === 2 ? 'md:col-span-2 lg:col-span-1 md:w-full md:border-t md:border-b lg:border-t-0 lg:border-b-0 md:border-r-0 lg:border-r' : 'border-b md:border-b'} ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
+                  className={`p-6 lg:p-8 border-b lg:border-b-0 border-r md:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:border-r last:lg:border-r-0 ${i === 2 ? 'md:col-span-2 lg:col-span-1 md:w-full md:border-t md:border-b lg:border-t-0 lg:border-b-0 md:border-r-0 lg:border-r' : 'border-b md:border-b'} ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
                 >
                   {i === 2 ? (
                     <div className="flex flex-col justify-between h-full">
@@ -758,7 +808,7 @@ export default function App() {
           </section>
 
           {/* ── OTHER PROJECTS & RECOGNITIONS — Stacked Full Width ── */}
-          <section className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
+          <section className={`border-b ${border}`}>
 
             {/* Personal Projects */}
             <div>
@@ -895,7 +945,7 @@ export default function App() {
                   {PERSONAL.slice(1).map((p, i) => (
                     <div
                       key={i}
-                      className={`p-6 lg:p-8 border-b md:border-b-0 border-r last:border-r-0 md:last:border-r-0 md:[&:nth-child(3n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full reveal-on-scroll reveal-hidden`}
+                      className={`p-6 lg:p-8 border-b md:border-b-0 border-r last:border-r-0 md:last:border-r-0 md:[&:nth-child(3n)]:border-r-0 ${border} group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors flex flex-col justify-between h-full`}
                     >
                       <div className="flex-1 flex flex-col">
                         <div className="aspect-[16/10] w-full relative overflow-hidden mb-5 p-1">
@@ -964,7 +1014,7 @@ export default function App() {
                 {ACHIEVEMENTS.map((a, i) => (
                   <div
                     key={i}
-                    className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:[&:nth-child(-n+3)]:border-b lg:[&:nth-child(n+4)]:border-b-0 lg:border-r [&:nth-child(3n)]:lg:border-r-0 ${border} flex items-start gap-2 md:gap-4 ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors reveal-on-scroll reveal-hidden`}
+                    className={`p-3 md:p-6 border-b border-r [&:last-child:nth-child(odd)]:col-span-2 [&:last-child:nth-child(odd)]:border-r-0 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:last-child:nth-child(odd)]:col-span-1 lg:[&:nth-child(-n+3)]:border-b lg:[&:nth-child(n+4)]:border-b-0 lg:border-r [&:nth-child(3n)]:lg:border-r-0 ${border} flex items-start gap-2 md:gap-4 ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors`}
                   >
                     <div className={`mt-0.5 p-1.5 md:p-2 rounded-lg ${t(dark, 'bg-zinc-800/80 text-[#ff6b6b] border border-red-500/20', 'bg-white text-[#a11d1d] border border-red-200')} shrink-0 hidden sm:block`}>
                       <a.icon size={22} strokeWidth={1.5} />
@@ -991,7 +1041,7 @@ export default function App() {
 
               <div className="grid grid-cols-2">
                 {EDUCATION.map((edu: any, i: number) => (
-                  <div key={i} className={`p-3.5 sm:p-5 md:p-8 border-r last:border-r-0 ${border} flex flex-col justify-start ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group reveal-on-scroll reveal-hidden`}>
+                  <div key={i} className={`p-3.5 sm:p-5 md:p-8 border-r last:border-r-0 ${border} flex flex-col justify-start ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')} transition-colors group`}>
                     <div>
                       {/* Top Header Bar */}
                       <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-dashed border-current/25">
@@ -1068,7 +1118,7 @@ export default function App() {
           </section>
 
           {/* ── SKILLS & INFO ── */}
-          <section id="skills" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
+          <section id="skills" className={`border-b ${border}`}>
             <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
               <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
                 <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> Technical Skills
@@ -1079,42 +1129,59 @@ export default function App() {
           </section>
 
           {/* ── GITHUB CONTRIBUTIONS ── */}
-          <section id="github" className={`border-b ${border} reveal-on-scroll reveal-hidden`}>
+          <section id="github" className={`border-b ${border}`}>
             <div className={`px-5 py-4 border-b ${border} ${bgGold}`}>
               <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-black uppercase tracking-wide flex items-center gap-2 sm:gap-3 leading-tight">
                 <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 bg-current rotate-45 shrink-0" /> GitHub Contributions
               </h2>
-              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">A look at my daily coding activity and projects over the past year</p>
+              <p className="text-[10px] font-mono font-black uppercase tracking-widest opacity-80 mt-1">Daily coding activity over the past year</p>
             </div>
 
-            <div className="p-4 md:p-6">
-              <div
-                className={`p-4 sm:p-6 border ${border} transition-all group ${t(dark, 'hover:bg-[#202020]', 'hover:bg-[#ebe5d5]')}`}
-              >
-                <div className={`flex items-center justify-between gap-2 mb-3 pb-3 border-b border-dashed ${border}`}>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider">@Hannahjamilla</span>
-                  <a
-                    href="https://github.com/Hannahjamilla"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`cursor-pointer inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1 rounded text-[9.5px] sm:text-[11px] font-mono font-bold uppercase tracking-wider border transition-all duration-200 shadow-xs hover:-translate-y-0.5 active:translate-y-0 group/btn ${t(dark, 'bg-[#2a241e] text-[#f5d089] border-[#665435] hover:bg-[#3d3329] hover:border-[#f5d089]', 'bg-[#f4efe4] text-[#7a591e] border-[#d4c5a9] hover:bg-[#eae2d0] hover:border-[#7a591e]')}`}
-                  >
-                    View Profile <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                  </a>
+            <div className="p-5 sm:p-8 md:p-10">
+              {/* Username + Profile link */}
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-2.5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" className="opacity-60 shrink-0">
+                    <path d="M12 2C6.5 2 2 6.5 2 12c0 4.4 2.9 8.2 6.8 9.5.5.1.7-.2.7-.5v-1.7C6.7 20 6.1 18 6.1 18c-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.8.8.1-.7.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 015 0c2-1.3 2.8-1 2.8-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0022 12c0-5.5-4.5-10-10-10z" fill="currentColor" stroke="none"/>
+                  </svg>
+                  <span className="text-xs sm:text-sm font-mono font-bold tracking-tight">@Hannahjamilla</span>
                 </div>
+                <a
+                  href="https://github.com/Hannahjamilla"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`cursor-pointer inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1 text-[9.5px] sm:text-[11px] font-mono font-bold uppercase tracking-wider border transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 group/btn ${t(dark, 'bg-[#2a241e] text-[#f5d089] border-[#665435] hover:bg-[#3d3329] hover:border-[#f5d089]', 'bg-[#f4efe4] text-[#7a591e] border-[#d4c5a9] hover:bg-[#eae2d0] hover:border-[#7a591e]')}`}
+                >
+                  View Profile <ArrowUpRight size={11} className="transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                </a>
+              </div>
 
-                <div className="w-full flex justify-center py-2 overflow-hidden">
-                  <img
-                    src={`https://ghchart.rshah.org/${dark ? 'ff6b6b' : 'a11d1d'}/Hannahjamilla`}
-                    alt="Hannah Jamilla's GitHub Contributions"
-                    className={`w-full max-w-full h-auto object-contain ${dark ? 'opacity-90' : 'mix-blend-multiply opacity-95'} transition-opacity`}
-                    loading="lazy"
-                  />
+              {/* Contribution Graph */}
+              <div className={`p-4 sm:p-6 border ${border} ${t(dark, 'bg-[#141414]', 'bg-[#fcfaf5]')} transition-colors`}>
+                <img
+                  src={`https://ghchart.rshah.org/${dark ? 'ff6b6b' : 'a11d1d'}/Hannahjamilla`}
+                  alt="Hannah Jamilla's GitHub Contributions"
+                  className={`w-full h-auto object-contain ${dark ? 'opacity-90' : 'opacity-95'} transition-opacity`}
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Legend + Caption */}
+              <div className={`flex items-center justify-between mt-3.5 ${muted}`}>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[8px] font-mono uppercase tracking-wider">Less</span>
+                  <div className="flex items-center gap-[2px]">
+                    {[0.12, 0.3, 0.5, 0.75, 1].map((op, i) => (
+                      <div
+                        key={i}
+                        className="w-[9px] h-[9px] rounded-[2px]"
+                        style={{ backgroundColor: dark ? `rgba(255,107,107,${op})` : `rgba(161,29,29,${op})` }}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-[8px] font-mono uppercase tracking-wider">More</span>
                 </div>
-
-                <p className="font-serif italic text-xs mt-3 opacity-70 text-center">
-                  A snapshot of my daily commits and contribution activity on GitHub.
-                </p>
+                <span className="text-[8px] font-mono uppercase tracking-[0.15em]">Updated daily</span>
               </div>
             </div>
           </section>

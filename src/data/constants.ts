@@ -151,26 +151,43 @@ export const ACHIEVEMENTS = [
 
 export const XP_LOG = [
   {
-    place: 'Creciendo Philippines',
-    role: 'Backend Developer Intern',
-    period: 'Nov 2025 – Feb 2026',
-    badge: 'Internship',
+    place: 'PCCI Finance',
+    role: 'Software Engineer / Main Programmer',
+    period: '2026 – Present',
+    badge: 'Current Role',
+    location: 'Ayala, Makati City, Philippines',
+    logo: '/images/pcci.webp',
     desc: [
-      'Developed robust backend features using Express.js and MongoDB.',
-      'Maintained resilient RESTful APIs for seamless integrations.'
+      'Leading core software engineering, system architecture, and technology execution in Ayala, Makati City.',
+      'Building secure, high-performance financial software systems, robust APIs, and modern web applications.'
     ],
-    tags: ['Express.js', 'MongoDB', 'REST APIs']
+    tags: ['Software Engineering', 'Financial Tech', 'Full-Stack']
   },
   {
     place: 'Lightweight Solutions',
     role: 'Full-Stack Web Developer Intern',
     period: 'Mar 2026 – May 2026',
     badge: 'Internship',
+    location: 'Paraluman, Quezon City, Philippines',
+    logo: '/images/LWS.webp',
     desc: [
-      'Built scalable full-stack features via React.js and Python.',
-      'Designed responsive UIs and optimized overall technical usability.'
+      'Built scalable full-stack features and responsive web components using React.js and Python.',
+      'Designed intuitive user interfaces and optimized end-to-end usability and technical performance.'
     ],
-    tags: ['React.js', 'Python']
+    tags: ['React.js', 'Python', 'Full-Stack']
+  },
+  {
+    place: 'Creciendo Philippines',
+    role: 'Backend Developer Intern',
+    period: 'Nov 2025 – Feb 2026',
+    badge: 'Internship',
+    location: 'EDSA, Project 7, Quezon City, Philippines',
+    logo: '/images/Criendo.webp',
+    desc: [
+      'Developed resilient backend services, business logic, and database schemas with Express.js and MongoDB.',
+      'Engineered and maintained secure RESTful APIs to ensure reliable system communication.'
+    ],
+    tags: ['Express.js', 'MongoDB', 'REST APIs']
   }
 ]
 
